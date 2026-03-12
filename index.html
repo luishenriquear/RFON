@@ -182,7 +182,7 @@
     <div id="screen-register" class="screen">
         <div class="card">
             <div class="top-bar">
-                <h2>Nova Conta</h2>
+                <h2>Criar Conta</h2>
                 <button class="btn btn-small btn-outline" onclick="navigate('screen-login')">Voltar</button>
             </div>
             <div class="form-group"><label>Nome Completo</label><input type="text" id="reg-nome"></div>
@@ -206,15 +206,53 @@
         </div>
     </div>
 
+    <div id="screen-settings" class="screen">
+        <div class="card">
+            <div class="top-bar">
+                <h2 style="margin:0;">⚙️ Personalizar Mensagens</h2>
+                <button class="btn btn-small btn-outline" onclick="navigate('screen-dashboard')">Voltar</button>
+            </div>
+            <p style="font-size: 13px; color: #666; text-align: justify; margin-bottom: 20px;">
+                Use as tags exatas para o sistema substituir automaticamente:<br>
+                <b>{nome}</b> = Nome da pessoa | <b>{numero}</b> = Número(s)<br>
+                <b>{rifa}</b> = Nome da Rifa | <b>{premio}</b> = Prêmio<br>
+                <b>{link}</b> = Link de acesso
+            </p>
+
+            <div class="form-group">
+                <label>1. Compartilhar a Rifa (Convidar amigos)</label>
+                <textarea id="cfg-msg-link" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label>2. Encaminhar Comprovante (Admin)</label>
+                <textarea id="cfg-msg-comp" rows="5"></textarea>
+                <small style="color:var(--danger); font-size:11px;">Mantenha a tag <b>{detalhes}</b> para gerar a lista de números e valores.</small>
+            </div>
+            <div class="form-group">
+                <label>3. Cobrar Número Atrasado</label>
+                <textarea id="cfg-msg-cob" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label>4. Avisar o Ganhador (Sorteio)</label>
+                <textarea id="cfg-msg-ganhador" rows="3"></textarea>
+            </div>
+
+            <button class="btn btn-success" style="margin-top:10px;" onclick="salvarConfiguracoes()">💾 Salvar Mensagens</button>
+        </div>
+    </div>
+
     <div id="screen-dashboard" class="screen">
         <div class="header">
             <div>Olá, <strong id="lbl-username">Usuário</strong></div>
-            <button class="btn btn-small btn-danger" onclick="fazerLogout()">Sair</button>
+            <div style="display:flex; gap:5px; flex-wrap:wrap;">
+                <button class="btn btn-small btn-outline" style="border-color:#555; color:#555;" onclick="abrirConfiguracoes()">⚙️ Mensagens</button>
+                <button class="btn btn-small btn-danger" onclick="fazerLogout()">Sair</button>
+            </div>
         </div>
         <h3 class="font-rifa" style="font-size: 24px;">Minhas Rifas</h3>
         <div id="raffle-list"></div>
         <div class="new-raffle-box">
-            <button class="btn-square-add" onclick="atualizarDashboard(); navigate('screen-new-raffle')">+</button>
+            <button class="btn-square-add" onclick="navigate('screen-new-raffle')">+</button>
             <div class="new-raffle-text">Nova Rifa</div>
         </div>
     </div>
@@ -223,7 +261,7 @@
         <div class="card">
             <div class="top-bar">
                 <h2>Cadastrar Rifa</h2>
-                <button class="btn btn-small btn-outline" onclick="atualizarDashboard(); navigate('screen-dashboard')">Voltar</button>
+                <button class="btn btn-small btn-outline" onclick="navigate('screen-dashboard')">Voltar</button>
             </div>
             <div class="form-group"><label>Nome da Rifa</label><input type="text" id="rf-nome"></div>
             <div class="form-group"><label>Descrição</label><textarea id="rf-desc"></textarea></div>
@@ -271,11 +309,11 @@
         <div class="card">
             <div class="top-bar">
                 <div id="admin-raffle-title" style="margin:0; text-align:left;"></div>
-                <button class="btn btn-small btn-outline" onclick="atualizarDashboard(); navigate('screen-dashboard')">Voltar</button>
+                <button class="btn btn-small btn-outline" onclick="navigate('screen-dashboard')">Voltar</button>
             </div>
 
             <div class="action-buttons" style="margin-bottom: 20px;">
-                <button id="btn-editar-rifa" class="btn btn-small btn-warning" onclick="chamarEdicaoAtual()">✏️ Editar</button>
+                <button id="btn-editar-rifa" class="btn btn-small btn-warning" onclick="navigate('screen-edit-raffle')">✏️ Editar</button>
                 <button id="btn-excluir-rifa" class="btn btn-small btn-danger" onclick="chamarExclusaoAtual()">Excluir</button>
                 <button id="btn-sortear" class="btn btn-small btn-success" style="display:none;" onclick="realizarSorteio()">🎉 Sortear!</button>
                 <button class="btn btn-small" style="background:#4A148C;" onclick="abrirListaCompradores()">📋 Ver Compradores</button>
@@ -287,10 +325,12 @@
                     <input type="text" id="admin-link-input" readonly style="flex: 1; min-width: 150px; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 12px;">
                     <div style="display: flex; gap: 5px; flex-wrap: nowrap;">
                         <button class="btn btn-small" onclick="copiarLink()">Copiar</button>
-                        <button class="btn btn-small btn-success" onclick="compartilharLink()">Compartilhar</button>
+                        <button class="btn btn-small btn-success" onclick="compartilharLinkWhatsApp()">Enviar no Zap</button>
                     </div>
                 </div>
             </div>
+
+            <button class="btn btn-outline" style="margin-bottom: 15px;" onclick="simularLinkComprador()">Testar como Comprador</button>
 
             <div class="progress-container"><div id="admin-progress" class="progress-bar">0%</div></div>
 
@@ -311,7 +351,7 @@
         <div class="card">
             <div class="top-bar">
                 <div id="buyer-title" style="margin:0; text-align:left;"></div>
-                <button class="btn btn-small btn-outline" onclick="deslogarComprador()">Sair</button>
+                <button class="btn btn-small btn-outline" onclick="deslogarComprador()">Sair / Fechar</button>
             </div>
             
             <img id="buyer-img" class="rifa-image-preview" style="display:block; margin: 0 auto 15px auto;">
@@ -401,7 +441,7 @@
         <div class="card" style="margin-top: 10vh;">
             <h2>Situação da sua Reserva</h2>
             <div id="area-consulta-resultado"></div>
-            <button class="btn btn-outline" style="margin-top:20px;" onclick="deslogarComprador();">Sair para o Início</button>
+            <button class="btn btn-outline" style="margin-top:20px;" onclick="deslogarComprador();">Sair / Voltar ao Início</button>
         </div>
     </div>
 
@@ -415,7 +455,7 @@
             
             <div class="action-buttons" style="gap: 5px; margin-bottom: 10px;">
                 <button class="btn btn-success btn-small" style="flex:1;" id="btn-adm-pagou" onclick="adminAcao('pagou')">✅ Confirmar</button>
-                <button class="btn btn-outline btn-small" style="flex:1;" onclick="encaminharComprovanteAdmin()">📲 Enviar</button>
+                <button class="btn btn-outline btn-small" style="flex:1;" onclick="encaminharComprovanteAdmin()">📲 Enviar Recibo</button>
                 <button class="btn btn-danger btn-small" style="flex:1;" id="btn-adm-apagar" onclick="adminAcao('apagar')">🗑️ Liberar</button>
             </div>
             
@@ -442,7 +482,7 @@
                         <tr><th>Nº</th><th>Nome</th><th>Celular</th><th>Status</th></tr>
                     </thead>
                     <tbody id="corpo-tabela-compradores">
-                        </tbody>
+                    </tbody>
                 </table>
             </div>
             <div class="action-buttons" style="margin-top: 15px;">
@@ -463,12 +503,15 @@
             measurementId: "G-4BBY4FNQGX"
         };
         
-        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
         
         const auth = firebase.auth(); 
         const database = firebase.database();
 
         let currentUserEmail = "";
+        let userConfig = {}; // Variável para as mensagens customizadas
         let rifas = [];
         let currentRaffleId = null;
         let selectedNumbers = [];
@@ -482,38 +525,37 @@
             return Object.values(data).filter(item => item !== null);
         }
 
+        function formatarPrimeiroNome(nomeCompleto) {
+            if(!nomeCompleto) return "Usuário";
+            return nomeCompleto.trim().split(' ')[0];
+        }
+
         function hideLoader() { document.getElementById('loading-overlay').style.display = 'none'; }
         function showLoader() { document.getElementById('loading-overlay').style.display = 'flex'; }
 
-        // EXTRAI E FORMATA SOMENTE O PRIMEIRO NOME
-        function formatarPrimeiroNome(nomeCompleto) {
-            if(!nomeCompleto) return "Usuário";
-            return nomeCompleto.split(' ')[0];
-        }
-
-        // FECHA COMPRADOR DE FORMA SEGURA SEM RECARREGAR PÁGINA
+        // --- PROTEÇÃO DO COMPRADOR ---
         function deslogarComprador() {
             currentRaffleId = null;
             selectedNumbers = [];
-            // Oculta todos os modais abertos preventivamente
             document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none');
             
-            // Limpa o link
+            // Limpa a URL sem recarregar a página!
             const urlBase = window.location.href.split('?')[0];
             window.history.replaceState({}, document.title, urlBase);
             
-            // Força a ida para a tela principal
             navigate('screen-welcome');
         }
 
+        // --- MEMÓRIA DO VENDEDOR PROTEGIDA ---
         function navigate(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active'); 
             window.scrollTo(0,0);
             
-            // SÓ SALVA A SESSÃO SE FOR O ADMINISTRADOR NOS PAINÉIS DELE
+            // Só salva as telas se quem estiver navegando for o dono, 
+            // impedindo que telas públicas entrem na memória
             if (currentUserEmail !== "") {
-                const telasAdmin = ['screen-dashboard', 'screen-admin-raffle', 'screen-edit-raffle', 'screen-new-raffle'];
+                const telasAdmin = ['screen-dashboard', 'screen-admin-raffle', 'screen-edit-raffle', 'screen-new-raffle', 'screen-settings'];
                 if (telasAdmin.includes(screenId)) {
                     localStorage.setItem('last_screen', screenId);
                     if (screenId === 'screen-admin-raffle' || screenId === 'screen-edit-raffle') {
@@ -538,7 +580,7 @@
             const rifaUrlId = urlParams.get('rifa');
             const consultaTel = urlParams.get('consulta');
 
-            // Autenticação é chamada primeiro
+            // Autenticação carrega primeiro
             auth.onAuthStateChanged(user => {
                 if (user) {
                     currentUserEmail = user.email;
@@ -546,25 +588,24 @@
                         const uData = uSnap.val();
                         if(uData && uData.nome) {
                             document.getElementById('lbl-username').innerText = formatarPrimeiroNome(uData.nome);
-                            // Atualiza nome na sessão cacheada também
-                            localStorage.setItem('rifa_logged_user', JSON.stringify({user: user.email, nome: uData.nome}));
+                            userConfig = uData.config || {}; // Carrega as mensagens salvas do banco
                         }
                     }).catch(e => console.log(e));
                 } else {
                     currentUserEmail = "";
+                    userConfig = {};
                 }
 
-                // Carrega as Rifas do Banco
                 database.ref('rifas').once('value').then(snap => {
                     rifas = parseFirebaseArray(snap.val());
                     hideLoader();
                     ativarAtualizacoesEmTempoReal(); 
 
-                    // REGRA 1: LINK COMPARTILHADO MANDA EM TUDO
+                    // REGRA 1: LINK COMPARTILHADO MANDA EM TUDO (Mesmo se você for o dono e estiver logado)
                     if (rifaUrlId && consultaTel) {
                         currentRaffleId = rifaUrlId;
                         realizarConsultaPublica(rifaUrlId, consultaTel);
-                        return;
+                        return; 
                     } else if (rifaUrlId) {
                         currentRaffleId = rifaUrlId;
                         const rifaEncontrada = rifas.find(r => r.id === rifaUrlId);
@@ -574,11 +615,18 @@
                             alert("Rifa não encontrada no sistema.");
                             deslogarComprador();
                         }
-                        return;
+                        return; 
                     }
 
                     // REGRA 2: ADMIN LOGADO (MEMÓRIA)
                     if (user) {
+                        // Resgata o nome na tela imediatamente usando a cache local
+                        const sessionData = localStorage.getItem('rifa_logged_user');
+                        if(sessionData) {
+                            const parsedUser = JSON.parse(sessionData);
+                            document.getElementById('lbl-username').innerText = formatarPrimeiroNome(parsedUser.nome);
+                        }
+
                         const savedScreen = localStorage.getItem('last_screen');
                         const savedRaffle = localStorage.getItem('last_raffle');
 
@@ -588,7 +636,7 @@
                         } else if (savedScreen === 'screen-edit-raffle' && savedRaffle) {
                             const r = rifas.find(x => x.id === savedRaffle);
                             if(r) { currentRaffleId = savedRaffle; abrirEditarRifa(savedRaffle); } else { atualizarDashboard(); navigate('screen-dashboard'); }
-                        } else if (savedScreen && ['screen-dashboard', 'screen-new-raffle'].includes(savedScreen)) {
+                        } else if (savedScreen && ['screen-dashboard', 'screen-new-raffle', 'screen-settings'].includes(savedScreen)) {
                             atualizarDashboard(); navigate(savedScreen);
                         } else {
                             atualizarDashboard(); navigate('screen-dashboard');
@@ -631,9 +679,6 @@
             return mudou;
         }
 
-        function abrirModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
-
         // --- SISTEMA DE USUÁRIOS E SEGURANÇA ---
         function salvarCadastroUsuario() {
             const nome = document.getElementById('reg-nome').value; 
@@ -667,7 +712,11 @@
             if(!email || !pass) { alert("Preencha o e-mail e a senha!"); return; }
             
             showLoader();
-            auth.signInWithEmailAndPassword(email, pass).catch(error => {
+            auth.signInWithEmailAndPassword(email, pass).then(userCredential => {
+                // Salva o e-mail para a inicialização rápida na memória
+                localStorage.setItem('rifa_logged_user', JSON.stringify({user: email, nome: "Usuário"}));
+                setTimeout(hideLoader, 3000); 
+            }).catch(error => {
                 hideLoader();
                 if(error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
                     alert("E-mail ou senha incorretos.");
@@ -680,9 +729,9 @@
         function fazerLogout() { 
             auth.signOut().then(() => {
                 currentUserEmail = ""; 
-                localStorage.removeItem('last_screen');
-                localStorage.removeItem('last_raffle');
-                localStorage.removeItem('rifa_logged_user');
+                localStorage.removeItem('last_screen'); 
+                localStorage.removeItem('last_raffle'); 
+                localStorage.removeItem('rifa_logged_user'); 
                 deslogarComprador(); 
             });
         }
@@ -702,6 +751,45 @@
                 else alert("Erro ao enviar redefinição: " + error.message);
             });
         }
+
+        // --- SISTEMA DE PERSONALIZAÇÃO DE MENSAGENS ---
+        function obterMsgTemplate(tipo) {
+            const defaults = {
+                link: "Compre números na minha rifa e concorra a: {premio}!\n\nAcesse o link e garanta o seu: {link}",
+                comprovante: "🧾 *COMPROVANTE DE RIFA* 🧾\n\n*Rifa:* {rifa}\n*Prêmio:* {premio}\n{detalhes}\n*Total de Números:* {qtd_total}\n*Valor Total:* R$ {valor_total}\n\nAcompanhe aqui: {link}",
+                cobranca: "Olá {nome}, o pagamento do número {numero} na rifa \"{rifa}\" está pendente. Ainda tem interesse?",
+                ganhador: "Parabéns {nome}! 🎉 Você foi o grande ganhador do número {numero} na minha rifa \"{rifa}\"! O prêmio é seu!"
+            };
+            if(userConfig && userConfig[tipo]) return userConfig[tipo];
+            return defaults[tipo];
+        }
+
+        function abrirConfiguracoes() {
+            document.getElementById('cfg-msg-link').value = obterMsgTemplate('link');
+            document.getElementById('cfg-msg-comp').value = obterMsgTemplate('comprovante');
+            document.getElementById('cfg-msg-cob').value = obterMsgTemplate('cobranca');
+            document.getElementById('cfg-msg-ganhador').value = obterMsgTemplate('ganhador');
+            navigate('screen-settings');
+        }
+
+        function salvarConfiguracoes() {
+            const user = auth.currentUser;
+            if(!user) return;
+            
+            userConfig = {
+                link: document.getElementById('cfg-msg-link').value,
+                comprovante: document.getElementById('cfg-msg-comp').value,
+                cobranca: document.getElementById('cfg-msg-cob').value,
+                ganhador: document.getElementById('cfg-msg-ganhador').value
+            };
+
+            database.ref('usuarios/' + user.uid + '/config').set(userConfig).then(() => {
+                alert("Configurações de mensagens salvas com sucesso!");
+                atualizarDashboard();
+                navigate('screen-dashboard');
+            });
+        }
+        // ---------------------------------------------
 
         function processarImagem(input, previewId) {
             if (input.files[0]) {
@@ -883,8 +971,10 @@
             if (acao === 'pagou') { n.status = 'paid'; database.ref('rifas').set(rifas); fecharModal('modal-admin-numero'); } 
             else if (acao === 'apagar') {
                 if (n.status === 'late') {
+                    let tpl = obterMsgTemplate('cobranca');
+                    let msg = tpl.replace(/{nome}/g, n.comprador).replace(/{numero}/g, n.numero).replace(/{rifa}/g, r.nome);
                     if (confirm("Deseja mandar mensagem cobrando antes de excluir?\n\n[OK] = Sim\n[Cancelar] = Excluir Direto")) {
-                        const t = n.telefone.replace(/\D/g,''); window.open(`https://wa.me/55${t}?text=Olá ${n.comprador}, o pagamento do número ${n.numero} na rifa "${r.nome}" está pendente. Ainda tem interesse?`, '_blank');
+                        const t = n.telefone.replace(/\D/g,''); window.open(`https://wa.me/55${t}?text=${encodeURIComponent(msg)}`, '_blank');
                         fecharModal('modal-admin-numero'); return; 
                     }
                 }
@@ -899,11 +989,21 @@
             tc.forEach(x => { if(x.status === 'paid') p.push(x.numero); if(x.status === 'reserved') rs.push(x.numero); if(x.status === 'late') a.push(x.numero); });
 
             const l = window.location.href.split('?')[0] + `?rifa=${r.id}&consulta=${n.telefone}`;
-            let msg = `🧾 *COMPROVANTE DE RIFA* 🧾\n\n*Rifa:* ${r.nome}\n*Prêmio:* ${r.premio}\n`;
-            if(p.length > 0) msg += `\n✅ *Garantidos:* ${p.join(', ')}`;
-            if(rs.length > 0) msg += `\n⏳ *Reservados:* ${rs.join(', ')}`;
-            if(a.length > 0) msg += `\n⚠️ *Atrasados:* ${a.join(', ')}`;
-            msg += `\n\n*Total em Números:* ${tc.length}\n*Valor Total:* R$ ${(tc.length * r.valor).toFixed(2)}\n\nAcompanhe aqui: ${l}`;
+            
+            let det = '';
+            if(p.length > 0) det += `\n✅ *Garantidos:* ${p.join(', ')}`;
+            if(rs.length > 0) det += `\n⏳ *Reservados:* ${rs.join(', ')}`;
+            if(a.length > 0) det += `\n⚠️ *Atrasados:* ${a.join(', ')}`;
+            
+            let tpl = obterMsgTemplate('comprovante');
+            let msg = tpl.replace(/{rifa}/g, r.nome)
+                         .replace(/{premio}/g, r.premio)
+                         .replace(/{detalhes}/g, det)
+                         .replace(/{qtd_total}/g, tc.length)
+                         .replace(/{valor_total}/g, (tc.length * r.valor).toFixed(2))
+                         .replace(/{link}/g, l)
+                         .replace(/{nome}/g, n.comprador);
+
             window.open(`https://wa.me/55${n.telefone.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
@@ -1014,7 +1114,15 @@
         }
 
         function copiarLink() { const i = document.getElementById("admin-link-input"); i.select(); document.execCommand("copy"); alert("Copiado!"); }
-        function compartilharLink() { if (navigator.share) navigator.share({ url: document.getElementById("admin-link-input").value }); }
+        
+        function compartilharLinkWhatsApp() { 
+            const r = rifas.find(x => x.id === currentRaffleId);
+            const link = document.getElementById("admin-link-input").value;
+            let tpl = obterMsgTemplate('link');
+            let msg = tpl.replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio).replace(/{link}/g, link);
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
         function chamarEdicaoAtual() { abrirEditarRifa(currentRaffleId); }
         function chamarExclusaoAtual() { if (confirm("Excluir Rifa?")) { rifas = rifas.filter(x => x.id !== currentRaffleId); database.ref('rifas').set(rifas); atualizarDashboard(); navigate('screen-dashboard'); } }
 
@@ -1025,13 +1133,12 @@
             
             if(confirm("Deseja realmente sortear? A rifa será finalizada e não poderá ser desfeita.")) {
                 const ganhador = r.numeros[Math.floor(Math.random() * r.qtd)];
-                
-                r.concluida = true;
-                r.ganhador = ganhador;
+                r.concluida = true; r.ganhador = ganhador;
                 
                 database.ref('rifas').set(rifas).then(() => {
                     alert(`🎉 BINGO! SORTEIO REALIZADO!\n\nNúmero Sorteado: ${ganhador.numero}\nGanhador(a): ${ganhador.comprador}`);
-                    const msg = `Parabéns ${ganhador.comprador}! 🎉 Você foi o grande ganhador do número ${ganhador.numero} na minha rifa "${r.nome}"! O prêmio é seu!`;
+                    let tpl = obterMsgTemplate('ganhador');
+                    let msg = tpl.replace(/{nome}/g, ganhador.comprador).replace(/{numero}/g, ganhador.numero).replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio);
                     window.open(`https://wa.me/55${ganhador.telefone.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
                     abrirAdminRifa(currentRaffleId); 
                 });
@@ -1045,9 +1152,7 @@
             abrirModal('modal-lista-compradores');
         }
 
-        function filtrarLista() {
-            renderizarListaCompradores();
-        }
+        function filtrarLista() { renderizarListaCompradores(); }
 
         function renderizarListaCompradores() {
             const r = rifas.find(x => x.id === currentRaffleId);
