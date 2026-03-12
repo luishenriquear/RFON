@@ -59,15 +59,18 @@
 
         .main-content { flex: 1; }
 
-        /* Botão Flutuante de Tema */
-        .theme-toggle {
-            position: fixed; bottom: 20px; left: 20px; width: 45px; height: 45px;
-            background: var(--primary-blue); color: white; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center; font-size: 20px;
-            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 1000;
-            border: none; transition: 0.3s;
+        /* BARRA SUPERIOR PROFISSIONAL */
+        .main-navbar {
+            background: var(--footer-bg); padding: 10px 20px; display: flex; justify-content: space-between;
+            align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 1000;
         }
-        .theme-toggle:hover { transform: scale(1.1); }
+        .nav-brand { font-family: 'Tw Cen MT Condensed', 'Oswald', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: 1px; }
+        .nav-actions { display: flex; gap: 10px; align-items: center; }
+        .btn-nav {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: var(--footer-text);
+            padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 5px; transition: 0.3s;
+        }
+        .btn-nav:hover { background: rgba(255,255,255,0.2); color: #fff; }
 
         /* Logotipo e Textos */
         .logo-container { text-align: center; margin-bottom: 30px; }
@@ -121,13 +124,13 @@
         .btn-square-add:hover { background: rgba(2, 136, 209, 0.1); }
         .new-raffle-text { margin-top: 10px; color: var(--primary-blue); font-weight: bold; font-size: 18px; }
 
-        .raffle-card-dash { cursor: pointer; transition: 0.3s; text-align: center; position: relative; border-radius: 12px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); background: var(--white); }
+        .raffle-card-dash { cursor: pointer; transition: 0.3s; text-align: center; position: relative; border-radius: 12px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); background: #ccc; }
         .raffle-card-dash:hover { transform: scale(1.02); }
         .raffle-card-bg { position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px; background-size: cover; background-position: center; filter: blur(8px); z-index: 0; }
-        .raffle-card-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--card-bg); z-index: 1; opacity: 0.85;}
+        .raffle-card-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.65); z-index: 1; }
         .raffle-card-content { position: relative; z-index: 2; padding: 20px; display: flex; flex-direction: column; align-items: center; }
         
-        .raffle-card-title { background: var(--card-bg); color: var(--text-dark); padding: 8px 25px; border-radius: 20px; font-size: 26px; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .raffle-card-title { background: rgba(255,255,255,0.9); padding: 8px 25px; border-radius: 20px; font-size: 26px; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .badge-concluido { background: var(--success); color: white; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; position: absolute; top: 10px; right: 10px; z-index: 5; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
 
         .numbers-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 15px;}
@@ -196,7 +199,13 @@
 </head>
 <body>
 
-    <button class="theme-toggle" id="theme-toggle-btn" onclick="toggleTheme()">🌙</button>
+    <nav class="main-navbar no-print">
+        <div class="nav-brand"><span style="color:#538cb3;">Rifa</span><span style="color:#d34c31;">On*</span></div>
+        <div class="nav-actions">
+            <button class="btn-nav" onclick="alert('Aplicativo oficial em desenvolvimento. Em breve nas lojas de aplicativos!')">⬇️ App</button>
+            <button class="btn-nav" id="theme-toggle-btn" onclick="toggleTheme()">🌙</button>
+        </div>
+    </nav>
 
     <div id="loading-overlay">
         <div class="spinner"></div>
@@ -304,7 +313,7 @@
 
         <div id="screen-dashboard" class="screen">
             <div class="header">
-                <div>Olá, <strong id="lbl-username" style="color:var(--primary-blue);">Usuário</strong></div>
+                <div>Olá, <strong id="lbl-username" style="color:var(--primary-blue);">Carregando...</strong></div>
                 <div style="display:flex; gap:5px; flex-wrap:wrap;">
                     <button class="btn btn-small btn-outline" style="border-color:#888; color:#888;" onclick="abrirConfiguracoes()">⚙️ Msgs</button>
                     <button id="btn-master-panel" class="btn btn-small btn-warning" style="display:none;" onclick="abrirPainelMestre()">👑 Suporte</button>
@@ -540,7 +549,7 @@
             <div class="card" style="margin-top: 10vh;">
                 <h2>Situação da sua Reserva</h2>
                 <div id="area-consulta-resultado"></div>
-                <button class="btn btn-outline" style="margin-top:20px;" onclick="deslogarComprador();">Sair e Voltar ao Início</button>
+                <button class="btn btn-outline" style="margin-top:20px;" onclick="deslogarComprador();">Sair / Voltar ao Início</button>
             </div>
         </div>
 
@@ -662,15 +671,12 @@
             selectedNumbers = [];
             document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none');
             
-            // Limpa a URL sem recarregar a página!
             const urlBase = window.location.href.split('?')[0];
             window.history.replaceState({}, document.title, urlBase);
             
             if (currentUserEmail !== "") {
-                // Se era o admin testando, volta pro dashboard dele
                 atualizarDashboard(); navigate('screen-dashboard');
             } else {
-                // Se era o cliente, volta pro inicio
                 navigate('screen-welcome');
             }
         }
@@ -712,17 +718,21 @@
                 if (user) {
                     currentUserEmail = user.email;
                     
-                    // Ativa Botão Mestre se for o Dono da Plataforma
                     if(user.email.toLowerCase() === EMAIL_MESTRE.toLowerCase()) {
                         document.getElementById('btn-master-panel').style.display = 'inline-block';
+                    } else {
+                        document.getElementById('btn-master-panel').style.display = 'none';
                     }
 
+                    // BUSCA O NOME REAL NO BANCO DE DADOS
                     database.ref('usuarios/' + user.uid).once('value').then(uSnap => {
                         const uData = uSnap.val();
                         if(uData && uData.nome) {
                             document.getElementById('lbl-username').innerText = formatarPrimeiroNome(uData.nome);
                             userConfig = uData.config || {}; 
                             localStorage.setItem('rifa_logged_user', JSON.stringify({user: user.email, nome: uData.nome}));
+                        } else if (user.displayName) {
+                            document.getElementById('lbl-username').innerText = formatarPrimeiroNome(user.displayName);
                         }
                     }).catch(e => console.log(e));
                 } else {
@@ -736,7 +746,6 @@
                     hideLoader();
                     ativarAtualizacoesEmTempoReal(); 
 
-                    // REGRA 1: LINK COMPARTILHADO MANDA EM TUDO (Mesmo se logado)
                     if (rifaUrlId && consultaTel) {
                         currentRaffleId = rifaUrlId;
                         realizarConsultaPublica(rifaUrlId, consultaTel);
@@ -753,7 +762,6 @@
                         return; 
                     }
 
-                    // REGRA 2: ADMIN LOGADO (MEMÓRIA)
                     if (user) {
                         const sessionData = localStorage.getItem('rifa_logged_user');
                         if(sessionData) {
@@ -776,7 +784,6 @@
                             atualizarDashboard(); navigate('screen-dashboard');
                         }
                     } else {
-                        // REGRA 3: NINGUÉM LOGADO E NENHUM LINK
                         navigate('screen-welcome');
                     }
                 }).catch(e => {
@@ -822,14 +829,11 @@
             const provider = new firebase.auth.GoogleAuthProvider();
             auth.signInWithPopup(provider).then((result) => {
                 const user = result.user;
-                // Garante que os dados estao no BD
                 database.ref('usuarios/' + user.uid).once('value').then(snap => {
                     if(!snap.exists()) {
-                        database.ref('usuarios/' + user.uid).set({ nome: user.displayName, email: user.email, telefone: '' });
+                        database.ref('usuarios/' + user.uid).set({ nome: user.displayName || "Usuário", email: user.email, telefone: '' });
                     }
                 });
-                hideLoader();
-                // onAuthStateChanged vai assumir
             }).catch(error => {
                 hideLoader(); alert("Erro no login com Google: " + error.message);
             });
@@ -866,10 +870,7 @@
             if(!email || !pass) { alert("Preencha o e-mail e a senha!"); return; }
             
             showLoader();
-            auth.signInWithEmailAndPassword(email, pass).then(userCredential => {
-                localStorage.setItem('rifa_logged_user', JSON.stringify({user: email, nome: "Usuário"}));
-                setTimeout(hideLoader, 3000); 
-            }).catch(error => {
+            auth.signInWithEmailAndPassword(email, pass).catch(error => {
                 hideLoader();
                 if(error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
                     alert("E-mail ou senha incorretos.");
@@ -915,7 +916,6 @@
                 alert("Suporte cadastrado com sucesso, aguarde até 7 dias para ter retorno.");
                 fecharModal('modal-suporte-publico');
                 
-                // Dispara aviso para o seu WhatsApp automaticamente com a duvida
                 const linkApp = window.location.href.split('?')[0];
                 const msgApp = `🛑 *NOVO TICKET DE SUPORTE*\n\n*Nome:* ${n}\n*E-mail:* ${e}\n*Mensagem:* ${m}\n\nAcesse o Painel Mestre no App para gerenciar: ${linkApp}`;
                 window.open(`https://wa.me/5512991643067?text=${encodeURIComponent(msgApp)}`, '_blank');
@@ -925,7 +925,7 @@
         function abrirPainelMestre() {
             showLoader();
             database.ref('suporte').once('value').then(snap => {
-                const tickets = parseFirebaseArray(snap.val()).reverse(); // Mais novos primeiro
+                const tickets = parseFirebaseArray(snap.val()).reverse(); 
                 const lista = document.getElementById('master-tickets-list');
                 lista.innerHTML = '';
                 
@@ -988,7 +988,6 @@
                 navigate('screen-dashboard');
             });
         }
-        // ---------------------------------------------
 
         function processarImagem(input, previewId) {
             if (input.files[0]) {
