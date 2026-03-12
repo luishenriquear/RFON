@@ -6,6 +6,7 @@
     <title>Rifas Online</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
     <style>
@@ -157,7 +158,7 @@
                 <button class="btn btn-small btn-outline" onclick="navigate('screen-welcome')">Voltar</button>
             </div>
             <h2>Login</h2>
-            <div class="form-group"><label>Usuário</label><input type="text" id="login-user" placeholder="Digite seu usuário"></div>
+            <div class="form-group"><label>E-mail</label><input type="email" id="login-user" placeholder="Digite seu e-mail cadastrado"></div>
             <div class="form-group"><label>Senha</label><input type="password" id="login-pass" placeholder="Digite sua senha"></div>
             <button class="btn" onclick="fazerLogin()">Logar</button>
             <div style="text-align: center; margin-top: 15px; display:flex; flex-direction:column; gap:8px;">
@@ -174,10 +175,9 @@
                 <button class="btn btn-small btn-outline" onclick="navigate('screen-login')">Voltar</button>
             </div>
             <div class="form-group"><label>Nome Completo</label><input type="text" id="reg-nome"></div>
-            <div class="form-group"><label>Usuário</label><input type="text" id="reg-user"></div>
             <div class="form-group"><label>Celular (com DDD)</label><input type="number" id="reg-tel" placeholder="Ex: 11999999999"></div>
-            <div class="form-group"><label>E-mail</label><input type="email" id="reg-email"></div>
-            <div class="form-group"><label>Senha</label><input type="password" id="reg-pass"></div>
+            <div class="form-group"><label>E-mail (Seu Login)</label><input type="email" id="reg-email" placeholder="Ex: joao@email.com"></div>
+            <div class="form-group"><label>Senha</label><input type="password" id="reg-pass" placeholder="Crie uma senha forte"></div>
             <div class="form-group"><label>Confirmar Senha</label><input type="password" id="reg-pass-conf"></div>
             <button class="btn" onclick="salvarCadastroUsuario()">Salvar Cadastro</button>
         </div>
@@ -189,23 +189,9 @@
                 <h2>Recuperar Senha</h2>
                 <button class="btn btn-small btn-outline" onclick="navigate('screen-login')">Voltar</button>
             </div>
-            <p style="text-align:center; font-size:14px;">Insira seus dados para enviarmos um SMS de redefinição.</p>
-            <div class="form-group"><label>Seu Usuário (Login)</label><input type="text" id="forgot-user"></div>
-            <div class="form-group"><label>Celular Cadastrado</label><input type="number" id="forgot-tel"></div>
-            <button class="btn btn-warning" onclick="solicitarSms()">Enviar SMS de Recuperação</button>
-        </div>
-    </div>
-
-    <div id="screen-reset-pass" class="screen">
-        <div class="card" style="margin-top: 10vh;">
-            <div class="top-bar">
-                <h2>Nova Senha</h2>
-                <button class="btn btn-small btn-outline" onclick="navigate('screen-login')">Cancelar</button>
-            </div>
-            <div class="form-group"><label>Confirme seu Usuário</label><input type="text" id="reset-user"></div>
-            <div class="form-group"><label>Nova Senha</label><input type="password" id="reset-pass"></div>
-            <div class="form-group"><label>Confirme Nova Senha</label><input type="password" id="reset-pass-conf"></div>
-            <button class="btn btn-success" onclick="confirmarNovaSenha()">Atualizar Senha</button>
+            <p style="text-align:center; font-size:14px;">Insira seu E-mail de cadastro. O sistema enviará um link seguro para você redefinir sua senha.</p>
+            <div class="form-group"><label>E-mail Cadastrado</label><input type="email" id="forgot-email" placeholder="Digite seu e-mail"></div>
+            <button class="btn btn-warning" onclick="recuperarSenha()">Enviar E-mail de Recuperação</button>
         </div>
     </div>
 
@@ -331,12 +317,32 @@
         </div>
     </div>
 
+    <div id="modal-termos" class="modal-overlay" style="z-index: 10000;">
+        <div class="modal-content" style="max-width: 500px;">
+            <h3>Termos e Regulamento</h3>
+            <div style="font-size: 13px; color: #555; max-height: 300px; overflow-y: auto; padding-right: 10px; text-align: justify; line-height:1.5;">
+                <p><b>1. Reserva e Pagamento:</b> Ao reservar um número, o comprador se compromete a realizar o pagamento e enviar o comprovante de PIX para o organizador no prazo estipulado. O não pagamento no prazo resultará na liberação automática do número.</p>
+                <p><b>2. Sorteio:</b> O sorteio será realizado de forma justa e transparente apenas após a confirmação do pagamento de 100% dos números (cotas) disponíveis nesta rifa, a não ser que o organizador declare o encerramento antecipado.</p>
+                <p><b>3. Prêmio:</b> O prêmio descrito é definitivo e intransferível. A logística de entrega, envio ou retirada do prêmio é de inteira responsabilidade do organizador da rifa.</p>
+                <p><b>4. Transparência:</b> O comprador pode consultar o status das suas cotas a qualquer momento pelo link disponibilizado em seu recibo de compra.</p>
+                <p><b>5. Vínculo:</b> O fornecedor desta plataforma de software não tem qualquer vínculo com a organização, criação ou arrecadação financeira desta rifa, servindo apenas como ferramenta de gestão para o organizador.</p>
+            </div>
+            <button class="btn btn-outline" style="margin-top:15px;" onclick="fecharModal('modal-termos')">Fechar Regulamento</button>
+        </div>
+    </div>
+
     <div id="modal-dados-comprador" class="modal-overlay">
         <div class="modal-content">
             <h3>Preencha seus dados</h3>
             <div class="form-group"><label>Seu Nome</label><input type="text" id="mod-comp-nome"></div>
             <div class="form-group"><label>Seu Celular (com DDD)</label><input type="number" id="mod-comp-tel"></div>
             <div class="form-group"><label>Data de Pagamento</label><input type="date" id="mod-comp-data"></div>
+            
+            <div class="form-group" style="display:flex; align-items:flex-start; gap:8px; font-size:13px; text-align:left;">
+                <input type="checkbox" id="mod-comp-termos" style="width:18px; height:18px; margin-top:2px;">
+                <label for="mod-comp-termos" style="font-weight:normal; margin:0;">Li e aceito os <a href="#" style="color:var(--primary-blue);" onclick="abrirModal('modal-termos')">Termos e Regulamento</a> da rifa.</label>
+            </div>
+
             <div class="action-buttons">
                 <button class="btn btn-outline" onclick="fecharModal('modal-dados-comprador')">Cancelar</button>
                 <button class="btn" onclick="confirmarReserva()">Reservar</button>
@@ -447,11 +453,15 @@
             appId: "1:635444835818:web:657712a4dbbb351bec2e93",
             measurementId: "G-4BBY4FNQGX"
         };
-        firebase.initializeApp(firebaseConfig);
+        
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        
+        const auth = firebase.auth(); 
         const database = firebase.database();
 
-        let currentUser = "";
-        let usuarios = [];
+        let currentUserEmail = "";
         let rifas = [];
         let currentRaffleId = null;
         let selectedNumbers = [];
@@ -459,57 +469,96 @@
         let adminIndexSelecionado = null;
         let ultimaCompraIds = [];
 
-        window.addEventListener('load', () => {
-            database.ref('/').once('value').then((snapshot) => {
-                const data = snapshot.val() || {};
-                usuarios = data.usuarios || [];
-                rifas = data.rifas || [];
-                document.getElementById('loading-overlay').style.display = 'none';
+        // FUNÇÃO DE SEGURANÇA MÁXIMA
+        function parseFirebaseArray(data) {
+            if (!data) return [];
+            if (Array.isArray(data)) return data.filter(item => item !== null);
+            return Object.values(data).filter(item => item !== null);
+        }
 
-                const urlParams = new URLSearchParams(window.location.search);
-                const rifaUrlId = urlParams.get('rifa');
-                const consultaTel = urlParams.get('consulta');
-                const resetPass = urlParams.get('reset');
-                
-                if (resetPass) {
-                    navigate('screen-reset-pass');
-                } else if (rifaUrlId && consultaTel) {
-                    currentRaffleId = rifaUrlId;
+        function hideLoader() {
+            document.getElementById('loading-overlay').style.display = 'none';
+        }
+
+        function showLoader() {
+            document.getElementById('loading-overlay').style.display = 'flex';
+        }
+
+        window.addEventListener('load', () => {
+            // TRAVA: Remove loader forçado após 5 segundos em caso de falha de rede
+            setTimeout(hideLoader, 5000);
+
+            // AVISO PARA ARQUIVOS LOCAIS (content:// ou file://)
+            if (window.location.protocol.includes('file') || window.location.protocol.includes('content')) {
+                alert("⚠️ ATENÇÃO: O sistema de login seguro bloqueia o acesso via arquivos locais do celular. Por favor, acesse usando o link oficial hospedado (rfon.vercel.app) no seu navegador para conseguir logar.");
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const rifaUrlId = urlParams.get('rifa');
+            const consultaTel = urlParams.get('consulta');
+            
+            // FLUXO DO COMPRADOR E VISITANTE
+            if (rifaUrlId && consultaTel) {
+                currentRaffleId = rifaUrlId;
+                database.ref('rifas').once('value').then(snap => {
+                    rifas = parseFirebaseArray(snap.val());
+                    hideLoader();
                     realizarConsultaPublica(rifaUrlId, consultaTel);
-                } else if (rifaUrlId) {
+                    ativarAtualizacoesEmTempoReal();
+                }).catch(e => { alert("Erro de rede: " + e.message); hideLoader(); navigate('screen-welcome'); });
+                return;
+            } else if (rifaUrlId) {
+                currentRaffleId = rifaUrlId;
+                database.ref('rifas').once('value').then(snap => {
+                    rifas = parseFirebaseArray(snap.val());
+                    hideLoader();
                     const rifaEncontrada = rifas.find(r => r.id === rifaUrlId);
-                    if(rifaEncontrada) {
-                        currentRaffleId = rifaUrlId; 
-                        simularLinkComprador();
-                    } else { navigate('screen-welcome'); }
-                } else {
-                    const sessionUser = localStorage.getItem('rifa_logged_user');
-                    if (sessionUser) {
-                        const parsedUser = JSON.parse(sessionUser);
-                        currentUser = parsedUser.user;
-                        document.getElementById('lbl-username').innerText = parsedUser.nome;
+                    if(rifaEncontrada) simularLinkComprador(); else navigate('screen-welcome');
+                    ativarAtualizacoesEmTempoReal();
+                }).catch(e => { alert("Erro de rede: " + e.message); hideLoader(); navigate('screen-welcome'); });
+                return;
+            }
+
+            // FLUXO DO ADMINISTRADOR
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    currentUserEmail = user.email;
+                    
+                    database.ref('usuarios/' + user.uid).once('value').then(snap => {
+                        const uData = snap.val();
+                        if(uData && uData.nome) document.getElementById('lbl-username').innerText = uData.nome;
+                    }).catch(e => console.log(e));
+
+                    database.ref('rifas').once('value').then(snap => {
+                        rifas = parseFirebaseArray(snap.val());
+                        hideLoader();
                         
                         const savedScreen = localStorage.getItem('last_screen');
                         const savedRaffle = localStorage.getItem('last_raffle');
                         
                         if (savedScreen === 'screen-admin-raffle' && savedRaffle) {
-                            abrirAdminRifa(savedRaffle);
+                            const r = rifas.find(x => x.id === savedRaffle);
+                            if(r) abrirAdminRifa(savedRaffle); else { atualizarDashboard(); navigate('screen-dashboard'); }
                         } else if (savedScreen === 'screen-edit-raffle' && savedRaffle) {
-                            abrirEditarRifa(savedRaffle);
-                        } else if (savedScreen) {
+                            const r = rifas.find(x => x.id === savedRaffle);
+                            if(r) abrirEditarRifa(savedRaffle); else { atualizarDashboard(); navigate('screen-dashboard'); }
+                        } else if (savedScreen && savedScreen !== 'screen-login' && savedScreen !== 'screen-register' && savedScreen !== 'screen-forgot-pass') {
                             atualizarDashboard(); navigate(savedScreen);
                         } else {
                             atualizarDashboard(); navigate('screen-dashboard');
                         }
-                    } else { navigate('screen-welcome'); }
+                        ativarAtualizacoesEmTempoReal();
+                    }).catch(e => { alert("Erro ao carregar dados: " + e.message); hideLoader(); navigate('screen-welcome'); });
+                } else {
+                    hideLoader();
+                    navigate('screen-welcome');
                 }
-                ativarAtualizacoesEmTempoReal();
-            }).catch(e => { alert("Erro de banco: " + e.message); });
+            });
         });
 
         function ativarAtualizacoesEmTempoReal() {
             database.ref('rifas').on('value', (snapshot) => {
-                rifas = snapshot.val() || [];
+                rifas = parseFirebaseArray(snapshot.val());
                 let mudouAtrasos = false;
                 rifas.forEach(r => { if(checarAtrasosLocal(r)) mudouAtrasos = true; });
                 if(mudouAtrasos) database.ref('rifas').set(rifas);
@@ -524,7 +573,6 @@
                      if(rifa) renderizarGridComprador(rifa);
                 }
             });
-            database.ref('usuarios').on('value', (s) => { usuarios = s.val() || []; });
         }
 
         function checarAtrasosLocal(rifa) {
@@ -539,7 +587,7 @@
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active'); window.scrollTo(0,0);
             
-            if (currentUser !== "") {
+            if (currentUserEmail !== "") {
                 localStorage.setItem('last_screen', screenId);
                 if (screenId === 'screen-admin-raffle' || screenId === 'screen-edit-raffle') {
                     localStorage.setItem('last_raffle', currentRaffleId);
@@ -551,50 +599,77 @@
         function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
         
         function deslogarComprador() { 
-            // Limpa a URL para remover o ID da rifa sem recarregar a página
             const urlBase = window.location.href.split('?')[0];
-            window.history.replaceState({}, document.title, urlBase);
-            currentRaffleId = null;
-            navigate('screen-login');
+            window.location.href = urlBase;
         }
 
+        // --- SISTEMA DE USUÁRIOS E SEGURANÇA ---
         function salvarCadastroUsuario() {
-            const nome = document.getElementById('reg-nome').value; const user = document.getElementById('reg-user').value;
-            const tel = document.getElementById('reg-tel').value; const email = document.getElementById('reg-email').value;
-            const pass = document.getElementById('reg-pass').value; const passConf = document.getElementById('reg-pass-conf').value;
-            if(!nome || !user || !tel || !email || !pass || !passConf) { alert("Preencha todos!"); return; }
-            if(pass !== passConf) { alert("Senhas não conferem!"); return; }
-            if(usuarios.find(u => u.user === user)) { alert("Usuário existe!"); return; }
-            usuarios.push({ nome, user, tel, email, pass });
-            database.ref('usuarios').set(usuarios).then(() => { alert("Cadastro realizado!"); navigate('screen-login'); });
+            const nome = document.getElementById('reg-nome').value; 
+            const tel = document.getElementById('reg-tel').value; 
+            const email = document.getElementById('reg-email').value;
+            const pass = document.getElementById('reg-pass').value; 
+            const passConf = document.getElementById('reg-pass-conf').value;
+            
+            if(!nome || !tel || !email || !pass || !passConf) { alert("Preencha todos os campos!"); return; }
+            if(pass !== passConf) { alert("As senhas não conferem!"); return; }
+            if(pass.length < 6) { alert("A senha deve ter no mínimo 6 caracteres."); return; }
+
+            showLoader();
+
+            auth.createUserWithEmailAndPassword(email, pass).then((userCredential) => {
+                const uid = userCredential.user.uid;
+                return database.ref('usuarios/' + uid).set({ nome, telefone: tel, email });
+            }).then(() => {
+                hideLoader();
+                alert("Cadastro realizado com sucesso!");
+            }).catch(error => {
+                hideLoader();
+                if(error.code === 'auth/email-already-in-use') alert("Este e-mail já está cadastrado no sistema.");
+                else alert("Erro ao cadastrar: " + error.message);
+            });
         }
 
         function fazerLogin() {
-            const user = document.getElementById('login-user').value; const pass = document.getElementById('login-pass').value;
-            const u = usuarios.find(x => x.user === user && x.pass === pass);
-            if (u) {
-                currentUser = u.user; document.getElementById('lbl-username').innerText = u.nome;
-                localStorage.setItem('rifa_logged_user', JSON.stringify({user: u.user, nome: u.nome}));
-                atualizarDashboard(); navigate('screen-dashboard');
-            } else { alert("Login incorreto."); }
+            const email = document.getElementById('login-user').value; 
+            const pass = document.getElementById('login-pass').value;
+            if(!email || !pass) { alert("Preencha o e-mail e a senha!"); return; }
+            
+            showLoader();
+            
+            auth.signInWithEmailAndPassword(email, pass).then(() => {
+                setTimeout(hideLoader, 4000); // Esconde forçado caso onAuth atrase
+            }).catch(error => {
+                hideLoader();
+                if(error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+                    alert("E-mail ou senha incorretos.");
+                } else {
+                    alert("Erro ao entrar. Verifique seu e-mail e senha.");
+                }
+            });
         }
 
-        function fazerLogout() { currentUser = ""; localStorage.clear(); deslogarComprador(); }
-
-        function solicitarSms() {
-            const u = document.getElementById('forgot-user').value; const t = document.getElementById('forgot-tel').value;
-            if(usuarios.find(x => x.user === u && x.tel === t)) {
-                alert(`SMS Enviado!\n(Simulação: Clique em OK para acessar).`); navigate('screen-reset-pass');
-            } else { alert("Dados não encontrados."); }
+        function fazerLogout() { 
+            auth.signOut().then(() => {
+                currentUserEmail = ""; localStorage.clear(); deslogarComprador(); 
+            });
         }
 
-        function confirmarNovaSenha() {
-            const u = document.getElementById('reset-user').value; const p = document.getElementById('reset-pass').value; const pC = document.getElementById('reset-pass-conf').value;
-            if(!u || !p || !pC) { alert("Preencha tudo"); return; }
-            if(p !== pC) { alert("Senhas não conferem"); return; }
-            const idx = usuarios.findIndex(x => x.user === u);
-            if(idx !== -1) { usuarios[idx].pass = p; database.ref('usuarios').set(usuarios).then(() => { alert("Senha alterada!"); navigate('screen-login'); }); } 
-            else { alert("Usuário não encontrado."); }
+        function recuperarSenha() {
+            const email = document.getElementById('forgot-email').value;
+            if(!email) { alert("Digite seu e-mail cadastrado."); return; }
+            
+            showLoader();
+            
+            auth.sendPasswordResetEmail(email).then(() => {
+                hideLoader();
+                alert("Um link oficial para criar uma nova senha foi enviado para o seu e-mail! Verifique sua caixa de entrada e pasta de Spam.");
+                navigate('screen-login');
+            }).catch(error => {
+                hideLoader();
+                if(error.code === 'auth/user-not-found') alert("E-mail não encontrado no sistema.");
+                else alert("Erro ao enviar redefinição: " + error.message);
+            });
         }
 
         function processarImagem(input, previewId) {
@@ -617,17 +692,29 @@
         function salvarRifa() {
             const qtd = parseInt(document.getElementById('rf-qtd').value); const numeros = [];
             for (let i=1; i<=qtd; i++) { numeros.push({ numero: i, status: 'available', comprador: '', telefone: '', dataPromessa: '' }); }
-            rifas.push({ id: Date.now().toString(), donoDaRifa: currentUser, nome: document.getElementById('rf-nome').value, desc: document.getElementById('rf-desc').value, premio: document.getElementById('rf-premio').value, valor: parseFloat(document.getElementById('rf-valor').value), qtd: qtd, imagem: imageBase64Temp, formato: document.getElementById('rf-formato').value, cor: document.getElementById('rf-cor').value, pixNome: document.getElementById('rf-pix-nome').value, pixChave: document.getElementById('rf-pix-chave').value, numeros: numeros });
-            database.ref('rifas').set(rifas).then(() => { imageBase64Temp = ""; alert("Rifa criada!"); atualizarDashboard(); navigate('screen-dashboard'); });
+            
+            const novaRifa = { 
+                id: Date.now().toString(), donoDaRifa: currentUserEmail, nome: document.getElementById('rf-nome').value, 
+                desc: document.getElementById('rf-desc').value, premio: document.getElementById('rf-premio').value, 
+                valor: parseFloat(document.getElementById('rf-valor').value), qtd: qtd, imagem: imageBase64Temp, 
+                formato: document.getElementById('rf-formato').value, cor: document.getElementById('rf-cor').value, 
+                pixNome: document.getElementById('rf-pix-nome').value, pixChave: document.getElementById('rf-pix-chave').value, 
+                numeros: numeros 
+            };
+            
+            rifas.push(novaRifa);
+            database.ref('rifas').set(rifas).then(() => { imageBase64Temp = ""; alert("Rifa criada com sucesso!"); atualizarDashboard(); navigate('screen-dashboard'); });
         }
 
         function abrirEditarRifa(id) {
             currentRaffleId = id; const r = rifas.find(x => x.id === id);
+            if(!r) return;
             document.getElementById('rf-edit-nome').value = r.nome; document.getElementById('rf-edit-desc').value = r.desc;
             document.getElementById('rf-edit-premio').value = r.premio; document.getElementById('rf-edit-valor').value = r.valor;
             document.getElementById('rf-edit-qtd').value = r.qtd; document.getElementById('rf-edit-formato').value = r.formato;
             document.getElementById('rf-edit-cor').value = r.cor; document.getElementById('rf-edit-pix-nome').value = r.pixNome;
             document.getElementById('rf-edit-pix-chave').value = r.pixChave;
+            
             imageBase64Temp = r.imagem || ""; const p = document.getElementById('preview-img-edicao');
             if (imageBase64Temp) { p.src = imageBase64Temp; p.style.display = 'block'; } else { p.style.display = 'none'; }
             navigate('screen-edit-raffle');
@@ -641,7 +728,7 @@
                 rifas[i].formato = document.getElementById('rf-edit-formato').value; rifas[i].cor = document.getElementById('rf-edit-cor').value;
                 rifas[i].pixNome = document.getElementById('rf-edit-pix-nome').value; rifas[i].pixChave = document.getElementById('rf-edit-pix-chave').value;
                 if(imageBase64Temp !== "") rifas[i].imagem = imageBase64Temp;
-                database.ref('rifas').set(rifas).then(() => { alert("Rifa editada!"); abrirAdminRifa(currentRaffleId); });
+                database.ref('rifas').set(rifas).then(() => { alert("Rifa editada com sucesso!"); abrirAdminRifa(currentRaffleId); });
             }
         }
 
@@ -652,7 +739,7 @@
 
         function atualizarDashboard() {
             const lista = document.getElementById('raffle-list'); lista.innerHTML = "";
-            const mr = rifas.filter(r => r.donoDaRifa === currentUser);
+            const mr = rifas.filter(r => r.donoDaRifa === currentUserEmail);
             if (mr.length === 0) { lista.innerHTML = "<p style='text-align:center; color:#666;'>Nenhuma rifa cadastrada.</p>"; return; }
 
             mr.forEach(r => {
@@ -681,6 +768,8 @@
 
         function abrirAdminRifa(id) {
             currentRaffleId = id; const r = rifas.find(x => x.id === id);
+            if(!r) { navigate('screen-dashboard'); return; }
+
             if(checarAtrasosLocal(r)) database.ref('rifas').set(rifas);
 
             document.getElementById('admin-raffle-title').innerHTML = r.nome + (r.concluida ? ' <span style="font-size:14px; background:var(--success); padding:3px 8px; border-radius:12px; color:white;">Concluída</span>' : '');
@@ -842,15 +931,21 @@
         function abrirModalDados() {
             document.getElementById('mod-comp-nome').value = ''; document.getElementById('mod-comp-tel').value = '';
             document.getElementById('mod-comp-data').value = new Date().toISOString().split('T')[0];
+            document.getElementById('mod-comp-termos').checked = false; 
             abrirModal('modal-dados-comprador');
         }
 
         function confirmarReserva() {
+            const aceitouTermos = document.getElementById('mod-comp-termos').checked;
+            if(!aceitouTermos) { alert("Você precisa ler e aceitar os Termos e Regulamento para reservar seu número."); return; }
+
             const n = document.getElementById('mod-comp-nome').value; const t = document.getElementById('mod-comp-tel').value; const d = document.getElementById('mod-comp-data').value;
             if(!n || !t || !d) { alert("Preencha todos os campos!"); return; }
+            
             const r = rifas.find(x => x.id === currentRaffleId);
             ultimaCompraIds = [...selectedNumbers];
             selectedNumbers.forEach(idx => { r.numeros[idx].status = 'reserved'; r.numeros[idx].comprador = n; r.numeros[idx].telefone = t; r.numeros[idx].dataPromessa = d; });
+            
             database.ref('rifas').set(rifas).then(() => {
                 selectedNumbers = []; fecharModal('modal-dados-comprador');
                 document.getElementById('mod-pix-chave').innerText = r.pixChave; document.getElementById('mod-pix-nome').innerText = r.pixNome;
