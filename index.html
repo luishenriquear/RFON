@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RifaOn</title>
+    <title>RifaOn*</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -16,6 +16,7 @@
     <style>
         :root {
             --bg-baby-blue: #e0f7fa;
+            --bg-bottom: #ffffff;
             --primary-blue: #0288d1;
             --white: #ffffff;
             --text-dark: #333333;
@@ -25,6 +26,22 @@
             --reserved: #ffd54f;
             --warning: #f57c00; 
             --gold: #FFD700;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --footer-bg: #0f172a;
+            --footer-text: #9ca3af;
+        }
+
+        /* VARIAVEIS MODO ESCURO */
+        body.dark-mode {
+            --bg-baby-blue: #0f172a;
+            --bg-bottom: #1e293b;
+            --white: #1e293b;
+            --text-dark: #f3f4f6;
+            --card-bg: rgba(30, 41, 59, 0.95);
+            --primary-blue: #38bdf8;
+            --pending: #7f1d1d;
+            --footer-bg: #020617;
+            --footer-text: #9ca3af;
         }
 
         * { box-sizing: border-box; }
@@ -33,58 +50,83 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0; padding: 0;
             color: var(--text-dark);
-            background: linear-gradient(to bottom, var(--bg-baby-blue) 0%, #ffffff 100%);
+            background: linear-gradient(to bottom, var(--bg-baby-blue) 0%, var(--bg-bottom) 100%);
             background-attachment: fixed;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.3s ease;
         }
 
-        /* Logotipo e Textos */
+        .main-content { flex: 1; }
+
+        /* BARRA SUPERIOR */
+        .main-navbar {
+            background: var(--footer-bg); padding: 10px 20px; display: flex; justify-content: space-between;
+            align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 1000;
+        }
+        .nav-brand { font-family: 'Tw Cen MT Condensed', 'Oswald', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: 1px; }
+        .nav-actions { display: flex; gap: 10px; align-items: center; }
+        .btn-nav {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: var(--footer-text);
+            padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 5px; transition: 0.3s;
+        }
+        .btn-nav:hover { background: rgba(255,255,255,0.2); color: #fff; }
+
+        /* Logotipo e Textos Animados */
         .logo-container { text-align: center; margin-bottom: 30px; }
         .logo-title { font-family: 'Tw Cen MT Condensed', 'Tw Cen MT', 'Oswald', sans-serif; font-size: 64px; font-weight: 700; margin: 0; letter-spacing: 1px; display: flex; align-items: center; justify-content: center; gap: 5px; }
         .logo-rifa { color: #538cb3; }
         .logo-on { color: #d34c31; }
-        .logo-clover { color: var(--gold); font-size: 30px; }
+        .logo-clover { color: var(--gold); font-size: 38px; text-shadow: 0 0 10px rgba(255,215,0,0.5);}
         
-        /* Animação de Onda na Descrição */
-        .logo-subtitle { font-size: 16px; color: #555; margin-top: 15px; line-height: 1.5; padding: 0 10px; font-weight: 500; display: inline-block; overflow: hidden; white-space: nowrap; border-right: 2px solid; animation: typing 4s steps(40) infinite, wave 2s ease-in-out infinite; width: 0; }
-        @keyframes typing { 0%, 90%, 100% { width: 0; } 30%, 60% { width: 100%; } }
-        @keyframes wave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-
-        @keyframes pulse-btn {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(2, 136, 209, 0.7); }
-            50% { transform: scale(1.08); box-shadow: 0 0 0 15px rgba(2, 136, 209, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(2, 136, 209, 0); }
+        .logo-subtitle { 
+            font-size: 16px; color: #555; margin-top: 15px; line-height: 1.5; padding: 0 10px; font-weight: 500;
+            display: inline-block; animation: wave 3s ease-in-out infinite; 
         }
+        body.dark-mode .logo-subtitle { color: #cbd5e1; }
+        @keyframes wave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+        @keyframes pulse-btn { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(2, 136, 209, 0.7); } 50% { transform: scale(1.08); box-shadow: 0 0 0 15px rgba(2, 136, 209, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(2, 136, 209, 0); } }
         .btn-animated { animation: pulse-btn 1.5s infinite; border-radius: 30px !important; font-size: 20px !important; padding: 15px 40px !important; font-weight: bold; text-transform: uppercase; }
         .font-rifa { font-family: 'Tw Cen MT Condensed', 'Tw Cen MT', 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
 
-        #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, var(--bg-baby-blue) 0%, #ffffff 100%); z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column; }
+        #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, var(--bg-baby-blue) 0%, var(--bg-bottom) 100%); z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column; }
         .spinner { border: 5px solid rgba(0,0,0,0.1); border-top: 5px solid var(--primary-blue); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .screen { display: none; padding: 15px; max-width: 800px; margin: 0 auto; min-height: 100vh; }
+        .screen { display: none; padding: 15px; max-width: 800px; margin: 0 auto; width: 100%; }
         .screen.active { display: block; }
 
-        .card { background: rgba(255, 255, 255, 0.95); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 20px; width: 100%; }
+        .card { background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 20px; width: 100%; transition: background 0.3s; }
         h1, h2, h3 { color: var(--primary-blue); text-align: center; margin-top: 0; }
         
         .action-buttons { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 10px; width: 100%; }
         .action-buttons .btn { flex: 1 1 120px; margin: 0; white-space: nowrap; }
 
-        .btn { background: var(--primary-blue); color: var(--white); border: none; padding: 12px 15px; border-radius: 8px; cursor: pointer; font-size: 15px; width: 100%; transition: 0.3s; display: flex; justify-content: center; align-items: center; text-align: center; }
-        .btn:hover { background: #0277bd; }
+        .btn { background: var(--primary-blue); color: #fff; border: none; padding: 12px 15px; border-radius: 8px; cursor: pointer; font-size: 15px; width: 100%; transition: 0.3s; display: flex; justify-content: center; align-items: center; text-align: center; font-weight: bold;}
+        .btn:hover { opacity: 0.9; }
+        .btn-google { background: #fff; color: #444; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-google img { width: 20px; }
         .btn-outline { background: transparent; color: var(--primary-blue); border: 1px solid var(--primary-blue); }
-        .btn-danger { background: var(--danger); }
-        .btn-success { background: var(--success); }
-        .btn-warning { background: var(--warning); color: var(--white); }
+        .btn-danger { background: var(--danger); color: white;}
+        .btn-success { background: var(--success); color: white;}
+        .btn-warning { background: var(--warning); color: white; }
         .btn-small { padding: 8px 12px; font-size: 14px; width: auto; }
 
         .form-group { margin-bottom: 15px; width: 100%; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px; }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
-        .form-group input:disabled { background-color: #f5f5f5; cursor: not-allowed; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; background: transparent; color: var(--text-dark); transition: 0.3s; }
+        .form-group input:disabled { opacity: 0.6; cursor: not-allowed; }
 
-        .header { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.95); padding: 15px 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        /* CORREÇÃO DO SELETOR DE CORES NO CELULAR */
+        input[type="color"] {
+            -webkit-appearance: none; border: none; width: 100%; height: 45px; border-radius: 6px; padding: 0; cursor: pointer;
+        }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: none; border-radius: 6px; }
+
+        .header { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 15px 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: 0.3s;}
         .top-bar { display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 15px; align-items: center; gap: 10px;}
 
         .new-raffle-box { display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 30px auto; width: 100%; }
@@ -97,19 +139,23 @@
         .raffle-card-bg { position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px; background-size: cover; background-position: center; filter: blur(8px); z-index: 0; }
         .raffle-card-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.65); z-index: 1; }
         .raffle-card-content { position: relative; z-index: 2; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        
         .raffle-card-title { background: rgba(255,255,255,0.9); padding: 8px 25px; border-radius: 20px; font-size: 26px; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .badge-concluido { background: var(--success); color: white; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; position: absolute; top: 10px; right: 10px; z-index: 5; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
 
-        .numbers-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 15px;}
-        .number-item { position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: #eee; border: 2px solid #ccc; cursor: pointer; font-weight: bold; transition: 0.2s; font-size: 14px; box-sizing: border-box; }
+        /* GRID E NÚMEROS */
+        .grid-container-custom { padding: 15px; border-radius: 12px; margin: 15px 0; transition: 0.3s; background-size: cover; background-position: center;}
+        .numbers-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;}
+        .number-item { position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: #eee; border: 2px solid #ccc; color: #333; cursor: pointer; font-weight: bold; transition: 0.2s; font-size: 14px; box-sizing: border-box; }
         .crown-icon { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: 22px; z-index: 5; text-shadow: 0 0 5px rgba(255,215,0,0.8); }
+
+        body.dark-mode .number-item { background: #333; border-color: #555; color: #fff;}
 
         .mini-numbers-grid { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; width: 100%; max-height: 200px; overflow-y: auto; padding: 5px; }
         .mini-numbers-grid .number-item { width: 28px; height: 28px; font-size: 11px; }
         .mini-numbers-grid::-webkit-scrollbar { width: 6px; }
         .mini-numbers-grid::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 10px; }
         
+        /* Formatos */
         .shape-square { border-radius: 4px; }
         .shape-circle { border-radius: 50%; }
         .shape-ellipse { border-radius: 50% / 25%; width: auto; padding: 0 10px; }
@@ -118,47 +164,51 @@
         .shape-hexagon { clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); }
         .shape-octagon { clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%); }
         
-        .status-paid { background: var(--success) !important; border-color: #1b5e20 !important; color: white !important; }
-        .status-reserved { background: var(--reserved) !important; border-color: #ffb300 !important; color: #333 !important; }
-        .status-late { background: var(--pending) !important; border-color: var(--danger) !important; color: var(--danger) !important; }
-        .selected { transform: scale(1.15); border: 3px solid #000 !important; box-shadow: 0 0 10px rgba(0,0,0,0.5); z-index: 10; position: relative;}
+        /* Status Especiais e Dinamicos (Injetados via JS na cor) */
+        .status-paid { background: var(--success) !important; border-color: #1b5e20 !important; color: white !important; filter: none !important;}
+        .status-reserved { background: var(--reserved) !important; border-color: #ffb300 !important; color: #333 !important; filter: none !important;}
+        .status-late { background: var(--pending) !important; border-color: var(--danger) !important; color: var(--danger) !important; filter: none !important;}
+        .selected { transform: scale(1.15) !important; border: 3px solid #000 !important; box-shadow: 0 0 10px rgba(0,0,0,0.5) !important; z-index: 10; position: relative;}
 
-        /* Estilos de Cores */
-        .color-flat { border: none !important; }
-        .color-translucent { opacity: 0.6; }
-        .color-matte { filter: grayscale(100%); }
-        
         .progress-container { width: 100%; background: #ddd; border-radius: 8px; margin: 15px 0; overflow: hidden; }
         .progress-bar { height: 20px; background: var(--success); width: 0%; text-align: center; color: white; font-size: 12px; line-height: 20px; transition: width 0.5s; }
         .rifa-image-preview { max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px; display: none; max-height: 250px; object-fit: cover; }
 
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-bottom: 20px; }
-        .stat-box { background: #f5f5f5; padding: 15px 5px; border-radius: 8px; text-align: center; font-size: 14px;}
+        .stat-box { background: rgba(0,0,0,0.05); padding: 15px 5px; border-radius: 8px; text-align: center; font-size: 14px;}
         .stat-box span { display: block; font-size: 18px; font-weight: bold; color: var(--primary-blue); margin-top: 5px;}
+        body.dark-mode .stat-box { background: rgba(255,255,255,0.05); }
 
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; overflow-y: auto; padding: 20px; }
-        .modal-content { background: var(--white); padding: 25px; border-radius: 12px; width: 100%; max-width: 400px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); margin: auto; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; overflow-y: auto; padding: 20px; }
+        .modal-content { background: var(--card-bg); padding: 25px; border-radius: 12px; width: 100%; max-width: 400px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); margin: auto; color: var(--text-dark);}
         
         .table-compradores { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
         .table-compradores th { padding: 10px 5px; background-color: var(--primary-blue); color: white; position: sticky; top: 0; z-index: 2; }
         .table-compradores td { padding: 8px 5px; border-bottom: 1px solid #ddd; }
-        .table-compradores tr:hover { background-color: #f0f8ff; }
+        body.dark-mode .table-compradores td { border-color: #444; }
         .badge-st { padding: 4px 6px; border-radius: 12px; font-size: 11px; font-weight: bold; color: white; display: inline-block; text-align: center; width: 70px;}
 
-        .recibo-box { background: #f9f9f9; border: 1px dashed #999; padding: 15px; border-radius: 8px; margin-bottom: 15px; font-family: monospace; font-size: 14px; color: #333; }
+        .recibo-box { background: rgba(0,0,0,0.03); border: 1px dashed #999; padding: 15px; border-radius: 8px; margin-bottom: 15px; font-family: monospace; font-size: 14px; }
         .recibo-header { text-align: center; font-weight: bold; border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 10px; font-size: 16px; }
         .recibo-row { display: flex; justify-content: space-between; margin-bottom: 5px; }
-        .recibo-block { margin-bottom: 10px; padding: 5px; border: 1px solid #ddd; border-radius: 5px; background: #fff;}
-        
-        /* Pré-visualização da Rifa */
-        .preview-container { margin-top: 20px; border: 2px solid #ccc; border-radius: 8px; padding: 15px; background-color: #f9f9f9; }
-        .preview-header { font-weight: bold; color: var(--primary-blue); margin-bottom: 10px; }
-        .preview-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+        .recibo-block { margin-bottom: 10px; padding: 5px; border: 1px solid #ddd; border-radius: 5px; background: rgba(255,255,255,0.5);}
+        body.dark-mode .recibo-block { background: rgba(0,0,0,0.2); border-color: #555;}
+
+        /* Rodapé Profissional */
+        .footer {
+            background: var(--footer-bg); color: var(--footer-text);
+            text-align: center; padding: 30px 20px 20px 20px; margin-top: auto; font-size: 14px; width: 100%;
+        }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 15px; }
+        .footer a { color: var(--footer-text); text-decoration: none; transition: 0.3s; cursor: pointer; font-weight: bold;}
+        .footer a:hover { color: var(--primary-blue); }
+        .footer-copy { margin-top: 15px; font-size: 12px; border-top: 1px solid #374151; padding-top: 15px; opacity: 0.7;}
         
         @media print {
             body * { visibility: hidden; }
-            #modal-comprovante, #modal-comprovante * { visibility: visible; }
+            #modal-comprovante, #modal-comprovante * { visibility: visible; color: black !important;}
             #modal-comprovante { position: absolute; left: 0; top: 0; width: 100%; background: white; padding: 0; }
+            .main-navbar, .footer { display: none !important; }
             .modal-overlay { background: transparent; }
             .no-print { display: none !important; }
         }
@@ -166,329 +216,475 @@
 </head>
 <body>
 
+    <nav class="main-navbar no-print">
+        <div class="nav-brand"><span class="logo-rifa">Rifa</span><span class="logo-on">On</span><span class="logo-clover" style="font-size:18px;">🍀</span></div>
+        <div class="nav-actions">
+            <button class="btn-nav" onclick="alert('Aplicativo oficial em desenvolvimento. Em breve nas lojas de aplicativos!')">⬇️ App</button>
+            <button class="btn-nav" id="theme-toggle-btn" onclick="toggleTheme()">🌙</button>
+        </div>
+    </nav>
+
     <div id="loading-overlay">
         <div class="spinner"></div>
         <h3 style="margin-top: 20px; color: var(--primary-blue);">Carregando sistema...</h3>
     </div>
 
-    <div id="screen-welcome" class="screen">
-        <div style="margin-top: 15vh; background: transparent; padding: 25px;">
-            <div class="logo-container">
-                <h1 class="logo-title"><span class="logo-rifa">Rifa</span><span class="logo-on">On</span><span class="logo-clover">🍀</span></h1>
-                <p class="logo-subtitle">Crie e compartilhe suas rifas com seus amigos e familiares. Fácil de acessar e totalmente seguro para compartilhar com quem você quiser.</p>
-            </div>
-            <div class="action-buttons">
-                <button class="btn btn-animated" onclick="navigate('screen-login')">Entrar ou Criar Conta</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="screen-login" class="screen">
-        <div class="card" style="margin-top: 10vh;">
-            <div class="top-bar">
-                <button class="btn btn-small btn-outline" onclick="navigate('screen-welcome')">Voltar</button>
-            </div>
-            <h2>Acessar Painel</h2>
-            <div class="form-group"><label>E-mail</label><input type="email" id="login-user" placeholder="Digite seu e-mail cadastrado"></div>
-            <div class="form-group"><label>Senha</label><input type="password" id="login-pass" placeholder="Digite sua senha"></div>
-            <button class="btn" onclick="fazerLogin()">Logar</button>
-            <div style="text-align: center; margin-top: 15px; display:flex; flex-direction:column; gap:8px;">
-                <a href="javascript:void(0)" style="color:var(--primary-blue);" onclick="navigate('screen-register')">Criar nova conta grátis</a>
-                <a href="javascript:void(0)" style="color:var(--danger);" onclick="navigate('screen-forgot-pass')">Esqueci a senha</a>
+    <div class="main-content">
+        <div id="screen-welcome" class="screen">
+            <div style="margin-top: 10vh; background: transparent; padding: 25px;">
+                <div class="logo-container">
+                    <h1 class="logo-title"><span class="logo-rifa">Rifa</span><span class="logo-on">On</span><span class="logo-clover">🍀</span></h1>
+                    <p class="logo-subtitle">Crie e compartilhe suas rifas com seus amigos e familiares. Fácil de acessar e totalmente seguro para compartilhar com quem você quiser.</p>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-animated" onclick="navigate('screen-login')">Entrar no Painel</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div id="screen-register" class="screen">
-        <div class="card">
-            <div class="top-bar">
-                <h2>Nova Conta</h2>
-                <button class="btn btn-small btn-outline" onclick="navigate('screen-login')">Voltar</button>
+        <div id="screen-login" class="screen">
+            <div class="card" style="margin-top: 5vh;">
+                <div class="top-bar">
+                    <button class="btn btn-small btn-outline" onclick="navigate('screen-welcome')">Voltar</button>
+                </div>
+                <h2>Acessar Conta</h2>
+                
+                <button class="btn btn-google" onclick="loginComGoogle()" style="margin-bottom: 20px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
+                    Entrar com o Google
+                </button>
+                
+                <div style="text-align: center; margin-bottom: 15px; color: #888;">ou use seu E-mail</div>
+
+                <div class="form-group"><label>E-mail</label><input type="email" id="login-user" placeholder="Digite seu e-mail"></div>
+                <div class="form-group"><label>Senha</label><input type="password" id="login-pass" placeholder="Digite sua senha"></div>
+                <button class="btn" onclick="fazerLogin()">Logar</button>
+                <div style="text-align: center; margin-top: 15px; display:flex; flex-direction:column; gap:8px;">
+                    <a href="javascript:void(0)" style="color:var(--primary-blue);" onclick="navigate('screen-register')">Criar nova conta grátis</a>
+                    <a href="javascript:void(0)" style="color:var(--danger);" onclick="navigate('screen-forgot-pass')">Esqueci a senha</a>
+                </div>
             </div>
-            <div class="form-group"><label>Nome Completo</label><input type="text" id="reg-nome"></div>
-            <div class="form-group"><label>Celular (com DDD)</label><input type="number" id="reg-tel" placeholder="Ex: 11999999999"></div>
-            <div class="form-group"><label>E-mail (Seu Login)</label><input type="email" id="reg-email" placeholder="Ex: joao@email.com"></div>
-            <div class="form-group"><label>Senha</label><input type="password" id="reg-pass" placeholder="Crie uma senha forte"></div>
-            <div class="form-group"><label>Confirmar Senha</label><input type="password" id="reg-pass-conf"></div>
-            <button class="btn" onclick="salvarCadastroUsuario()">Concluir Cadastro</button>
         </div>
-    </div>
 
-    <div id="screen-forgot-pass" class="screen">
-        <div class="card" style="margin-top: 10vh;">
-            <div class="top-bar">
-                <h2>Recuperar Senha</h2>
-                <button class="btn btn-small btn-outline" onclick="navigate('screen-login')">Voltar</button>
+        <div id="screen-register" class="screen">
+            <div class="card">
+                <div class="top-bar">
+                    <h2>Nova Conta</h2>
+                    <button class="btn btn-small btn-outline" onclick="navigate('screen-login')">Voltar</button>
+                </div>
+                <div class="form-group"><label>Nome Completo</label><input type="text" id="reg-nome"></div>
+                <div class="form-group"><label>Celular (com DDD)</label><input type="number" id="reg-tel" placeholder="Ex: 11999999999"></div>
+                <div class="form-group"><label>E-mail (Seu Login)</label><input type="email" id="reg-email" placeholder="Ex: joao@email.com"></div>
+                <div class="form-group"><label>Senha</label><input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres"></div>
+                <div class="form-group"><label>Confirmar Senha</label><input type="password" id="reg-pass-conf"></div>
+                <button class="btn" onclick="salvarCadastroUsuario()">Concluir Cadastro</button>
             </div>
-            <p style="text-align:center; font-size:14px;">Insira seu E-mail de cadastro. O sistema enviará um link seguro para você redefinir sua senha.</p>
-            <div class="form-group"><label>E-mail Cadastrado</label><input type="email" id="forgot-email" placeholder="Digite seu e-mail"></div>
-            <button class="btn btn-warning" onclick="recuperarSenha()">Enviar E-mail de Recuperação</button>
         </div>
-    </div>
 
-    <div id="screen-dashboard" class="screen">
-        <div class="header">
-            <div>Olá, <strong id="lbl-username">Usuário</strong></div>
-            <button class="btn btn-small btn-danger" onclick="fazerLogout()">Sair</button>
+        <div id="screen-forgot-pass" class="screen">
+            <div class="card" style="margin-top: 10vh;">
+                <div class="top-bar">
+                    <h2>Recuperar Senha</h2>
+                    <button class="btn btn-small btn-outline" onclick="navigate('screen-login')">Voltar</button>
+                </div>
+                <p style="text-align:center; font-size:14px;">Insira seu E-mail de cadastro. Enviaremos um link seguro para você redefinir sua senha oficial.</p>
+                <div class="form-group"><label>E-mail Cadastrado</label><input type="email" id="forgot-email" placeholder="Digite seu e-mail"></div>
+                <button class="btn btn-warning" onclick="recuperarSenha()">Enviar E-mail de Recuperação</button>
+            </div>
         </div>
-        <h3 class="font-rifa" style="font-size: 24px;">Minhas Rifas</h3>
-        <div id="raffle-list"></div>
-        <div class="new-raffle-box">
-            <button class="btn-square-add" onclick="atualizarDashboard(); navigate('screen-new-raffle')">+</button>
-            <div class="new-raffle-text">Nova Rifa</div>
+
+        <div id="screen-settings" class="screen">
+            <div class="card">
+                <div class="top-bar">
+                    <h2 style="margin:0;">⚙️ Personalizar Mensagens</h2>
+                    <button class="btn btn-small btn-outline" onclick="navigate('screen-dashboard')">Voltar</button>
+                </div>
+                <p style="font-size: 13px; color: #666; text-align: justify; margin-bottom: 20px;">
+                    Use as tags exatas para o sistema substituir automaticamente:<br>
+                    <b>{nome}</b> = Nome da pessoa | <b>{numero}</b> = Número(s)<br>
+                    <b>{rifa}</b> = Nome da Rifa | <b>{premio}</b> = Prêmio<br>
+                    <b>{link}</b> = Link de acesso
+                </p>
+
+                <div class="form-group">
+                    <label>1. Compartilhar a Rifa (Convite)</label>
+                    <textarea id="cfg-msg-link" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>2. Encaminhar Comprovante (Admin)</label>
+                    <textarea id="cfg-msg-comp" rows="5"></textarea>
+                    <small style="color:var(--danger); font-size:11px;">Mantenha a tag <b>{detalhes}</b> para gerar a lista de números e valores.</small>
+                </div>
+                <div class="form-group">
+                    <label>3. Cobrar Número Atrasado</label>
+                    <textarea id="cfg-msg-cob" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>4. Avisar o Ganhador (Sorteio)</label>
+                    <textarea id="cfg-msg-ganhador" rows="3"></textarea>
+                </div>
+
+                <button class="btn btn-success" style="margin-top:10px;" onclick="salvarConfiguracoes()">💾 Salvar Mensagens</button>
+            </div>
         </div>
-    </div>
 
-    <div id="screen-new-raffle" class="screen">
-        <div class="card">
-            <div class="top-bar">
-                <h2>Cadastrar Rifa</h2>
-                <button class="btn btn-small btn-outline" onclick="atualizarDashboard(); navigate('screen-dashboard')">Voltar</button>
+        <div id="screen-dashboard" class="screen">
+            <div class="header">
+                <div>Olá, <strong id="lbl-username" style="color:var(--primary-blue);">Carregando...</strong></div>
+                <div style="display:flex; gap:5px; flex-wrap:wrap;">
+                    <button class="btn btn-small btn-outline" style="border-color:#888; color:#888;" onclick="abrirConfiguracoes()">⚙️ Msgs</button>
+                    <button id="btn-master-panel" class="btn btn-small btn-warning" style="display:none;" onclick="abrirPainelMestre()">👑 Suporte</button>
+                    <button class="btn btn-small btn-danger" onclick="fazerLogout()">Sair</button>
+                </div>
             </div>
-            <div class="form-group"><label>Nome da Rifa</label><input type="text" id="rf-nome"></div>
-            <div class="form-group"><label>Descrição</label><textarea id="rf-desc"></textarea></div>
-            <div class="form-group"><label>Prêmio</label><input type="text" id="rf-premio"></div>
-            <div class="form-group"><label>Valor por Número (R$)</label><input type="number" id="rf-valor" step="0.01"></div>
-            <div class="form-group"><label>Quantidade de Números</label><input type="number" id="rf-qtd" value="100"></div>
-            <div class="form-group"><label>Imagem do Produto</label><input type="file" id="rf-img" accept="image/*" onchange="processarImagem(this, 'preview-img-cadastro')">
-                <img id="preview-img-cadastro" class="rifa-image-preview">
+            <h3 class="font-rifa" style="font-size: 28px;">Minhas Rifas</h3>
+            <div id="raffle-list"></div>
+            <div class="new-raffle-box">
+                <button class="btn-square-add" onclick="atualizarDashboard(); navigate('screen-new-raffle')">+</button>
+                <div class="new-raffle-text">Nova Rifa</div>
             </div>
-            <div class="form-group">
-                <label>Formato dos Números</label>
-                <select id="rf-formato" onchange="updatePreview()"><option value="shape-square">Quadrado</option><option value="shape-circle">Círculo</option><option value="shape-ellipse">Elipse</option><option value="shape-heart">Coração</option><option value="shape-triangle">Triângulo</option><option value="shape-hexagon">Hexágono</option><option value="shape-octagon">Octógono</option></select>
-            </div>
-            <div class="form-group">
-                <label>Estilo da Cor dos Números</label>
-                <select id="rf-color-style" onchange="updatePreview()"><option value="">Padrão</option><option value="color-flat">Placa</option><option value="color-translucent">Translúcido</option><option value="color-matte">Fosco</option><option value="color-gradient">Gradiente</option></select>
-            </div>
-            <div class="form-group"><label>Cor Principal</label><input type="color" id="rf-cor" value="#0288d1" onchange="updatePreview()"></div>
-            <div class="form-group"><label>Dados de Pagamento (PIX)</label><input type="text" id="rf-pix-nome" placeholder="Nome do Titular" style="margin-bottom: 5px;"><input type="text" id="rf-pix-chave" placeholder="Chave PIX"></div>
-            
-            <div class="form-group">
-                <label>Plano de Fundo da Rifa</label>
-                <select id="rf-bg-style" onchange="updatePreview()"><option value="">Padrão</option><option value="bg-flat">Placa</option><option value="bg-translucent">Translúcido</option><option value="bg-matte">Fosco</option><option value="bg-gradient">Gradiente</option></select>
-            </div>
-            <div class="form-group"><label>Cor do Fundo</label><input type="color" id="rf-bg-color" value="#ffffff" onchange="updatePreview()"></div>
-            <div class="form-group"><label>Imagem de Fundo</label><input type="file" id="rf-bg-img" accept="image/*" onchange="processarImagem(this, 'preview-img-bg')">
-                <img id="preview-img-bg" class="rifa-image-preview">
-            </div>
-            
-            <div class="preview-container">
-                <div class="preview-header">Pré-visualização</div>
-                <div class="preview-grid" id="preview-grid"></div>
-            </div>
-            
-            <button class="btn" onclick="salvarRifa()">Salvar Rifa</button>
         </div>
-    </div>
 
-    <div id="screen-edit-raffle" class="screen">
-        <div class="card">
-            <div class="top-bar">
-                <h2>Editar Rifa</h2>
-                <button class="btn btn-small btn-outline" onclick="abrirAdminRifa(currentRaffleId)">Voltar</button>
+        <div id="screen-master-support" class="screen">
+            <div class="card">
+                <div class="top-bar">
+                    <h2 style="margin:0;">👑 Tickets de Suporte</h2>
+                    <button class="btn btn-small btn-outline" onclick="navigate('screen-dashboard')">Voltar</button>
+                </div>
+                <div id="master-tickets-list" style="margin-top: 15px;"></div>
             </div>
-            <div class="form-group"><label>Nome da Rifa</label><input type="text" id="rf-edit-nome"></div>
-            <div class="form-group"><label>Descrição</label><textarea id="rf-edit-desc"></textarea></div>
-            <div class="form-group"><label>Prêmio</label><input type="text" id="rf-edit-premio"></div>
-            <div class="form-group"><label>Valor por Número (R$)</label><input type="number" id="rf-edit-valor" step="0.01"></div>
-            <div class="form-group"><label>Quantidade de Números</label><input type="number" id="rf-edit-qtd" disabled></div>
-            <div class="form-group"><label>Nova Imagem (Opcional)</label><input type="file" id="rf-edit-img" accept="image/*" onchange="processarImagem(this, 'preview-img-edicao')">
-                <img id="preview-img-edicao" class="rifa-image-preview">
-            </div>
-            <div class="form-group">
-                <label>Formato</label>
-                <select id="rf-edit-formato"><option value="shape-square">Quadrado</option><option value="shape-circle">Círculo</option><option value="shape-ellipse">Elipse</option><option value="shape-heart">Coração</option><option value="shape-triangle">Triângulo</option><option value="shape-hexagon">Hexágono</option><option value="shape-octagon">Octógono</option></select>
-            </div>
-            <div class="form-group"><label>Cor Principal</label><input type="color" id="rf-edit-cor"></div>
-            <div class="form-group"><label>Dados de Pagamento</label><input type="text" id="rf-edit-pix-nome" style="margin-bottom: 5px;"><input type="text" id="rf-edit-pix-chave"></div>
-            <button class="btn btn-warning" onclick="salvarEdicaoRifa()">Salvar Alterações</button>
         </div>
-    </div>
 
-    <div id="screen-admin-raffle" class="screen">
-        <div class="card">
-            <div class="top-bar">
-                <div id="admin-raffle-title" style="margin:0; text-align:left;"></div>
-                <button class="btn btn-small btn-outline" onclick="atualizarDashboard(); navigate('screen-dashboard')">Voltar</button>
+        <div id="screen-new-raffle" class="screen">
+            <div class="card">
+                <div class="top-bar">
+                    <h2>Cadastrar Rifa</h2>
+                    <button class="btn btn-small btn-outline" onclick="atualizarDashboard(); navigate('screen-dashboard')">Voltar</button>
+                </div>
+                <div class="form-group"><label>Nome da Rifa</label><input type="text" id="rf-nome"></div>
+                <div class="form-group"><label>Descrição</label><textarea id="rf-desc"></textarea></div>
+                <div class="form-group"><label>Prêmio</label><input type="text" id="rf-premio"></div>
+                <div class="form-group"><label>Valor por Número (R$)</label><input type="number" id="rf-valor" step="0.01"></div>
+                <div class="form-group"><label>Quantidade de Números</label><input type="number" id="rf-qtd" value="100"></div>
+                <div class="form-group"><label>Imagem do Produto</label><input type="file" accept="image/*" onchange="processarImagem(this, 'preview-img-cadastro', 'produto')">
+                    <img id="preview-img-cadastro" class="rifa-image-preview">
+                </div>
+                <div class="form-group">
+                    <label>Formato dos Números</label>
+                    <select id="rf-formato">
+                        <option value="shape-square">Quadrado</option><option value="shape-circle">Círculo</option><option value="shape-ellipse">Elipse</option>
+                        <option value="shape-heart">Coração</option><option value="shape-triangle">Triângulo</option><option value="shape-hexagon">Hexágono</option><option value="shape-octagon">Octógono</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Estilo da Cor dos Números</label>
+                    <select id="rf-color-style">
+                        <option value="">Padrão</option><option value="color-flat">Placa (Sem borda)</option><option value="color-translucent">Translúcido</option><option value="color-matte">Fosco</option><option value="color-gradient">Gradiente</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Cor Principal</label><input type="color" id="rf-cor" value="#0288d1"></div>
+                <div class="form-group"><label>Dados de Pagamento (PIX)</label><input type="text" id="rf-pix-nome" placeholder="Nome do Titular" style="margin-bottom: 5px;"><input type="text" id="rf-pix-chave" placeholder="Chave PIX"></div>
+                
+                <div class="form-group">
+                    <label>Plano de Fundo da Rifa (Fundo da Grade)</label>
+                    <select id="rf-bg-style">
+                        <option value="">Transparente</option><option value="bg-flat">Cor Sólida</option><option value="bg-gradient">Cor Gradiente</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Cor do Fundo</label><input type="color" id="rf-bg-color" value="#ffffff"></div>
+                <div class="form-group"><label>Ou Imagem de Fundo</label><input type="file" accept="image/*" onchange="processarImagem(this, 'preview-img-bg-cad', 'fundo')">
+                    <img id="preview-img-bg-cad" class="rifa-image-preview">
+                </div>
+                
+                <button class="btn btn-outline" style="margin-bottom: 15px;" onclick="abrirPreVisualizacao('criar')">👀 Pré-visualizar Grade</button>
+                <button class="btn" onclick="salvarRifa()">Salvar Rifa</button>
             </div>
+        </div>
 
-            <div class="action-buttons" style="margin-bottom: 20px;">
-                <button id="btn-editar-rifa" class="btn btn-small btn-warning" onclick="chamarEdicaoAtual()">✏️ Editar</button>
-                <button id="btn-excluir-rifa" class="btn btn-small btn-danger" onclick="chamarExclusaoAtual()">Excluir</button>
-                <button id="btn-sortear" class="btn btn-small btn-success" style="display:none;" onclick="realizarSorteio()">🎉 Sortear!</button>
-                <button class="btn btn-small" style="background:#4A148C;" onclick="abrirListaCompradores()">📋 Ver Compradores</button>
+        <div id="screen-edit-raffle" class="screen">
+            <div class="card">
+                <div class="top-bar">
+                    <h2>Editar Rifa</h2>
+                    <button class="btn btn-small btn-outline" onclick="abrirAdminRifa(currentRaffleId)">Voltar</button>
+                </div>
+                <div class="form-group"><label>Nome da Rifa</label><input type="text" id="rf-edit-nome"></div>
+                <div class="form-group"><label>Descrição</label><textarea id="rf-edit-desc"></textarea></div>
+                <div class="form-group"><label>Prêmio</label><input type="text" id="rf-edit-premio"></div>
+                <div class="form-group"><label>Valor por Número (R$)</label><input type="number" id="rf-edit-valor" step="0.01"></div>
+                <div class="form-group"><label>Quantidade de Números (Não Editável)</label><input type="number" id="rf-edit-qtd" disabled></div>
+                <div class="form-group"><label>Nova Imagem Produto (Opcional)</label><input type="file" accept="image/*" onchange="processarImagem(this, 'preview-img-edicao', 'produto')">
+                    <img id="preview-img-edicao" class="rifa-image-preview">
+                </div>
+                <div class="form-group">
+                    <label>Formato dos Números</label>
+                    <select id="rf-edit-formato">
+                        <option value="shape-square">Quadrado</option><option value="shape-circle">Círculo</option><option value="shape-ellipse">Elipse</option>
+                        <option value="shape-heart">Coração</option><option value="shape-triangle">Triângulo</option><option value="shape-hexagon">Hexágono</option><option value="shape-octagon">Octógono</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Estilo da Cor dos Números</label>
+                    <select id="rf-edit-color-style">
+                        <option value="">Padrão</option><option value="color-flat">Placa (Sem borda)</option><option value="color-translucent">Translúcido</option><option value="color-matte">Fosco</option><option value="color-gradient">Gradiente</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Cor Principal</label><input type="color" id="rf-edit-cor"></div>
+                <div class="form-group"><label>Dados de Pagamento (PIX)</label><input type="text" id="rf-edit-pix-nome" style="margin-bottom: 5px;"><input type="text" id="rf-edit-pix-chave"></div>
+                
+                <div class="form-group">
+                    <label>Plano de Fundo da Rifa (Fundo da Grade)</label>
+                    <select id="rf-edit-bg-style">
+                        <option value="">Transparente</option><option value="bg-flat">Cor Sólida</option><option value="bg-gradient">Cor Gradiente</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Cor do Fundo</label><input type="color" id="rf-edit-bg-color"></div>
+                <div class="form-group"><label>Nova Imagem de Fundo (Opcional)</label><input type="file" accept="image/*" onchange="processarImagem(this, 'preview-img-bg-edit', 'fundo')">
+                    <img id="preview-img-bg-edit" class="rifa-image-preview">
+                </div>
+
+                <button class="btn btn-outline" style="margin-bottom: 15px;" onclick="abrirPreVisualizacao('editar')">👀 Pré-visualizar Grade</button>
+                <button class="btn btn-warning" onclick="salvarEdicaoRifa()">Salvar Alterações</button>
             </div>
-            
-            <div style="background: #f0f0f0; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-                <label style="font-weight: bold; display: block; margin-bottom: 8px; color: var(--primary-blue);">Link para Compradores:</label>
-                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                    <input type="text" id="admin-link-input" readonly style="flex: 1; min-width: 150px; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 12px;">
-                    <div style="display: flex; gap: 5px; flex-wrap: nowrap;">
-                        <button class="btn btn-small" onclick="copiarLink()">Copiar</button>
-                        <button class="btn btn-small btn-success" onclick="compartilharLink()">Compartilhar</button>
+        </div>
+
+        <div id="screen-admin-raffle" class="screen">
+            <div class="card">
+                <div class="top-bar">
+                    <div id="admin-raffle-title" style="margin:0; text-align:left;"></div>
+                    <button class="btn btn-small btn-outline" onclick="atualizarDashboard(); navigate('screen-dashboard')">Voltar</button>
+                </div>
+
+                <div class="action-buttons" style="margin-bottom: 20px;">
+                    <button id="btn-editar-rifa" class="btn btn-small btn-warning" onclick="chamarEdicaoAtual()">✏️ Editar</button>
+                    <button id="btn-excluir-rifa" class="btn btn-small btn-danger" onclick="chamarExclusaoAtual()">Excluir</button>
+                    <button id="btn-sortear" class="btn btn-small btn-success" style="display:none;" onclick="realizarSorteio()">🎉 Sortear!</button>
+                    <button class="btn btn-small" style="background:#4A148C;" onclick="abrirListaCompradores()">📋 Ver Compradores</button>
+                </div>
+                
+                <div style="background: rgba(0,0,0,0.05); padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <label style="font-weight: bold; display: block; margin-bottom: 8px; color: var(--primary-blue);">Link para Compradores:</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <input type="text" id="admin-link-input" readonly style="flex: 1; min-width: 150px; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 12px; background: transparent;">
+                        <div style="display: flex; gap: 5px; flex-wrap: nowrap;">
+                            <button class="btn btn-small" onclick="copiarLink()">Copiar</button>
+                            <button class="btn btn-small btn-success" onclick="compartilharLinkWhatsApp()">WhatsApp</button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="progress-container"><div id="admin-progress" class="progress-bar">0%</div></div>
+                <button class="btn btn-outline" style="margin-bottom: 15px;" onclick="simularLinkComprador()">Testar como Comprador</button>
 
-            <div class="stats-grid">
-                <div class="stat-box">Livres: <span id="stat-disp">0</span></div>
-                <div class="stat-box">Reserv.: <span id="stat-res">0</span></div>
-                <div class="stat-box">Pagos: <span id="stat-vend">0</span></div>
-                <div class="stat-box">Total: <span id="stat-val-total">R$ 0,00</span></div>
-                <div class="stat-box">Recebido: <span id="stat-val-rec">R$ 0,00</span></div>
-                <div class="stat-box" style="color:var(--danger)">Pendente: <span id="stat-val-pend" style="color:var(--danger)">R$ 0,00</span></div>
-            </div>
+                <div class="progress-container"><div id="admin-progress" class="progress-bar">0%</div></div>
 
-            <div class="numbers-grid" id="admin-numbers-grid"></div>
-        </div>
-    </div>
+                <div class="stats-grid">
+                    <div class="stat-box">Livres: <span id="stat-disp">0</span></div>
+                    <div class="stat-box">Reserv.: <span id="stat-res">0</span></div>
+                    <div class="stat-box">Pagos: <span id="stat-vend">0</span></div>
+                    <div class="stat-box">Total: <span id="stat-val-total">R$ 0,00</span></div>
+                    <div class="stat-box">Recebido: <span id="stat-val-rec">R$ 0,00</span></div>
+                    <div class="stat-box" style="color:var(--danger)">Pendente: <span id="stat-val-pend" style="color:var(--danger)">R$ 0,00</span></div>
+                </div>
 
-    <div id="screen-buyer" class="screen">
-        <div class="card">
-            <div class="top-bar">
-                <div id="buyer-title" style="margin:0; text-align:left;"></div>
-                <button class="btn btn-small btn-outline" onclick="deslogarComprador()">Sair</button>
-            </div>
-            
-            <img id="buyer-img" class="rifa-image-preview" style="display:block; margin: 0 auto 15px auto;">
-            <p id="buyer-desc" style="text-align: center;"></p>
-            <h3 id="buyer-premio"></h3>
-            <p style="text-align: center; font-size: 18px;">Valor do número: <strong>R$ <span id="buyer-valor">0,00</span></strong></p>
-            
-            <p style="text-align: center; color: var(--danger);" id="buyer-instrucoes">Selecione os números desejados:</p>
-            <div class="numbers-grid" id="buyer-numbers-grid"></div>
-
-            <button class="btn" id="btn-prosseguir" style="display: none; margin-top: 20px;" onclick="abrirModalDados()">Prosseguir</button>
-        </div>
-    </div>
-
-    <div id="modal-termos" class="modal-overlay" style="z-index: 10000;">
-        <div class="modal-content" style="max-width: 500px;">
-            <h3>Termos e Regulamento</h3>
-            <div style="font-size: 13px; color: #555; max-height: 300px; overflow-y: auto; padding-right: 10px; text-align: justify; line-height:1.5;">
-                <p><b>1. Reserva e Pagamento:</b> Ao reservar um número, o comprador se compromete a realizar o pagamento e enviar o comprovante de PIX para o organizador no prazo estipulado. O não pagamento no prazo resultará na liberação automática do número.</p>
-                <p><b>2. Sorteio:</b> O sorteio será realizado de forma justa e transparente apenas após a confirmação do pagamento de 100% dos números (cotas) disponíveis nesta rifa, a não ser que o organizador declare o encerramento antecipado.</p>
-                <p><b>3. Prêmio:</b> O prêmio descrito é definitivo e intransferível. A logística de entrega, envio ou retirada do prêmio é de inteira responsabilidade do organizador da rifa.</p>
-                <p><b>4. Transparência:</b> O comprador pode consultar o status das suas cotas a qualquer momento pelo link disponibilizado em seu recibo de compra.</p>
-                <p><b>5. Vínculo:</b> O fornecedor desta plataforma de software não tem qualquer vínculo com a organização, criação ou arrecadação financeira desta rifa, servindo apenas como ferramenta de gestão para o organizador.</p>
-            </div>
-            <button class="btn btn-outline" style="margin-top:15px;" onclick="fecharModal('modal-termos')">Fechar Regulamento</button>
-        </div>
-    </div>
-
-    <div id="modal-dados-comprador" class="modal-overlay">
-        <div class="modal-content">
-            <h3>Preencha seus dados</h3>
-            <div class="form-group"><label>Seu Nome Completo</label><input type="text" id="mod-comp-nome"></div>
-            <div class="form-group"><label>Seu Celular (com DDD)</label><input type="number" id="mod-comp-tel"></div>
-            <div class="form-group"><label>Data de Pagamento</label><input type="date" id="mod-comp-data"></div>
-            
-            <div class="form-group" style="display:flex; align-items:flex-start; gap:8px; font-size:13px; text-align:left;">
-                <input type="checkbox" id="mod-comp-termos" style="width:18px; height:18px; margin-top:2px;">
-                <label for="mod-comp-termos" style="font-weight:normal; margin:0;">Li e aceito os <a href="javascript:void(0)" style="color:var(--primary-blue);" onclick="abrirModal('modal-termos')">Termos e Regulamento</a> da rifa.</label>
-            </div>
-
-            <div class="action-buttons">
-                <button class="btn btn-outline" onclick="fecharModal('modal-dados-comprador')">Cancelar</button>
-                <button class="btn" onclick="confirmarReserva()">Reservar</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="modal-pagamento" class="modal-overlay">
-        <div class="modal-content" style="text-align:center;">
-            <h3>Reservado com Sucesso!</h3>
-            <div style="background:#f5f5f5; padding:15px; border-radius:8px; margin-bottom:15px;">
-                <p style="margin:0; font-weight:bold;">Chave PIX para pagamento:</p>
-                <p id="mod-pix-chave" style="word-break: break-all; color:var(--primary-blue); margin:5px 0; font-size:18px;"></p>
-                <p style="margin:0; font-size:14px;">Titular: <span id="mod-pix-nome"></span></p>
-            </div>
-            <div class="action-buttons">
-                <button class="btn btn-success" onclick="abrirComprovanteCompraImediata()">Ver Comprovante</button>
-                <button class="btn btn-outline" onclick="fecharModal('modal-pagamento'); deslogarComprador();">Fechar</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="modal-comprovante" class="modal-overlay">
-        <div class="modal-content" style="max-width: 350px;">
-            <div class="recibo-box" id="area-recibo-print">
-                <div class="recibo-header">🧾 COMPROVANTE</div>
-                <div class="recibo-row"><span>Rifa:</span> <strong id="rec-nome-rifa"></strong></div>
-                <div class="recibo-row"><span>Prêmio:</span> <strong id="rec-premio"></strong></div>
-                <hr style="border-top:1px dashed #ccc;">
-                <div id="rec-conteudo-dinamico"></div>
-                <hr style="border-top:1px dashed #ccc;">
-                <div class="recibo-row"><span>Comprador:</span> <strong id="rec-comprador"></strong></div>
-                <div class="recibo-row"><span>Telefone:</span> <strong id="rec-tel"></strong></div>
-                
-                <div style="text-align:center; font-size:10px; margin-top:15px; word-break:break-all;">
-                    Acompanhe em:<br><span id="rec-link" style="color:blue;"></span>
+                <div id="admin-grid-container" class="grid-container-custom">
+                    <div class="numbers-grid" id="admin-numbers-grid"></div>
                 </div>
             </div>
-            <div class="action-buttons no-print">
-                <button class="btn btn-success" onclick="window.print()">Salvar PDF / Imprimir</button>
-                <button class="btn btn-outline" onclick="fecharModal('modal-comprovante'); deslogarComprador();">Fechar e Sair</button>
-            </div>
         </div>
-    </div>
 
-    <div id="screen-consulta" class="screen">
-        <div class="card" style="margin-top: 10vh;">
-            <h2>Situação da sua Reserva</h2>
-            <div id="area-consulta-resultado"></div>
-            <button class="btn btn-outline" style="margin-top:20px;" onclick="deslogarComprador();">Sair para o Início</button>
-        </div>
-    </div>
+        <div id="screen-buyer" class="screen">
+            <div class="card">
+                <div class="top-bar">
+                    <div id="buyer-title" style="margin:0; text-align:left;"></div>
+                    <button class="btn btn-small btn-outline" onclick="deslogarComprador()">Sair</button>
+                </div>
+                
+                <img id="buyer-img" class="rifa-image-preview" style="display:block; margin: 0 auto 15px auto;">
+                <p id="buyer-desc" style="text-align: center;"></p>
+                <h3 id="buyer-premio"></h3>
+                <p style="text-align: center; font-size: 18px;">Valor do número: <strong>R$ <span id="buyer-valor">0,00</span></strong></p>
+                
+                <p style="text-align: center; color: var(--danger);" id="buyer-instrucoes">Selecione os números desejados:</p>
+                
+                <div id="buyer-grid-container" class="grid-container-custom">
+                    <div class="numbers-grid" id="buyer-numbers-grid"></div>
+                </div>
 
-    <div id="modal-admin-numero" class="modal-overlay">
-        <div class="modal-content" style="padding: 20px;">
-            <h3 style="margin-top:0;">Número <span id="mod-adm-num"></span></h3>
-            <p style="margin: 5px 0;"><strong>Comprador:</strong> <span id="mod-adm-nome"></span></p>
-            <p style="margin: 5px 0;"><strong>WhatsApp:</strong> <span id="mod-adm-tel"></span></p>
-            <p style="margin: 5px 0;"><strong>Promessa:</strong> <span id="mod-adm-data"></span></p>
-            <p style="margin: 5px 0 15px 0;"><strong>Status:</strong> <span id="mod-adm-status"></span></p>
-            
-            <div class="action-buttons" style="gap: 5px; margin-bottom: 10px;">
-                <button class="btn btn-success btn-small" style="flex:1;" id="btn-adm-pagou" onclick="adminAcao('pagou')">✅ Confirmar</button>
-                <button class="btn btn-outline btn-small" style="flex:1;" onclick="encaminharComprovanteAdmin()">📲 Enviar</button>
-                <button class="btn btn-danger btn-small" style="flex:1;" id="btn-adm-apagar" onclick="adminAcao('apagar')">🗑️ Liberar</button>
+                <button class="btn" id="btn-prosseguir" style="display: none; margin-top: 20px;" onclick="abrirModalDados()">Prosseguir</button>
             </div>
-            
-            <button class="btn" style="background:#999; margin: 0;" onclick="fecharModal('modal-admin-numero')">Fechar Janela</button>
         </div>
-    </div>
 
-    <div id="modal-lista-compradores" class="modal-overlay">
-        <div class="modal-content" style="max-width: 600px;">
-            <h3>Lista de Compradores</h3>
-            <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
-                <input type="text" id="filtro-nome" placeholder="Buscar por nome..." oninput="filtrarLista()" style="flex:1; padding:8px; border-radius:4px; border:1px solid #ccc;">
-                <select id="filtro-status" onchange="filtrarLista()" style="padding:8px; border-radius:4px; border:1px solid #ccc;">
-                    <option value="">Todos os Status</option>
-                    <option value="paid">Pagos (Garantidos)</option>
-                    <option value="reserved">Reservados</option>
-                    <option value="late">Atrasados</option>
-                    <option value="available">Livres</option>
-                </select>
-            </div>
-            <div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; border-radius: 6px;">
-                <table class="table-compradores">
-                    <thead>
-                        <tr><th>Nº</th><th>Nome</th><th>Celular</th><th>Status</th></tr>
-                    </thead>
-                    <tbody id="corpo-tabela-compradores">
-                        </tbody>
-                </table>
-            </div>
-            <div class="action-buttons" style="margin-top: 15px;">
-                <button class="btn btn-outline" onclick="fecharModal('modal-lista-compradores')">Fechar</button>
+        <div id="modal-preview-rifa" class="modal-overlay" style="z-index: 10000;">
+            <div class="modal-content" style="max-width: 500px; padding: 15px;">
+                <h3 style="margin-top:0;">Pré-visualização da Grade</h3>
+                <div id="preview-modal-container" class="grid-container-custom">
+                    <div class="numbers-grid" id="preview-modal-grid"></div>
+                </div>
+                <button class="btn btn-outline" style="margin-top:15px;" onclick="fecharModal('modal-preview-rifa')">Fechar Visualização</button>
             </div>
         </div>
-    </div>
+
+        <div id="modal-termos" class="modal-overlay" style="z-index: 10000;">
+            <div class="modal-content" style="max-width: 500px;">
+                <h3>Termos e Regulamento</h3>
+                <div style="font-size: 13px; max-height: 300px; overflow-y: auto; padding-right: 10px; text-align: justify; line-height:1.5;">
+                    <p><b>1. Reserva e Pagamento:</b> Ao reservar um número, o comprador se compromete a realizar o pagamento e enviar o comprovante de PIX para o organizador no prazo estipulado. O não pagamento no prazo resultará na liberação automática do número.</p>
+                    <p><b>2. Sorteio:</b> O sorteio será realizado de forma justa e transparente apenas após a confirmação do pagamento de 100% dos números (cotas) disponíveis nesta rifa, a não ser que o organizador declare o encerramento antecipado.</p>
+                    <p><b>3. Prêmio:</b> O prêmio descrito é definitivo e intransferível. A logística de entrega, envio ou retirada do prêmio é de inteira responsabilidade do organizador da rifa.</p>
+                    <p><b>4. Transparência:</b> O comprador pode consultar o status das suas cotas a qualquer momento pelo link disponibilizado em seu recibo de compra.</p>
+                    <p><b>5. Vínculo:</b> O fornecedor desta plataforma de software não tem qualquer vínculo com a organização, criação ou arrecadação financeira desta rifa, servindo apenas como ferramenta de gestão para o organizador.</p>
+                </div>
+                <button class="btn btn-outline" style="margin-top:15px;" onclick="fecharModal('modal-termos')">Fechar Regulamento</button>
+            </div>
+        </div>
+
+        <div id="modal-privacidade" class="modal-overlay" style="z-index: 10000;">
+            <div class="modal-content" style="max-width: 500px;">
+                <h3>Política de Privacidade</h3>
+                <div style="font-size: 13px; max-height: 300px; overflow-y: auto; padding-right: 10px; text-align: justify; line-height:1.5;">
+                    <p>A privacidade dos nossos usuários e visitantes é muito importante para nós. Coletamos apenas as informações mínimas necessárias (nome e telefone de contato) exclusivamente para garantir a identificação correta do dono da cota e para comunicação de vitórias no sorteio.</p>
+                    <p>Nenhuma informação financeira, senha bancária ou dados sensíveis são solicitados por esta plataforma. O pagamento via PIX é realizado fora do ambiente do site, direto entre as contas do comprador e do organizador.</p>
+                    <p>Os dados armazenados não são vendidos ou compartilhados com terceiros e são mantidos com protocolos de segurança padrão de mercado.</p>
+                </div>
+                <button class="btn btn-outline" style="margin-top:15px;" onclick="fecharModal('modal-privacidade')">Entendido</button>
+            </div>
+        </div>
+
+        <div id="modal-suporte-publico" class="modal-overlay" style="z-index: 10000;">
+            <div class="modal-content">
+                <h3>Fale com o Desenvolvedor</h3>
+                <p style="font-size: 13px; text-align:center; margin-top:0;">Dúvidas, reclamações ou feedbacks.</p>
+                <div class="form-group"><label>Seu Nome</label><input type="text" id="sup-nome"></div>
+                <div class="form-group"><label>Seu E-mail</label><input type="email" id="sup-email"></div>
+                <div class="form-group"><label>Sua Mensagem</label><textarea id="sup-msg" rows="4" placeholder="Descreva aqui..."></textarea></div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-outline" onclick="fecharModal('modal-suporte-publico')">Cancelar</button>
+                    <button class="btn btn-success" onclick="enviarTicketSuporte()">Enviar Mensagem</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-dados-comprador" class="modal-overlay">
+            <div class="modal-content">
+                <h3>Preencha seus dados</h3>
+                <div class="form-group"><label>Seu Nome Completo</label><input type="text" id="mod-comp-nome"></div>
+                <div class="form-group"><label>Seu Celular (com DDD)</label><input type="number" id="mod-comp-tel"></div>
+                <div class="form-group"><label>Data de Pagamento</label><input type="date" id="mod-comp-data"></div>
+                
+                <div class="form-group" style="display:flex; align-items:flex-start; gap:8px; font-size:13px; text-align:left;">
+                    <input type="checkbox" id="mod-comp-termos" style="width:18px; height:18px; margin-top:2px;">
+                    <label for="mod-comp-termos" style="font-weight:normal; margin:0;">Li e aceito os <a href="javascript:void(0)" style="color:var(--primary-blue);" onclick="abrirModal('modal-termos')">Termos e Regulamento</a> da rifa.</label>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-outline" onclick="fecharModal('modal-dados-comprador')">Cancelar</button>
+                    <button class="btn" onclick="confirmarReserva()">Reservar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-pagamento" class="modal-overlay">
+            <div class="modal-content" style="text-align:center;">
+                <h3>Reservado com Sucesso!</h3>
+                <div style="background:rgba(0,0,0,0.05); padding:15px; border-radius:8px; margin-bottom:15px;">
+                    <p style="margin:0; font-weight:bold;">Chave PIX para pagamento:</p>
+                    <p id="mod-pix-chave" style="word-break: break-all; color:var(--primary-blue); margin:5px 0; font-size:18px;"></p>
+                    <p style="margin:0; font-size:14px;">Titular: <span id="mod-pix-nome"></span></p>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-success" onclick="abrirComprovanteCompraImediata()">Ver Comprovante</button>
+                    <button class="btn btn-outline" onclick="fecharModal('modal-pagamento'); deslogarComprador();">Fechar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-comprovante" class="modal-overlay">
+            <div class="modal-content" style="max-width: 350px;">
+                <div class="recibo-box" id="area-recibo-print">
+                    <div class="recibo-header">🧾 COMPROVANTE</div>
+                    <div class="recibo-row"><span>Rifa:</span> <strong id="rec-nome-rifa"></strong></div>
+                    <div class="recibo-row"><span>Prêmio:</span> <strong id="rec-premio"></strong></div>
+                    <hr style="border-top:1px dashed #ccc;">
+                    <div id="rec-conteudo-dinamico"></div>
+                    <hr style="border-top:1px dashed #ccc;">
+                    <div class="recibo-row"><span>Comprador:</span> <strong id="rec-comprador"></strong></div>
+                    <div class="recibo-row"><span>Telefone:</span> <strong id="rec-tel"></strong></div>
+                    
+                    <div style="text-align:center; font-size:10px; margin-top:15px; word-break:break-all;">
+                        Acompanhe em:<br><span id="rec-link" style="color:var(--primary-blue);"></span>
+                    </div>
+                </div>
+                <div class="action-buttons no-print">
+                    <button class="btn btn-success" onclick="window.print()">Salvar PDF / Imprimir</button>
+                    <button class="btn btn-outline" onclick="fecharModal('modal-comprovante'); deslogarComprador();">Fechar e Sair</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="screen-consulta" class="screen">
+            <div class="card" style="margin-top: 10vh;">
+                <h2>Situação da sua Reserva</h2>
+                <div id="area-consulta-resultado"></div>
+                <button class="btn btn-outline" style="margin-top:20px;" onclick="deslogarComprador();">Sair / Voltar ao Início</button>
+            </div>
+        </div>
+
+        <div id="modal-admin-numero" class="modal-overlay">
+            <div class="modal-content" style="padding: 20px;">
+                <h3 style="margin-top:0;">Número <span id="mod-adm-num"></span></h3>
+                <p style="margin: 5px 0;"><strong>Comprador:</strong> <span id="mod-adm-nome"></span></p>
+                <p style="margin: 5px 0;"><strong>WhatsApp:</strong> <span id="mod-adm-tel"></span></p>
+                <p style="margin: 5px 0;"><strong>Promessa:</strong> <span id="mod-adm-data"></span></p>
+                <p style="margin: 5px 0 15px 0;"><strong>Status:</strong> <span id="mod-adm-status"></span></p>
+                
+                <div class="action-buttons" style="gap: 5px; margin-bottom: 10px;">
+                    <button class="btn btn-success btn-small" style="flex:1;" id="btn-adm-pagou" onclick="adminAcao('pagou')">✅ Confirmar</button>
+                    <button class="btn btn-outline btn-small" style="flex:1;" onclick="encaminharComprovanteAdmin()">📲 Enviar</button>
+                    <button class="btn btn-danger btn-small" style="flex:1;" id="btn-adm-apagar" onclick="adminAcao('apagar')">🗑️ Liberar</button>
+                </div>
+                
+                <button class="btn" style="background:#999; margin: 0;" onclick="fecharModal('modal-admin-numero')">Fechar Janela</button>
+            </div>
+        </div>
+
+        <div id="modal-lista-compradores" class="modal-overlay">
+            <div class="modal-content" style="max-width: 600px;">
+                <h3>Lista de Compradores</h3>
+                <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                    <input type="text" id="filtro-nome" placeholder="Buscar por nome..." oninput="filtrarLista()" style="flex:1; padding:8px; border-radius:4px; border:1px solid #ccc;">
+                    <select id="filtro-status" onchange="filtrarLista()" style="padding:8px; border-radius:4px; border:1px solid #ccc;">
+                        <option value="">Todos os Status</option>
+                        <option value="paid">Pagos (Garantidos)</option>
+                        <option value="reserved">Reservados</option>
+                        <option value="late">Atrasados</option>
+                        <option value="available">Livres</option>
+                    </select>
+                </div>
+                <div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; border-radius: 6px;">
+                    <table class="table-compradores">
+                        <thead>
+                            <tr><th>Nº</th><th>Nome</th><th>Celular</th><th>Status</th></tr>
+                        </thead>
+                        <tbody id="corpo-tabela-compradores">
+                            </tbody>
+                    </table>
+                </div>
+                <div class="action-buttons" style="margin-top: 15px;">
+                    <button class="btn btn-outline" onclick="fecharModal('modal-lista-compradores')">Fechar</button>
+                </div>
+            </div>
+        </div>
+
+    </div> <footer class="footer no-print">
+        <div class="footer-links">
+            <a href="javascript:void(0)" onclick="abrirModal('modal-privacidade')">Política de Privacidade</a>
+            <a href="javascript:void(0)" onclick="abrirModal('modal-termos')">Termos de Uso</a>
+            <a href="javascript:void(0)" onclick="abrirModal('modal-suporte-publico')">Suporte</a>
+        </div>
+        <div class="footer-copy">
+            © 2026 RifaOn*. Todos os direitos reservados | Desenvolvido por L.H.A.R.
+        </div>
+    </footer>
 
     <script>
         const firebaseConfig = {
@@ -508,12 +704,29 @@
         const database = firebase.database();
 
         let currentUserEmail = "";
+        let userConfig = {}; 
         let rifas = [];
         let currentRaffleId = null;
         let selectedNumbers = [];
         let imageBase64Temp = "";
+        let bgImageBase64Temp = ""; // Variavel exclusiva para o Fundo
         let adminIndexSelecionado = null;
         let ultimaCompraIds = [];
+        
+        // E-mail Mestre para ter acesso ao Painel de Suporte
+        const EMAIL_MESTRE = 'luishenriquear@bol.com.br'; 
+
+        // Tema Dark/Light
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            document.getElementById('theme-toggle-btn').innerText = isDark ? '☀️' : '🌙';
+        }
+        if(localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('theme-toggle-btn').innerText = '☀️';
+        }
 
         function parseFirebaseArray(data) {
             if (!data) return [];
@@ -521,14 +734,15 @@
             return Object.values(data).filter(item => item !== null);
         }
 
+        function formatarPrimeiroNome(nomeCompleto) {
+            if(!nomeCompleto) return "Usuário";
+            return nomeCompleto.trim().split(' ')[0];
+        }
+
         function hideLoader() { document.getElementById('loading-overlay').style.display = 'none'; }
         function showLoader() { document.getElementById('loading-overlay').style.display = 'flex'; }
 
-        function formatarPrimeiroNome(nomeCompleto) {
-            if(!nomeCompleto) return "Usuário";
-            return nomeCompleto.split(' ')[0];
-        }
-
+        // --- BLINDAGEM COMPLETA DO COMPRADOR ---
         function deslogarComprador() {
             currentRaffleId = null;
             selectedNumbers = [];
@@ -537,16 +751,21 @@
             const urlBase = window.location.href.split('?')[0];
             window.history.replaceState({}, document.title, urlBase);
             
-            navigate('screen-welcome');
+            if (currentUserEmail !== "") {
+                atualizarDashboard(); navigate('screen-dashboard');
+            } else {
+                navigate('screen-welcome');
+            }
         }
 
+        // --- MEMÓRIA DO VENDEDOR PROTEGIDA ---
         function navigate(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active'); 
             window.scrollTo(0,0);
             
             if (currentUserEmail !== "") {
-                const telasAdmin = ['screen-dashboard', 'screen-admin-raffle', 'screen-edit-raffle', 'screen-new-raffle'];
+                const telasAdmin = ['screen-dashboard', 'screen-admin-raffle', 'screen-edit-raffle', 'screen-new-raffle', 'screen-settings', 'screen-master-support'];
                 if (telasAdmin.includes(screenId)) {
                     localStorage.setItem('last_screen', screenId);
                     if (screenId === 'screen-admin-raffle' || screenId === 'screen-edit-raffle') {
@@ -571,18 +790,32 @@
             const rifaUrlId = urlParams.get('rifa');
             const consultaTel = urlParams.get('consulta');
 
+            // Autenticação carrega primeiro
             auth.onAuthStateChanged(user => {
                 if (user) {
                     currentUserEmail = user.email;
+                    
+                    if(user.email.toLowerCase() === EMAIL_MESTRE.toLowerCase()) {
+                        document.getElementById('btn-master-panel').style.display = 'inline-block';
+                    } else {
+                        document.getElementById('btn-master-panel').style.display = 'none';
+                    }
+
+                    // BUSCA O NOME REAL NO BANCO DE DADOS
                     database.ref('usuarios/' + user.uid).once('value').then(uSnap => {
                         const uData = uSnap.val();
                         if(uData && uData.nome) {
                             document.getElementById('lbl-username').innerText = formatarPrimeiroNome(uData.nome);
+                            userConfig = uData.config || {}; 
                             localStorage.setItem('rifa_logged_user', JSON.stringify({user: user.email, nome: uData.nome}));
+                        } else if (user.displayName) {
+                            document.getElementById('lbl-username').innerText = formatarPrimeiroNome(user.displayName);
                         }
                     }).catch(e => console.log(e));
                 } else {
                     currentUserEmail = "";
+                    userConfig = {};
+                    document.getElementById('btn-master-panel').style.display = 'none';
                 }
 
                 database.ref('rifas').once('value').then(snap => {
@@ -590,10 +823,11 @@
                     hideLoader();
                     ativarAtualizacoesEmTempoReal(); 
 
+                    // REGRA 1: LINK COMPARTILHADO MANDA EM TUDO
                     if (rifaUrlId && consultaTel) {
                         currentRaffleId = rifaUrlId;
                         realizarConsultaPublica(rifaUrlId, consultaTel);
-                        return;
+                        return; 
                     } else if (rifaUrlId) {
                         currentRaffleId = rifaUrlId;
                         const rifaEncontrada = rifas.find(r => r.id === rifaUrlId);
@@ -603,10 +837,17 @@
                             alert("Rifa não encontrada no sistema.");
                             deslogarComprador();
                         }
-                        return;
+                        return; 
                     }
 
+                    // REGRA 2: ADMIN LOGADO (MEMÓRIA)
                     if (user) {
+                        const sessionData = localStorage.getItem('rifa_logged_user');
+                        if(sessionData) {
+                            const parsedUser = JSON.parse(sessionData);
+                            document.getElementById('lbl-username').innerText = formatarPrimeiroNome(parsedUser.nome);
+                        }
+
                         const savedScreen = localStorage.getItem('last_screen');
                         const savedRaffle = localStorage.getItem('last_raffle');
 
@@ -615,13 +856,14 @@
                             if(r) abrirAdminRifa(savedRaffle); else { atualizarDashboard(); navigate('screen-dashboard'); }
                         } else if (savedScreen === 'screen-edit-raffle' && savedRaffle) {
                             const r = rifas.find(x => x.id === savedRaffle);
-                            if(r) { currentRaffleId = savedRaffle; abrirEditarRifa(savedRaffle); } else { atualizarDashboard(); navigate('screen-dashboard'); }
-                        } else if (savedScreen && ['screen-dashboard', 'screen-new-raffle'].includes(savedScreen)) {
+                            if(r) { abrirEditarRifa(savedRaffle); } else { atualizarDashboard(); navigate('screen-dashboard'); }
+                        } else if (savedScreen && ['screen-dashboard', 'screen-new-raffle', 'screen-settings', 'screen-master-support'].includes(savedScreen)) {
                             atualizarDashboard(); navigate(savedScreen);
                         } else {
                             atualizarDashboard(); navigate('screen-dashboard');
                         }
                     } else {
+                        // REGRA 3: NINGUÉM LOGADO E NENHUM LINK
                         navigate('screen-welcome');
                     }
                 }).catch(e => {
@@ -661,6 +903,22 @@
         function abrirModal(id) { document.getElementById(id).style.display = 'flex'; }
         function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
 
+        // --- SISTEMA DE USUÁRIOS E LOGIN GOOGLE ---
+        function loginComGoogle() {
+            showLoader();
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).then((result) => {
+                const user = result.user;
+                database.ref('usuarios/' + user.uid).once('value').then(snap => {
+                    if(!snap.exists()) {
+                        database.ref('usuarios/' + user.uid).set({ nome: user.displayName || "Usuário", email: user.email, telefone: '' });
+                    }
+                });
+            }).catch(error => {
+                hideLoader(); alert("Erro no login com Google: " + error.message);
+            });
+        }
+
         function salvarCadastroUsuario() {
             const nome = document.getElementById('reg-nome').value; 
             const tel = document.getElementById('reg-tel').value; 
@@ -678,8 +936,7 @@
                 const uid = userCredential.user.uid;
                 return database.ref('usuarios/' + uid).set({ nome, telefone: tel, email });
             }).then(() => {
-                hideLoader();
-                alert("Cadastro realizado com sucesso!");
+                hideLoader(); alert("Cadastro realizado com sucesso!");
             }).catch(error => {
                 hideLoader();
                 if(error.code === 'auth/email-already-in-use') alert("Este e-mail já está cadastrado no sistema.");
@@ -693,22 +950,20 @@
             if(!email || !pass) { alert("Preencha o e-mail e a senha!"); return; }
             
             showLoader();
-            auth.signInWithEmailAndPassword(email, pass).catch(error => {
+            auth.signInWithEmailAndPassword(email, pass).then(userCredential => {
+                localStorage.setItem('rifa_logged_user', JSON.stringify({user: email, nome: "Usuário"}));
+                setTimeout(hideLoader, 3000); 
+            }).catch(error => {
                 hideLoader();
                 if(error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
                     alert("E-mail ou senha incorretos.");
-                } else {
-                    alert("Erro ao entrar. Verifique seu e-mail e senha.");
-                }
+                } else { alert("Erro ao entrar. Verifique seu e-mail e senha."); }
             });
         }
 
         function fazerLogout() { 
             auth.signOut().then(() => {
-                currentUserEmail = ""; 
-                localStorage.removeItem('last_screen');
-                localStorage.removeItem('last_raffle');
-                localStorage.removeItem('rifa_logged_user');
+                currentUserEmail = ""; localStorage.removeItem('last_screen'); localStorage.removeItem('last_raffle'); localStorage.removeItem('rifa_logged_user'); 
                 deslogarComprador(); 
             });
         }
@@ -719,8 +974,7 @@
             
             showLoader();
             auth.sendPasswordResetEmail(email).then(() => {
-                hideLoader();
-                alert("Um link oficial para criar uma nova senha foi enviado para o seu e-mail! Verifique sua caixa de entrada e pasta de Spam.");
+                hideLoader(); alert("Um link oficial para criar uma nova senha foi enviado para o seu e-mail! Verifique sua caixa de entrada e pasta de Spam.");
                 navigate('screen-login');
             }).catch(error => {
                 hideLoader();
@@ -729,7 +983,97 @@
             });
         }
 
-        function processarImagem(input, previewId) {
+        // --- SISTEMA DE SUPORTE PÚBLICO E MESTRE ---
+        function enviarTicketSuporte() {
+            const n = document.getElementById('sup-nome').value;
+            const e = document.getElementById('sup-email').value;
+            const m = document.getElementById('sup-msg').value;
+            if(!n || !e || !m) return alert("Preencha todos os campos do suporte.");
+            
+            showLoader();
+            const ticketId = Date.now().toString();
+            database.ref('suporte/' + ticketId).set({
+                nome: n, email: e, msg: m, data: new Date().toLocaleDateString('pt-BR'), status: 'aberto'
+            }).then(() => {
+                hideLoader();
+                alert("Suporte cadastrado com sucesso, aguarde até 7 dias para ter retorno.");
+                fecharModal('modal-suporte-publico');
+                
+                const linkApp = window.location.href.split('?')[0];
+                const msgApp = `🛑 *NOVO TICKET DE SUPORTE*\n\n*Nome:* ${n}\n*E-mail:* ${e}\n*Mensagem:* ${m}\n\nAcesse o Painel Mestre no App para gerenciar: ${linkApp}`;
+                window.open(`https://wa.me/5512991643067?text=${encodeURIComponent(msgApp)}`, '_blank');
+            }).catch(e => { hideLoader(); alert("Erro ao enviar: " + e.message); });
+        }
+
+        function abrirPainelMestre() {
+            showLoader();
+            database.ref('suporte').once('value').then(snap => {
+                const tickets = parseFirebaseArray(snap.val()).reverse(); 
+                const lista = document.getElementById('master-tickets-list');
+                lista.innerHTML = '';
+                
+                if(tickets.length === 0) {
+                    lista.innerHTML = '<p style="text-align:center;">Nenhum chamado de suporte.</p>';
+                } else {
+                    tickets.forEach(t => {
+                        const cor = t.status === 'aberto' ? 'var(--danger)' : 'var(--success)';
+                        lista.innerHTML += `
+                            <div style="background:rgba(0,0,0,0.05); padding:15px; border-radius:8px; border-left:4px solid ${cor}; margin-bottom:10px;">
+                                <div style="display:flex; justify-content:space-between; font-size:12px; color:#666;">
+                                    <b>${t.data}</b> <span style="color:${cor}; text-transform:uppercase;">${t.status}</span>
+                                </div>
+                                <h4 style="margin:5px 0;">${t.nome} (${t.email})</h4>
+                                <p style="font-size:14px; margin-bottom:10px;">${t.msg}</p>
+                                <button class="btn btn-small" onclick="window.open('mailto:${t.email}?subject=Resposta Suporte RifaOn*', '_blank')">Responder por E-mail</button>
+                            </div>
+                        `;
+                    });
+                }
+                hideLoader();
+                navigate('screen-master-support');
+            });
+        }
+
+        // --- SISTEMA DE PERSONALIZAÇÃO DE MENSAGENS ---
+        function obterMsgTemplate(tipo) {
+            const defaults = {
+                link: "Compre números na minha rifa e concorra a: {premio}!\n\nAcesse o link e garanta o seu: {link}",
+                comprovante: "🧾 *COMPROVANTE DE RIFA* 🧾\n\n*Rifa:* {rifa}\n*Prêmio:* {premio}\n{detalhes}\n*Total de Números:* {qtd_total}\n*Valor Total:* R$ {valor_total}\n\nAcompanhe aqui: {link}",
+                cobranca: "Olá {nome}, o pagamento do número {numero} na rifa \"{rifa}\" está pendente. Ainda tem interesse?",
+                ganhador: "Parabéns {nome}! 🎉 Você foi o grande ganhador do número {numero} na minha rifa \"{rifa}\"! O prêmio é seu!"
+            };
+            if(userConfig && userConfig[tipo]) return userConfig[tipo];
+            return defaults[tipo];
+        }
+
+        function abrirConfiguracoes() {
+            document.getElementById('cfg-msg-link').value = obterMsgTemplate('link');
+            document.getElementById('cfg-msg-comp').value = obterMsgTemplate('comprovante');
+            document.getElementById('cfg-msg-cob').value = obterMsgTemplate('cobranca');
+            document.getElementById('cfg-msg-ganhador').value = obterMsgTemplate('ganhador');
+            navigate('screen-settings');
+        }
+
+        function salvarConfiguracoes() {
+            const user = auth.currentUser;
+            if(!user) return;
+            
+            userConfig = {
+                link: document.getElementById('cfg-msg-link').value,
+                comprovante: document.getElementById('cfg-msg-comp').value,
+                cobranca: document.getElementById('cfg-msg-cob').value,
+                ganhador: document.getElementById('cfg-msg-ganhador').value
+            };
+
+            database.ref('usuarios/' + user.uid + '/config').set(userConfig).then(() => {
+                alert("Configurações de mensagens salvas com sucesso!");
+                atualizarDashboard();
+                navigate('screen-dashboard');
+            });
+        }
+
+        // --- SISTEMA DE IMAGENS ---
+        function processarImagem(input, previewId, tipo) {
             if (input.files[0]) {
                 const r = new FileReader();
                 r.onload = function(e) {
@@ -737,9 +1081,16 @@
                     img.onload = function() {
                         const canvas = document.createElement('canvas'); const w = 600; const sc = w / img.width;
                         canvas.width = w; canvas.height = img.height * sc; canvas.getContext('2d').drawImage(img, 0, 0, w, canvas.height);
-                        imageBase64Temp = canvas.toDataURL('image/jpeg', 0.7);
-                        document.getElementById(previewId).src = imageBase64Temp; document.getElementById(previewId).style.display = 'block';
-                        if (previewId === 'preview-img-bg') updatePreview(); // Atualiza pré-visualização ao mudar fundo
+                        
+                        if(tipo === 'produto') {
+                            imageBase64Temp = canvas.toDataURL('image/jpeg', 0.7);
+                            document.getElementById(previewId).src = imageBase64Temp; 
+                            document.getElementById(previewId).style.display = 'block';
+                        } else if(tipo === 'fundo') {
+                            bgImageBase64Temp = canvas.toDataURL('image/jpeg', 0.5); // Mais compacta para o fundo
+                            document.getElementById(previewId).src = bgImageBase64Temp; 
+                            document.getElementById(previewId).style.display = 'block';
+                        }
                     }
                     img.src = e.target.result;
                 }
@@ -747,33 +1098,73 @@
             }
         }
 
-        // Função de Pré-visualização
-        function updatePreview() {
-            const formato = document.getElementById('rf-formato').value;
-            const colorStyle = document.getElementById('rf-color-style').value;
-            const cor = document.getElementById('rf-cor').value;
-            const bgStyle = document.getElementById('rf-bg-style').value;
-            const bgColor = document.getElementById('rf-bg-color').value;
-            const bgImg = imageBase64Temp; // Imagem de fundo se houver
+        // --- PRÉ-VISUALIZAÇÃO DA RIFA ---
+        function abrirPreVisualizacao(origem) {
+            let prefixo = origem === 'editar' ? 'rf-edit-' : 'rf-';
+            
+            const formato = document.getElementById(prefixo + 'formato').value;
+            const colorStyle = document.getElementById(prefixo + 'color-style').value;
+            const cor = document.getElementById(prefixo + 'cor').value;
+            const bgStyle = document.getElementById(prefixo + 'bg-style').value;
+            const bgColor = document.getElementById(prefixo + 'bg-color').value;
+            
+            // Lógica para pegar imagem de fundo dependendo da tela (nova ou edit)
+            let imgBgAtual = "";
+            if (origem === 'editar') {
+                const r = rifas.find(x => x.id === currentRaffleId);
+                imgBgAtual = bgImageBase64Temp || (r ? r.bgImagem : "");
+            } else {
+                imgBgAtual = bgImageBase64Temp;
+            }
 
-            const grid = document.getElementById('preview-grid');
+            const gridContainer = document.getElementById('preview-modal-container');
+            const grid = document.getElementById('preview-modal-grid');
+            
             grid.innerHTML = "";
-            grid.className = "preview-grid " + bgStyle;
-            grid.style.backgroundColor = bgColor;
-            if (bgImg) grid.style.backgroundImage = `url(${bgImg})`;
-            else grid.style.backgroundImage = "none";
+            gridContainer.className = "grid-container-custom";
+            
+            // Aplica Fundo
+            if (bgStyle === 'bg-flat') {
+                gridContainer.style.background = bgColor;
+            } else if (bgStyle === 'bg-gradient') {
+                gridContainer.style.background = `linear-gradient(135deg, ${bgColor} 0%, rgba(0,0,0,0.8) 100%)`;
+            } else {
+                gridContainer.style.background = "transparent";
+            }
 
-            for (let i = 1; i <= 20; i++) { // Mostra 20 números
+            if (imgBgAtual) {
+                gridContainer.style.backgroundImage = `url(${imgBgAtual})`;
+            }
+
+            // Renderiza 20 números para o teste
+            for (let i = 1; i <= 20; i++) {
                 const div = document.createElement('div');
-                div.className = `number-item ${formato} ${colorStyle}`;
-                div.style.backgroundColor = cor;
-                div.style.borderColor = cor;
+                div.className = `number-item ${formato} ${colorStyle}`; 
+                
+                // Aplica Estilo do Número
+                if (colorStyle === 'color-translucent') div.style.opacity = '0.6';
+                if (colorStyle === 'color-matte') div.style.filter = 'grayscale(30%) contrast(80%)';
+                
+                if (colorStyle === 'color-gradient') {
+                    div.style.background = `linear-gradient(135deg, ${cor}, #222)`;
+                    div.style.border = 'none';
+                } else if (colorStyle === 'color-flat') {
+                    div.style.backgroundColor = cor;
+                    div.style.border = 'none';
+                } else {
+                    div.style.backgroundColor = cor;
+                    div.style.borderColor = cor;
+                }
+                
                 div.style.color = '#fff';
                 div.innerText = i;
                 grid.appendChild(div);
             }
+            
+            abrirModal('modal-preview-rifa');
         }
 
+        // --- SISTEMA DA RIFA ---
         function salvarRifa() {
             const qtd = parseInt(document.getElementById('rf-qtd').value); const numeros = [];
             for (let i=1; i<=qtd; i++) { numeros.push({ numero: i, status: 'available', comprador: '', telefone: '', dataPromessa: '' }); }
@@ -784,12 +1175,15 @@
                 valor: parseFloat(document.getElementById('rf-valor').value), qtd: qtd, imagem: imageBase64Temp, 
                 formato: document.getElementById('rf-formato').value, colorStyle: document.getElementById('rf-color-style').value, cor: document.getElementById('rf-cor').value, 
                 pixNome: document.getElementById('rf-pix-nome').value, pixChave: document.getElementById('rf-pix-chave').value, 
-                bgStyle: document.getElementById('rf-bg-style').value, bgColor: document.getElementById('rf-bg-color').value, bgImagem: imageBase64Temp,
+                bgStyle: document.getElementById('rf-bg-style').value, bgColor: document.getElementById('rf-bg-color').value, bgImagem: bgImageBase64Temp,
                 numeros: numeros 
             };
             
             rifas.push(novaRifa);
-            database.ref('rifas').set(rifas).then(() => { imageBase64Temp = ""; alert("Rifa criada com sucesso!"); atualizarDashboard(); navigate('screen-dashboard'); });
+            database.ref('rifas').set(rifas).then(() => { 
+                imageBase64Temp = ""; bgImageBase64Temp = ""; 
+                alert("Rifa criada com sucesso!"); atualizarDashboard(); navigate('screen-dashboard'); 
+            });
         }
 
         function abrirEditarRifa(id) {
@@ -797,36 +1191,99 @@
             if(!r) return;
             document.getElementById('rf-edit-nome').value = r.nome; document.getElementById('rf-edit-desc').value = r.desc;
             document.getElementById('rf-edit-premio').value = r.premio; document.getElementById('rf-edit-valor').value = r.valor;
-            document.getElementById('rf-edit-qtd').value = r.qtd; document.getElementById('rf-edit-formato').value = r.formato;
-            document.getElementById('rf-edit-cor').value = r.cor; document.getElementById('rf-edit-pix-nome').value = r.pixNome;
+            document.getElementById('rf-edit-qtd').value = r.qtd; 
+            
+            document.getElementById('rf-edit-formato').value = r.formato || 'shape-square';
+            document.getElementById('rf-edit-color-style').value = r.colorStyle || '';
+            document.getElementById('rf-edit-cor').value = r.cor || '#0288d1';
+            document.getElementById('rf-edit-bg-style').value = r.bgStyle || '';
+            document.getElementById('rf-edit-bg-color').value = r.bgColor || '#ffffff';
+            
+            document.getElementById('rf-edit-pix-nome').value = r.pixNome;
             document.getElementById('rf-edit-pix-chave').value = r.pixChave;
             
-            imageBase64Temp = r.imagem || ""; const p = document.getElementById('preview-img-edicao');
-            if (imageBase64Temp) { p.src = imageBase64Temp; p.style.display = 'block'; } else { p.style.display = 'none'; }
+            imageBase64Temp = r.imagem || ""; 
+            bgImageBase64Temp = r.bgImagem || "";
+
+            const p1 = document.getElementById('preview-img-edicao');
+            if (imageBase64Temp) { p1.src = imageBase64Temp; p1.style.display = 'block'; } else { p1.style.display = 'none'; }
+            
+            const p2 = document.getElementById('preview-img-bg-edit');
+            if (bgImageBase64Temp) { p2.src = bgImageBase64Temp; p2.style.display = 'block'; } else { p2.style.display = 'none'; }
+
             navigate('screen-edit-raffle');
         }
 
         function salvarEdicaoRifa() {
             const i = rifas.findIndex(x => x.id === currentRaffleId);
             if(i !== -1) {
-                rifas[i].nome = document.getElementById('rf-edit-nome').value; rifas[i].desc = document.getElementById('rf-edit-desc').value;
-                rifas[i].premio = document.getElementById('rf-edit-premio').value; rifas[i].valor = parseFloat(document.getElementById('rf-edit-valor').value);
-                rifas[i].formato = document.getElementById('rf-edit-formato').value; rifas[i].cor = document.getElementById('rf-edit-cor').value;
-                rifas[i].pixNome = document.getElementById('rf-edit-pix-nome').value; rifas[i].pixChave = document.getElementById('rf-edit-pix-chave').value;
+                rifas[i].nome = document.getElementById('rf-edit-nome').value; 
+                rifas[i].desc = document.getElementById('rf-edit-desc').value;
+                rifas[i].premio = document.getElementById('rf-edit-premio').value; 
+                rifas[i].valor = parseFloat(document.getElementById('rf-edit-valor').value);
+                rifas[i].formato = document.getElementById('rf-edit-formato').value; 
+                rifas[i].colorStyle = document.getElementById('rf-edit-color-style').value;
+                rifas[i].cor = document.getElementById('rf-edit-cor').value;
+                rifas[i].bgStyle = document.getElementById('rf-edit-bg-style').value; 
+                rifas[i].bgColor = document.getElementById('rf-edit-bg-color').value;
+                rifas[i].pixNome = document.getElementById('rf-edit-pix-nome').value; 
+                rifas[i].pixChave = document.getElementById('rf-edit-pix-chave').value;
+                
                 if(imageBase64Temp !== "") rifas[i].imagem = imageBase64Temp;
+                if(bgImageBase64Temp !== "") rifas[i].bgImagem = bgImageBase64Temp;
+
                 database.ref('rifas').set(rifas).then(() => { alert("Rifa editada com sucesso!"); abrirAdminRifa(currentRaffleId); });
             }
         }
 
+        // --- SISTEMA VISUAL DA GRADE (COMPRADOR E ADMIN) ---
         function aplicarCoresNumero(div, num, rifa) {
-            if (num.status === 'available') { div.style.backgroundColor = rifa.cor; div.style.borderColor = rifa.cor; div.style.color = '#fff'; } 
-            else { div.className = `number-item ${rifa.formato} status-${num.status}`; }
+            if (num.status === 'available') { 
+                const cStyle = rifa.colorStyle || '';
+                if (cStyle === 'color-translucent') div.style.opacity = '0.6';
+                if (cStyle === 'color-matte') div.style.filter = 'grayscale(30%) contrast(80%)';
+                
+                if (cStyle === 'color-gradient') {
+                    div.style.background = `linear-gradient(135deg, ${rifa.cor}, #222)`;
+                    div.style.border = 'none';
+                } else if (cStyle === 'color-flat') {
+                    div.style.backgroundColor = rifa.cor;
+                    div.style.border = 'none';
+                } else {
+                    div.style.backgroundColor = rifa.cor;
+                    div.style.borderColor = rifa.cor;
+                }
+                div.style.color = '#fff';
+            } 
+            else { 
+                div.className = `number-item ${rifa.formato} status-${num.status}`; 
+            }
+        }
+
+        function aplicarFundoContainer(containerId, rifa) {
+            const container = document.getElementById(containerId);
+            if(!container) return;
+            const bgS = rifa.bgStyle || '';
+            const bgC = rifa.bgColor || '#ffffff';
+            const bgI = rifa.bgImagem || '';
+
+            if (bgS === 'bg-flat') {
+                container.style.background = bgC;
+            } else if (bgS === 'bg-gradient') {
+                container.style.background = `linear-gradient(135deg, ${bgC} 0%, rgba(0,0,0,0.8) 100%)`;
+            } else {
+                container.style.background = "transparent";
+            }
+
+            if (bgI) {
+                container.style.backgroundImage = `url(${bgI})`;
+            }
         }
 
         function atualizarDashboard() {
             const lista = document.getElementById('raffle-list'); lista.innerHTML = "";
             const mr = rifas.filter(r => r.donoDaRifa === currentUserEmail);
-            if (mr.length === 0) { lista.innerHTML = "<p style='text-align:center; color:#666;'>Nenhuma rifa cadastrada.</p>"; return; }
+            if (mr.length === 0) { lista.innerHTML = "<p style='text-align:center; color:var(--footer-text);'>Nenhuma rifa cadastrada.</p>"; return; }
 
             mr.forEach(r => {
                 const div = document.createElement('div'); div.className = "raffle-card-dash"; div.onclick = () => abrirAdminRifa(r.id);
@@ -839,12 +1296,12 @@
                     let st = ''; let cCls = '';
                     if (n.status === 'available') st = `background-color: ${r.cor}; border-color: ${r.cor}; color: #fff;`;
                     else cCls = `status-${n.status}`;
-                    grid += `<div class="number-item ${r.formato} ${cCls}" style="${st}">${n.numero}</div>`;
+                    grid += `<div class="number-item ${r.formato || 'shape-square'} ${cCls}" style="${st}">${n.numero}</div>`;
                 });
                 
                 let titleHtml = `<div class="raffle-card-title font-rifa" style="color: ${r.cor};">${r.nome}</div>`;
                 if (r.concluida && r.ganhador) {
-                    titleHtml += `<p style="margin:0 0 10px 0; color:white; font-weight:bold; text-shadow:1px 1px 2px black;">🏆 Ganhador: Nº ${r.ganhador.numero}</p>`;
+                    titleHtml += `<p style="margin:0 0 10px 0; color:var(--text-dark); font-weight:bold;">🏆 Ganhador: Nº ${r.ganhador.numero}</p>`;
                 }
 
                 div.innerHTML = `${htmlConcluido}<div class="raffle-card-bg" style="${bg}"></div><div class="raffle-card-overlay"></div><div class="raffle-card-content">${titleHtml}<div class="mini-numbers-grid">${grid}</div></div>`;
@@ -868,7 +1325,10 @@
                 document.getElementById('btn-editar-rifa').style.display = 'block';
             }
 
-            atualizarEstatisticas(r); renderizarGridAdmin(r); navigate('screen-admin-raffle');
+            atualizarEstatisticas(r); 
+            aplicarFundoContainer('admin-grid-container', r);
+            renderizarGridAdmin(r); 
+            navigate('screen-admin-raffle');
         }
 
         function atualizarEstatisticas(r) {
@@ -938,8 +1398,10 @@
             if (acao === 'pagou') { n.status = 'paid'; database.ref('rifas').set(rifas); fecharModal('modal-admin-numero'); } 
             else if (acao === 'apagar') {
                 if (n.status === 'late') {
+                    let tpl = obterMsgTemplate('cobranca');
+                    let msg = tpl.replace(/{nome}/g, n.comprador).replace(/{numero}/g, n.numero).replace(/{rifa}/g, r.nome);
                     if (confirm("Deseja mandar mensagem cobrando antes de excluir?\n\n[OK] = Sim\n[Cancelar] = Excluir Direto")) {
-                        const t = n.telefone.replace(/\D/g,''); window.open(`https://wa.me/55${t}?text=Olá ${n.comprador}, o pagamento do número ${n.numero} na rifa "${r.nome}" está pendente. Ainda tem interesse?`, '_blank');
+                        const t = n.telefone.replace(/\D/g,''); window.open(`https://wa.me/55${t}?text=${encodeURIComponent(msg)}`, '_blank');
                         fecharModal('modal-admin-numero'); return; 
                     }
                 }
@@ -954,11 +1416,15 @@
             tc.forEach(x => { if(x.status === 'paid') p.push(x.numero); if(x.status === 'reserved') rs.push(x.numero); if(x.status === 'late') a.push(x.numero); });
 
             const l = window.location.href.split('?')[0] + `?rifa=${r.id}&consulta=${n.telefone}`;
-            let msg = `🧾 *COMPROVANTE DE RIFA* 🧾\n\n*Rifa:* ${r.nome}\n*Prêmio:* ${r.premio}\n`;
-            if(p.length > 0) msg += `\n✅ *Garantidos:* ${p.join(', ')}`;
-            if(rs.length > 0) msg += `\n⏳ *Reservados:* ${rs.join(', ')}`;
-            if(a.length > 0) msg += `\n⚠️ *Atrasados:* ${a.join(', ')}`;
-            msg += `\n\n*Total em Números:* ${tc.length}\n*Valor Total:* R$ ${(tc.length * r.valor).toFixed(2)}\n\nAcompanhe aqui: ${l}`;
+            
+            let det = '';
+            if(p.length > 0) det += `\n✅ *Garantidos:* ${p.join(', ')}`;
+            if(rs.length > 0) det += `\n⏳ *Reservados:* ${rs.join(', ')}`;
+            if(a.length > 0) det += `\n⚠️ *Atrasados:* ${a.join(', ')}`;
+            
+            let tpl = obterMsgTemplate('comprovante');
+            let msg = tpl.replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio).replace(/{detalhes}/g, det).replace(/{qtd_total}/g, tc.length).replace(/{valor_total}/g, (tc.length * r.valor).toFixed(2)).replace(/{link}/g, l).replace(/{nome}/g, n.comprador);
+
             window.open(`https://wa.me/55${n.telefone.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
@@ -977,7 +1443,10 @@
             }
 
             document.getElementById('btn-prosseguir').style.display = selectedNumbers.length > 0 ? 'block' : 'none';
-            renderizarGridComprador(r); navigate('screen-buyer');
+            
+            aplicarFundoContainer('buyer-grid-container', r);
+            renderizarGridComprador(r); 
+            navigate('screen-buyer');
         }
 
         function renderizarGridComprador(r) {
@@ -1063,13 +1532,21 @@
                 if(pg.length>0) b+=`<div class="recibo-block"><span style="color:var(--success);">✅ Pagos:</span><br>Números: ${pg.join(', ')}<br>Valor: R$ ${(pg.length * r.valor).toFixed(2)}</div>`;
                 if(rs.length>0) b+=`<div class="recibo-block"><span style="color:var(--warning);">⏳ Reservados:</span><br>Números: ${rs.join(', ')}<br>Valor: R$ ${(rs.length * r.valor).toFixed(2)}</div>`;
                 if(at.length>0) b+=`<div class="recibo-block"><span style="color:var(--danger);">⚠️ Pendentes:</span><br>Números: ${at.join(', ')}<br>Valor: R$ ${(at.length * r.valor).toFixed(2)}</div>`;
-                dr.innerHTML = `<div style="background:#f9f9f9; padding:15px; border-radius:8px; border:1px solid #ccc; font-size: 14px;"><p><strong>Comprador:</strong> ${m[0].comprador}</p><p><strong>Telefone:</strong> ${m[0].telefone}</p><p><strong>Rifa:</strong> <span class="font-rifa" style="color:${r.cor}; font-size:18px;">${r.nome}</span></p><hr>${b}<hr><p style="text-align:right;"><strong>Total Geral: R$ ${(m.length * r.valor).toFixed(2)}</strong></p><button class="btn btn-success" onclick="window.print()" style="margin-top:15px;">Salvar PDF</button></div>`;
+                dr.innerHTML = `<div style="background:var(--card-bg); padding:15px; border-radius:8px; border:1px solid #ccc; font-size: 14px;"><p><strong>Comprador:</strong> ${m[0].comprador}</p><p><strong>Telefone:</strong> ${m[0].telefone}</p><p><strong>Rifa:</strong> <span class="font-rifa" style="color:${r.cor}; font-size:18px;">${r.nome}</span></p><hr>${b}<hr><p style="text-align:right;"><strong>Total Geral: R$ ${(m.length * r.valor).toFixed(2)}</strong></p><button class="btn btn-success" onclick="window.print()" style="margin-top:15px;">Salvar PDF</button></div>`;
             }
             navigate('screen-consulta');
         }
 
         function copiarLink() { const i = document.getElementById("admin-link-input"); i.select(); document.execCommand("copy"); alert("Copiado!"); }
-        function compartilharLink() { if (navigator.share) navigator.share({ url: document.getElementById("admin-link-input").value }); }
+        
+        function compartilharLinkWhatsApp() { 
+            const r = rifas.find(x => x.id === currentRaffleId);
+            const link = document.getElementById("admin-link-input").value;
+            let tpl = obterMsgTemplate('link');
+            let msg = tpl.replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio).replace(/{link}/g, link);
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
         function chamarEdicaoAtual() { abrirEditarRifa(currentRaffleId); }
         function chamarExclusaoAtual() { if (confirm("Excluir Rifa?")) { rifas = rifas.filter(x => x.id !== currentRaffleId); database.ref('rifas').set(rifas); atualizarDashboard(); navigate('screen-dashboard'); } }
 
@@ -1080,13 +1557,12 @@
             
             if(confirm("Deseja realmente sortear? A rifa será finalizada e não poderá ser desfeita.")) {
                 const ganhador = r.numeros[Math.floor(Math.random() * r.qtd)];
-                
-                r.concluida = true;
-                r.ganhador = ganhador;
+                r.concluida = true; r.ganhador = ganhador;
                 
                 database.ref('rifas').set(rifas).then(() => {
                     alert(`🎉 BINGO! SORTEIO REALIZADO!\n\nNúmero Sorteado: ${ganhador.numero}\nGanhador(a): ${ganhador.comprador}`);
-                    const msg = `Parabéns ${ganhador.comprador}! 🎉 Você foi o grande ganhador do número ${ganhador.numero} na minha rifa "${r.nome}"! O prêmio é seu!`;
+                    let tpl = obterMsgTemplate('ganhador');
+                    let msg = tpl.replace(/{nome}/g, ganhador.comprador).replace(/{numero}/g, ganhador.numero).replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio);
                     window.open(`https://wa.me/55${ganhador.telefone.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
                     abrirAdminRifa(currentRaffleId); 
                 });
@@ -1100,9 +1576,7 @@
             abrirModal('modal-lista-compradores');
         }
 
-        function filtrarLista() {
-            renderizarListaCompradores();
-        }
+        function filtrarLista() { renderizarListaCompradores(); }
 
         function renderizarListaCompradores() {
             const r = rifas.find(x => x.id === currentRaffleId);
