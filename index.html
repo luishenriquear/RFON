@@ -47,8 +47,8 @@
             margin: 0; 
             letter-spacing: 1px;
         }
-        .logo-rifa { color: #538cb3; } /* Azul da foto */
-        .logo-on { color: #d34c31; } /* Laranja/Vermelho da foto */
+        .logo-rifa { color: #538cb3; }
+        .logo-on { color: #d34c31; }
         .logo-subtitle { 
             font-size: 16px; color: #555; margin-top: 15px; 
             line-height: 1.5; padding: 0 10px; font-weight: 500;
@@ -441,7 +441,7 @@
         <div class="card" style="margin-top: 10vh;">
             <h2>Situação da sua Reserva</h2>
             <div id="area-consulta-resultado"></div>
-            <button class="btn btn-outline" style="margin-top:20px;" onclick="simularLinkComprador();">Voltar para a Rifa</button>
+            <button class="btn btn-outline" style="margin-top:20px;" onclick="deslogarComprador();">Sair / Ir para o Início</button>
         </div>
     </div>
 
@@ -518,6 +518,7 @@
         let adminIndexSelecionado = null;
         let ultimaCompraIds = [];
 
+        // FUNÇÃO DE SEGURANÇA MÁXIMA PARA ARRAYS DO FIREBASE
         function parseFirebaseArray(data) {
             if (!data) return [];
             if (Array.isArray(data)) return data.filter(item => item !== null);
@@ -533,16 +534,18 @@
         }
 
         window.addEventListener('load', () => {
+            // TRAVA: Remove loader forçado após 5 segundos em caso de falha
             setTimeout(hideLoader, 5000);
 
             if (window.location.protocol.includes('file') || window.location.protocol.includes('content')) {
-                alert("⚠️ ATENÇÃO: O sistema de login seguro bloqueia o acesso via arquivos locais do celular. Por favor, acesse usando o link oficial hospedado (rfon.vercel.app) no seu navegador para conseguir logar.");
+                alert("⚠️ ATENÇÃO: Acesse usando o link oficial hospedado (rfon.vercel.app) no seu navegador para utilizar o sistema de login com e-mail e senha.");
             }
 
             const urlParams = new URLSearchParams(window.location.search);
             const rifaUrlId = urlParams.get('rifa');
             const consultaTel = urlParams.get('consulta');
             
+            // FLUXO DO COMPRADOR / VISITANTE (Não exige Login)
             if (rifaUrlId && consultaTel) {
                 currentRaffleId = rifaUrlId;
                 database.ref('rifas').once('value').then(snap => {
@@ -550,7 +553,7 @@
                     hideLoader();
                     realizarConsultaPublica(rifaUrlId, consultaTel);
                     ativarAtualizacoesEmTempoReal();
-                }).catch(e => { alert("Erro de rede: " + e.message); hideLoader(); navigate('screen-welcome'); });
+                }).catch(e => { alert("Erro de rede: " + e.message); hideLoader(); navigate('screen-login'); });
                 return;
             } else if (rifaUrlId) {
                 currentRaffleId = rifaUrlId;
@@ -558,12 +561,13 @@
                     rifas = parseFirebaseArray(snap.val());
                     hideLoader();
                     const rifaEncontrada = rifas.find(r => r.id === rifaUrlId);
-                    if(rifaEncontrada) simularLinkComprador(); else navigate('screen-welcome');
+                    if(rifaEncontrada) simularLinkComprador(); else navigate('screen-login');
                     ativarAtualizacoesEmTempoReal();
-                }).catch(e => { alert("Erro de rede: " + e.message); hideLoader(); navigate('screen-welcome'); });
+                }).catch(e => { alert("Erro de rede: " + e.message); hideLoader(); navigate('screen-login'); });
                 return;
             }
 
+            // FLUXO DO ADMINISTRADOR (Verifica Auth do Firebase)
             auth.onAuthStateChanged(user => {
                 if (user) {
                     currentUserEmail = user.email;
@@ -580,19 +584,20 @@
                         const savedScreen = localStorage.getItem('last_screen');
                         const savedRaffle = localStorage.getItem('last_raffle');
                         
+                        // Garante que só vai tentar reabrir se os dados baterem e não forem telas do comprador
                         if (savedScreen === 'screen-admin-raffle' && savedRaffle) {
                             const r = rifas.find(x => x.id === savedRaffle);
                             if(r) abrirAdminRifa(savedRaffle); else { atualizarDashboard(); navigate('screen-dashboard'); }
                         } else if (savedScreen === 'screen-edit-raffle' && savedRaffle) {
                             const r = rifas.find(x => x.id === savedRaffle);
                             if(r) abrirEditarRifa(savedRaffle); else { atualizarDashboard(); navigate('screen-dashboard'); }
-                        } else if (savedScreen && savedScreen !== 'screen-login' && savedScreen !== 'screen-register' && savedScreen !== 'screen-forgot-pass') {
+                        } else if (savedScreen && ['screen-dashboard', 'screen-new-raffle'].includes(savedScreen)) {
                             atualizarDashboard(); navigate(savedScreen);
                         } else {
                             atualizarDashboard(); navigate('screen-dashboard');
                         }
                         ativarAtualizacoesEmTempoReal();
-                    }).catch(e => { alert("Erro ao carregar dados: " + e.message); hideLoader(); navigate('screen-welcome'); });
+                    }).catch(e => { alert("Erro ao carregar dados: " + e.message); hideLoader(); navigate('screen-login'); });
                 } else {
                     hideLoader();
                     navigate('screen-welcome');
@@ -631,10 +636,14 @@
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active'); window.scrollTo(0,0);
             
+            // Só salva as telas do Admin na Memória para não travar o carregamento futuro
             if (currentUserEmail !== "") {
-                localStorage.setItem('last_screen', screenId);
-                if (screenId === 'screen-admin-raffle' || screenId === 'screen-edit-raffle') {
-                    localStorage.setItem('last_raffle', currentRaffleId);
+                const telasAdmin = ['screen-dashboard', 'screen-admin-raffle', 'screen-edit-raffle', 'screen-new-raffle'];
+                if (telasAdmin.includes(screenId)) {
+                    localStorage.setItem('last_screen', screenId);
+                    if (screenId === 'screen-admin-raffle' || screenId === 'screen-edit-raffle') {
+                        localStorage.setItem('last_raffle', currentRaffleId);
+                    }
                 }
             }
         }
@@ -642,11 +651,16 @@
         function abrirModal(id) { document.getElementById(id).style.display = 'flex'; }
         function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
         
+        // FUNÇÃO CORRIGIDA: Limpa o link da Rifa e desliza para a tela de login imediatamente!
         function deslogarComprador() { 
+            currentRaffleId = null;
+            selectedNumbers = [];
             const urlBase = window.location.href.split('?')[0];
-            window.location.href = urlBase;
+            window.history.replaceState({}, document.title, urlBase);
+            navigate('screen-login');
         }
 
+        // --- SISTEMA DE USUÁRIOS E SEGURANÇA ---
         function salvarCadastroUsuario() {
             const nome = document.getElementById('reg-nome').value; 
             const tel = document.getElementById('reg-tel').value; 
@@ -681,7 +695,7 @@
             showLoader();
             
             auth.signInWithEmailAndPassword(email, pass).then(() => {
-                setTimeout(hideLoader, 4000); 
+                setTimeout(hideLoader, 3000); 
             }).catch(error => {
                 hideLoader();
                 if(error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
@@ -694,7 +708,10 @@
 
         function fazerLogout() { 
             auth.signOut().then(() => {
-                currentUserEmail = ""; localStorage.clear(); deslogarComprador(); 
+                currentUserEmail = ""; 
+                localStorage.removeItem('last_screen'); 
+                localStorage.removeItem('last_raffle'); 
+                deslogarComprador(); 
             });
         }
 
