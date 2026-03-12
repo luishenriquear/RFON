@@ -214,7 +214,7 @@
         <h3 class="font-rifa" style="font-size: 24px;">Minhas Rifas</h3>
         <div id="raffle-list"></div>
         <div class="new-raffle-box">
-            <button class="btn-square-add" onclick="navigate('screen-new-raffle')">+</button>
+            <button class="btn-square-add" onclick="atualizarDashboard(); navigate('screen-new-raffle')">+</button>
             <div class="new-raffle-text">Nova Rifa</div>
         </div>
     </div>
@@ -223,7 +223,7 @@
         <div class="card">
             <div class="top-bar">
                 <h2>Cadastrar Rifa</h2>
-                <button class="btn btn-small btn-outline" onclick="navigate('screen-dashboard')">Voltar</button>
+                <button class="btn btn-small btn-outline" onclick="atualizarDashboard(); navigate('screen-dashboard')">Voltar</button>
             </div>
             <div class="form-group"><label>Nome da Rifa</label><input type="text" id="rf-nome"></div>
             <div class="form-group"><label>Descrição</label><textarea id="rf-desc"></textarea></div>
@@ -247,7 +247,7 @@
         <div class="card">
             <div class="top-bar">
                 <h2>Editar Rifa</h2>
-                <button class="btn btn-small btn-outline" onclick="navigate('screen-admin-raffle')">Voltar</button>
+                <button class="btn btn-small btn-outline" onclick="abrirAdminRifa(currentRaffleId)">Voltar</button>
             </div>
             <div class="form-group"><label>Nome da Rifa</label><input type="text" id="rf-edit-nome"></div>
             <div class="form-group"><label>Descrição</label><textarea id="rf-edit-desc"></textarea></div>
@@ -271,11 +271,11 @@
         <div class="card">
             <div class="top-bar">
                 <div id="admin-raffle-title" style="margin:0; text-align:left;"></div>
-                <button class="btn btn-small btn-outline" onclick="navigate('screen-dashboard')">Voltar</button>
+                <button class="btn btn-small btn-outline" onclick="atualizarDashboard(); navigate('screen-dashboard')">Voltar</button>
             </div>
 
             <div class="action-buttons" style="margin-bottom: 20px;">
-                <button id="btn-editar-rifa" class="btn btn-small btn-warning" onclick="navigate('screen-edit-raffle')">✏️ Editar</button>
+                <button id="btn-editar-rifa" class="btn btn-small btn-warning" onclick="chamarEdicaoAtual()">✏️ Editar</button>
                 <button id="btn-excluir-rifa" class="btn btn-small btn-danger" onclick="chamarExclusaoAtual()">Excluir</button>
                 <button id="btn-sortear" class="btn btn-small btn-success" style="display:none;" onclick="realizarSorteio()">🎉 Sortear!</button>
                 <button class="btn btn-small" style="background:#4A148C;" onclick="abrirListaCompradores()">📋 Ver Compradores</button>
@@ -291,8 +291,6 @@
                     </div>
                 </div>
             </div>
-
-            <button class="btn btn-outline" style="margin-bottom: 15px;" onclick="simularLinkComprador()">Ver como Comprador</button>
 
             <div class="progress-container"><div id="admin-progress" class="progress-bar">0%</div></div>
 
@@ -313,7 +311,7 @@
         <div class="card">
             <div class="top-bar">
                 <div id="buyer-title" style="margin:0; text-align:left;"></div>
-                <button class="btn btn-small btn-outline" onclick="sairParaInicio()">Sair</button>
+                <button class="btn btn-small btn-outline" onclick="deslogarComprador()">Sair</button>
             </div>
             
             <img id="buyer-img" class="rifa-image-preview" style="display:block; margin: 0 auto 15px auto;">
@@ -345,7 +343,7 @@
     <div id="modal-dados-comprador" class="modal-overlay">
         <div class="modal-content">
             <h3>Preencha seus dados</h3>
-            <div class="form-group"><label>Seu Nome</label><input type="text" id="mod-comp-nome"></div>
+            <div class="form-group"><label>Seu Nome Completo</label><input type="text" id="mod-comp-nome"></div>
             <div class="form-group"><label>Seu Celular (com DDD)</label><input type="number" id="mod-comp-tel"></div>
             <div class="form-group"><label>Data de Pagamento</label><input type="date" id="mod-comp-data"></div>
             
@@ -371,7 +369,7 @@
             </div>
             <div class="action-buttons">
                 <button class="btn btn-success" onclick="abrirComprovanteCompraImediata()">Ver Comprovante</button>
-                <button class="btn btn-outline" onclick="sairParaInicio()">Fechar Janela</button>
+                <button class="btn btn-outline" onclick="fecharModal('modal-pagamento'); deslogarComprador();">Fechar</button>
             </div>
         </div>
     </div>
@@ -394,7 +392,7 @@
             </div>
             <div class="action-buttons no-print">
                 <button class="btn btn-success" onclick="window.print()">Salvar PDF / Imprimir</button>
-                <button class="btn btn-outline" onclick="sairParaInicio()">Fechar e Voltar</button>
+                <button class="btn btn-outline" onclick="fecharModal('modal-comprovante'); deslogarComprador();">Fechar e Sair</button>
             </div>
         </div>
     </div>
@@ -403,7 +401,7 @@
         <div class="card" style="margin-top: 10vh;">
             <h2>Situação da sua Reserva</h2>
             <div id="area-consulta-resultado"></div>
-            <button class="btn btn-outline" style="margin-top:20px;" onclick="sairParaInicio()">Voltar para a Tela Inicial</button>
+            <button class="btn btn-outline" style="margin-top:20px;" onclick="deslogarComprador();">Sair para o Início</button>
         </div>
     </div>
 
@@ -487,13 +485,33 @@
         function hideLoader() { document.getElementById('loading-overlay').style.display = 'none'; }
         function showLoader() { document.getElementById('loading-overlay').style.display = 'flex'; }
 
-        // NAVEGAÇÃO E MEMÓRIA DE TELAS
+        // EXTRAI E FORMATA SOMENTE O PRIMEIRO NOME
+        function formatarPrimeiroNome(nomeCompleto) {
+            if(!nomeCompleto) return "Usuário";
+            return nomeCompleto.split(' ')[0];
+        }
+
+        // FECHA COMPRADOR DE FORMA SEGURA SEM RECARREGAR PÁGINA
+        function deslogarComprador() {
+            currentRaffleId = null;
+            selectedNumbers = [];
+            // Oculta todos os modais abertos preventivamente
+            document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none');
+            
+            // Limpa o link
+            const urlBase = window.location.href.split('?')[0];
+            window.history.replaceState({}, document.title, urlBase);
+            
+            // Força a ida para a tela principal
+            navigate('screen-welcome');
+        }
+
         function navigate(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active'); 
             window.scrollTo(0,0);
             
-            // Só salva telas do Admin, impedindo que telas públicas travem o recarregamento
+            // SÓ SALVA A SESSÃO SE FOR O ADMINISTRADOR NOS PAINÉIS DELE
             if (currentUserEmail !== "") {
                 const telasAdmin = ['screen-dashboard', 'screen-admin-raffle', 'screen-edit-raffle', 'screen-new-raffle'];
                 if (telasAdmin.includes(screenId)) {
@@ -505,22 +523,13 @@
             }
         }
 
-        // LIMPA OS PARÂMETROS E VOLTA PRA TELA INICIAL
-        function sairParaInicio() {
-            currentRaffleId = null;
-            selectedNumbers = [];
-            window.location.href = window.location.origin + window.location.pathname;
-        }
-
         window.addEventListener('load', () => {
-            setTimeout(hideLoader, 8000); // Trava extra para conexões ruins
+            setTimeout(hideLoader, 8000);
 
-            // Previne que links "#" quebrem a URL
             document.querySelectorAll('a[href="javascript:void(0)"]').forEach(a => {
                 a.addEventListener('click', e => e.preventDefault());
             });
 
-            // Extração Inteligente de Links (Resolve problemas de hash # no Vercel)
             let queryString = window.location.search;
             if (!queryString && window.location.hash.includes('?')) {
                 queryString = window.location.hash.substring(window.location.hash.indexOf('?'));
@@ -535,7 +544,11 @@
                     currentUserEmail = user.email;
                     database.ref('usuarios/' + user.uid).once('value').then(uSnap => {
                         const uData = uSnap.val();
-                        if(uData && uData.nome) document.getElementById('lbl-username').innerText = uData.nome;
+                        if(uData && uData.nome) {
+                            document.getElementById('lbl-username').innerText = formatarPrimeiroNome(uData.nome);
+                            // Atualiza nome na sessão cacheada também
+                            localStorage.setItem('rifa_logged_user', JSON.stringify({user: user.email, nome: uData.nome}));
+                        }
                     }).catch(e => console.log(e));
                 } else {
                     currentUserEmail = "";
@@ -547,11 +560,11 @@
                     hideLoader();
                     ativarAtualizacoesEmTempoReal(); 
 
-                    // REGRA 1: LINK COMPARTILHADO TEM PRIORIDADE ABSOLUTA
+                    // REGRA 1: LINK COMPARTILHADO MANDA EM TUDO
                     if (rifaUrlId && consultaTel) {
                         currentRaffleId = rifaUrlId;
                         realizarConsultaPublica(rifaUrlId, consultaTel);
-                        return; // Para tudo e exibe a consulta
+                        return;
                     } else if (rifaUrlId) {
                         currentRaffleId = rifaUrlId;
                         const rifaEncontrada = rifas.find(r => r.id === rifaUrlId);
@@ -559,12 +572,12 @@
                             simularLinkComprador();
                         } else {
                             alert("Rifa não encontrada no sistema.");
-                            sairParaInicio();
+                            deslogarComprador();
                         }
-                        return; // Para tudo e exibe a tela do comprador
+                        return;
                     }
 
-                    // REGRA 2: USUÁRIO LOGADO E SEM LINKS NA URL
+                    // REGRA 2: ADMIN LOGADO (MEMÓRIA)
                     if (user) {
                         const savedScreen = localStorage.getItem('last_screen');
                         const savedRaffle = localStorage.getItem('last_raffle');
@@ -666,7 +679,11 @@
 
         function fazerLogout() { 
             auth.signOut().then(() => {
-                localStorage.clear(); sairParaInicio(); 
+                currentUserEmail = ""; 
+                localStorage.removeItem('last_screen');
+                localStorage.removeItem('last_raffle');
+                localStorage.removeItem('rifa_logged_user');
+                deslogarComprador(); 
             });
         }
 
@@ -759,6 +776,7 @@
             mr.forEach(r => {
                 const div = document.createElement('div'); div.className = "raffle-card-dash"; div.onclick = () => abrirAdminRifa(r.id);
                 const bg = r.imagem ? `background-image: url('${r.imagem}');` : '';
+                
                 const htmlConcluido = r.concluida ? `<div class="badge-concluido">Concluído</div>` : '';
 
                 let grid = '';
@@ -811,7 +829,9 @@
             document.getElementById('stat-val-rec').innerText = `R$ ${tArrec.toFixed(2)}`; document.getElementById('stat-val-pend').innerText = `R$ ${tPend.toFixed(2)}`;
             document.getElementById('admin-progress').style.width = prog + '%'; document.getElementById('admin-progress').innerText = prog + '% Vendido';
             
-            if(!r.concluida) { document.getElementById('btn-sortear').style.display = (v === r.qtd && r.qtd > 0) ? 'block' : 'none'; }
+            if(!r.concluida) {
+                document.getElementById('btn-sortear').style.display = (v === r.qtd && r.qtd > 0) ? 'block' : 'none';
+            }
         }
 
         function renderizarGridAdmin(r) {
@@ -822,9 +842,13 @@
                 
                 if (r.concluida && r.ganhador && r.ganhador.numero === n.numero) {
                     div.innerHTML = `<span class="crown-icon">👑</span>${n.numero}`;
-                    div.style.boxShadow = "0 0 12px rgba(255,215,0,1)"; div.style.transform = "scale(1.15)";
-                    div.style.zIndex = "5"; div.style.border = "2px solid #ffd700";
-                } else { div.innerText = n.numero; }
+                    div.style.boxShadow = "0 0 12px rgba(255,215,0,1)";
+                    div.style.transform = "scale(1.15)";
+                    div.style.zIndex = "5";
+                    div.style.border = "2px solid #ffd700";
+                } else {
+                    div.innerText = n.numero;
+                }
 
                 div.onclick = () => abrirModalAdminNumero(idx, r);
                 grid.appendChild(div);
@@ -843,7 +867,8 @@
             document.getElementById('mod-adm-status').innerText = st;
             
             if(r.concluida) {
-                document.getElementById('btn-adm-pagou').style.display = 'none'; document.getElementById('btn-adm-apagar').style.display = 'none';
+                document.getElementById('btn-adm-pagou').style.display = 'none';
+                document.getElementById('btn-adm-apagar').style.display = 'none';
             } else {
                 document.getElementById('btn-adm-pagou').style.display = n.status === 'paid' ? 'none' : 'block';
                 document.getElementById('btn-adm-apagar').style.display = 'block';
@@ -908,7 +933,9 @@
                 if (r.concluida && r.ganhador && r.ganhador.numero === n.numero) {
                     div.innerHTML = `<span class="crown-icon">👑</span>${n.numero}`;
                     div.style.boxShadow = "0 0 10px rgba(255,215,0,1)"; div.style.border = "2px solid #ffd700"; div.style.zIndex = "5";
-                } else { div.innerText = n.numero; }
+                } else {
+                    div.innerText = n.numero;
+                }
                 
                 if (n.status === 'available' || selectedNumbers.includes(index)) {
                     aplicarCoresNumero(div, n, r);
@@ -998,7 +1025,9 @@
             
             if(confirm("Deseja realmente sortear? A rifa será finalizada e não poderá ser desfeita.")) {
                 const ganhador = r.numeros[Math.floor(Math.random() * r.qtd)];
-                r.concluida = true; r.ganhador = ganhador;
+                
+                r.concluida = true;
+                r.ganhador = ganhador;
                 
                 database.ref('rifas').set(rifas).then(() => {
                     alert(`🎉 BINGO! SORTEIO REALIZADO!\n\nNúmero Sorteado: ${ganhador.numero}\nGanhador(a): ${ganhador.comprador}`);
@@ -1010,11 +1039,15 @@
         }
 
         function abrirListaCompradores() {
-            document.getElementById('filtro-nome').value = ''; document.getElementById('filtro-status').value = '';
-            renderizarListaCompradores(); abrirModal('modal-lista-compradores');
+            document.getElementById('filtro-nome').value = '';
+            document.getElementById('filtro-status').value = '';
+            renderizarListaCompradores();
+            abrirModal('modal-lista-compradores');
         }
 
-        function filtrarLista() { renderizarListaCompradores(); }
+        function filtrarLista() {
+            renderizarListaCompradores();
+        }
 
         function renderizarListaCompradores() {
             const r = rifas.find(x => x.id === currentRaffleId);
@@ -1023,6 +1056,7 @@
             const fStatus = document.getElementById('filtro-status').value;
             
             tbody.innerHTML = '';
+            
             r.numeros.forEach(n => {
                 const nomeStr = (n.comprador || '').toLowerCase();
                 if (fNome && !nomeStr.includes(fNome)) return;
