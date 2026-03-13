@@ -70,6 +70,7 @@
 
         .main-content { flex: 1; }
 
+        /* HEADER */
         .main-navbar {
             background: var(--footer-bg); padding: 10px 20px; display: flex; justify-content: space-between;
             align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 1000;
@@ -82,6 +83,7 @@
         }
         .btn-nav:hover { background: rgba(255,255,255,0.2); color: #fff; }
 
+        /* LOGO */
         .logo-container { text-align: center; margin-bottom: 30px; }
         .logo-title { 
             font-family: 'Tw Cen MT Condensed', 'Tw Cen MT', 'Oswald', sans-serif; 
@@ -105,6 +107,9 @@
         @keyframes pulse-btn { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(2, 136, 209, 0.7); } 50% { transform: scale(1.08); box-shadow: 0 0 0 15px rgba(2, 136, 209, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(2, 136, 209, 0); } }
         .btn-animated { animation: pulse-btn 1.5s infinite; border-radius: 30px !important; font-size: clamp(18px, 2vw, 24px) !important; padding: 15px 40px !important; font-weight: bold; text-transform: uppercase; }
         
+        .font-rifa { font-family: 'Tw Cen MT Condensed', 'Tw Cen MT', 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* TELAS E CARDS */
         #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, var(--bg-baby-blue) 0%, var(--bg-bottom) 100%); z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column; transition: 0.5s; }
         .spinner { border: 5px solid rgba(0,0,0,0.1); border-top: 5px solid var(--primary-blue); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -134,13 +139,9 @@
         .btn-icon.btn-danger { background: var(--danger); color: white; border: none; }
         .btn-icon.btn-warning { background: var(--warning); color: white; border: none; }
         .btn-icon.btn-success { background: var(--success); color: white; border: none; }
-        
-        .badge-notif { 
-            position: absolute; top: -5px; right: -5px; background: red; color: white; 
-            font-size: 10px; font-weight: bold; width: 18px; height: 18px; 
-            border-radius: 50%; display: flex; justify-content: center; align-items: center; 
-        }
+        .badge-notif { position: absolute; top: -5px; right: -5px; background: red; color: white; font-size: 10px; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
 
+        /* FORMULARIOS */
         .form-group { margin-bottom: 15px; width: 100%; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px; }
         .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; background: transparent; color: var(--text-dark); transition: 0.3s; font-family: inherit;}
@@ -153,6 +154,7 @@
         .header { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 15px 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: 0.3s;}
         .top-bar { display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 15px; align-items: center; gap: 10px;}
 
+        /* RIFAS E GRID */
         .new-raffle-box { display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 30px auto; width: 100%; }
         .btn-square-add { width: 100px; height: 100px; background: transparent; border: 3px dashed var(--primary-blue); color: var(--primary-blue); font-size: 50px; border-radius: 15px; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: 0.3s; }
         .btn-square-add:hover { background: rgba(2, 136, 209, 0.1); }
@@ -170,7 +172,6 @@
         .numbers-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;}
         .number-item { position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: #eee; border: 2px solid #ccc; color: #333; cursor: pointer; font-weight: bold; transition: 0.2s; font-size: 14px; box-sizing: border-box; }
         .crown-icon { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: 22px; z-index: 5; text-shadow: 0 0 5px rgba(255,215,0,0.8); }
-
         body.dark-mode .number-item { background: #333; border-color: #555; color: #fff;}
 
         .mini-numbers-grid { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; width: 100%; max-height: 200px; overflow-y: auto; padding: 5px; }
@@ -200,7 +201,8 @@
         .stat-box span { display: block; font-size: 18px; font-weight: bold; color: var(--primary-blue); margin-top: 5px;}
         body.dark-mode .stat-box { background: rgba(255,255,255,0.05); }
 
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; overflow-y: auto; padding: 20px; }
+        /* MODAIS E ELEMENTOS COMUNS */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center; overflow-y: auto; padding: 20px; }
         .modal-content { background: var(--card-bg); padding: 25px; border-radius: 12px; width: 100%; max-width: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); margin: auto; color: var(--text-dark);}
         
         .table-compradores { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
@@ -215,20 +217,21 @@
         .recibo-block { margin-bottom: 10px; padding: 5px; border: 1px solid #ddd; border-radius: 5px; background: rgba(255,255,255,0.5);}
         body.dark-mode .recibo-block { background: rgba(0,0,0,0.2); border-color: #555;}
 
+        /* CHAT E FEEDBACK */
         .chat-container { display: flex; flex-direction: column; gap: 10px; height: 350px; overflow-y: auto; background: rgba(0,0,0,0.03); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #ccc; }
         body.dark-mode .chat-container { background: rgba(0,0,0,0.3); border-color: #444;}
         .msg-bubble { padding: 10px 15px; border-radius: 15px; max-width: 85%; font-size: 14px; line-height: 1.4; position: relative;}
         .msg-user { background: var(--primary-blue); color: white; align-self: flex-end; border-bottom-right-radius: 0; }
         .msg-admin { background: #e2e8f0; color: #333; align-self: flex-start; border-bottom-left-radius: 0; }
         body.dark-mode .msg-admin { background: #334155; color: #fff; }
-        .msg-sistema { background: rgba(255,0,0,0.1); color: var(--danger); align-self: center; font-size:12px; font-style:italic; text-align:center; border-radius:8px;}
+        .msg-sistema { background: rgba(255,0,0,0.1); color: var(--danger); align-self: center; font-size:12px; font-style:italic; text-align:center; border-radius:8px; padding: 5px 10px;}
         .msg-time { font-size: 10px; opacity: 0.7; margin-top: 5px; text-align: right; display: block;}
         
         .estrelas { font-size: 35px; color: #ccc; display: flex; justify-content: center; gap: 5px; cursor: pointer; margin: 15px 0;}
         .estrelas span.ativa { color: var(--gold); text-shadow: 0 0 5px rgba(255,215,0,0.5);}
-
         .chart-box { background: var(--card-bg); padding: 15px; border-radius: 12px; margin-top: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
 
+        /* RODAPÉ PROFISSIONAL */
         .footer { background: var(--footer-bg); color: var(--footer-text); text-align: center; padding: 30px 20px 20px 20px; margin-top: auto; font-size: 14px; width: 100%; position: relative; }
         .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 15px; }
         .footer a { color: var(--footer-text); text-decoration: none; transition: 0.3s; cursor: pointer; font-weight: bold;}
@@ -242,7 +245,6 @@
             font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
         .btn-help-footer:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
-
         .preview-container { margin-top: 20px; border: 2px solid #ccc; border-radius: 8px; padding: 15px; background: rgba(0,0,0,0.05); }
         
         @media print {
@@ -273,15 +275,9 @@
       function instalarApp() {
           if (deferredPrompt) {
               deferredPrompt.prompt();
-              deferredPrompt.userChoice.then(() => { 
-                  deferredPrompt = null; 
-              });
+              deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
           } else {
-              if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-                  alert("Você já instalou o aplicativo! Ele está rodando na sua tela inicial.");
-              } else {
-                  alert("⏳ O seu celular ainda está preparando o instalador. Tente clicar novamente em 5 segundos.\n\nSe a janela automática não aparecer:\n📱 Android: Clique nos 3 pontinhos do navegador e escolha 'Instalar aplicativo'.\n🍎 iPhone: Toque no botão Compartilhar (quadrado com setinha) e 'Adicionar à Tela de Início'.");
-              }
+              alert("Siga o passo a passo para instalar o aplicativo:\n\n📱 No Android (Chrome):\n1. Clique nos 3 pontinhos no canto superior da tela.\n2. Clique em 'Instalar aplicativo' ou 'Adicionar à tela inicial'.\n\n🍎 No iPhone (Safari):\n1. Toque no botão de Compartilhar (quadradinho com seta pra cima) no rodapé.\n2. Role a lista e clique em 'Adicionar à Tela de Início'.\n\nSe você já instalou, procure o ícone RifaOn🍀 no menu do seu celular!");
           }
       }
     </script>
@@ -310,13 +306,14 @@
     </div>
 
     <div class="main-content">
+        
         <div id="screen-welcome" class="screen active">
             <div style="margin-top: 10vh; background: transparent; padding: 25px; text-align: center;">
                 <div class="logo-container">
                     <h1 class="logo-title">
-                        <span class="logo-rifa">Rifa</span><span class="logo-on">On</span><span class="logo-clover">🍀</span>
+                        <span class="logo-rifa">Rifa</span><span class="logo-on">On</span><sup class="logo-clover">🍀</sup>
                     </h1>
-                    <p class="logo-subtitle">A maneira mais fácil e segura de criar rifas online. Compartilhe no WhatsApp, gerencie pagamentos e realize sorteios em poucos cliques.</p>
+                    <p class="logo-subtitle">A maneira mais fácil e segura de criar rifas online. Compartilhe o link, gerencie pagamentos e realize sorteios em poucos cliques.</p>
                 </div>
                 <div class="action-buttons" style="margin-top: 40px;">
                     <button class="btn btn-animated" onclick="navigate('screen-login')">Entrar no Painel</button>
@@ -330,14 +327,11 @@
                     <button class="btn btn-small btn-outline" onclick="navigate('screen-welcome')">Voltar</button>
                 </div>
                 <h2>Acessar Conta</h2>
-                
                 <button class="btn btn-google" onclick="loginComGoogle()" style="margin-bottom: 20px;">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
                     Entrar com o Google
                 </button>
-                
                 <div style="text-align: center; margin-bottom: 15px; color: #888;">ou use seu E-mail</div>
-
                 <div class="form-group"><label>E-mail</label><input type="email" id="login-user" placeholder="Digite seu e-mail"></div>
                 <div class="form-group"><label>Senha</label><input type="password" id="login-pass" placeholder="Digite sua senha"></div>
                 <button class="btn" onclick="fazerLogin()">Logar</button>
@@ -387,7 +381,6 @@
                     <b>{rifa}</b> = Nome da Rifa | <b>{premio}</b> = Prêmio<br>
                     <b>{link}</b> = Link de acesso
                 </p>
-
                 <div class="form-group"><label>1. Compartilhar a Rifa (Convite)</label><textarea id="cfg-msg-link" rows="3"></textarea></div>
                 <div class="form-group"><label>2. Encaminhar Comprovante (Admin)</label><textarea id="cfg-msg-comp" rows="5"></textarea><small style="color:var(--danger); font-size:11px;">Mantenha a tag <b>{detalhes}</b> para gerar a lista de números e valores.</small></div>
                 <div class="form-group"><label>3. Cobrar Número Atrasado</label><textarea id="cfg-msg-cob" rows="3"></textarea></div>
@@ -405,14 +398,11 @@
                     </button>
                     <button class="btn-icon" title="Mensagens Automáticas" onclick="abrirConfiguracoes()">⚙️</button>
                     <button id="btn-user-support" class="btn-icon" title="Meus Chamados" onclick="carregarMeusChamados()">🎧</button>
-                    
                     <button id="btn-master-panel" class="btn-icon btn-warning" title="Painel de Suporte Master" style="display:none;" onclick="abrirPainelMestre()">👑</button>
                     <button id="btn-master-analytics" class="btn-icon btn-success" title="Relatórios e Feedback" style="display:none;" onclick="abrirRelatoriosMaster()">📊</button>
-                    
                     <button class="btn-icon btn-danger" title="Sair" onclick="fazerLogout()">🚪</button>
                 </div>
             </div>
-            
             <h3 class="font-rifa" style="font-size: 28px;">Minhas Rifas</h3>
             <div id="raffle-list"></div>
             <div class="new-raffle-box">
@@ -432,7 +422,6 @@
                 <div class="form-group"><label>Prêmio</label><input type="text" id="rf-premio"></div>
                 <div class="form-group"><label>Valor por Número (R$)</label><input type="number" id="rf-valor" step="0.01"></div>
                 <div class="form-group"><label>Quantidade de Números</label><input type="number" id="rf-qtd" value="100"></div>
-                
                 <div class="form-group">
                     <label>Imagem do Produto</label>
                     <div style="display: flex; gap: 10px; align-items: center;">
@@ -441,7 +430,6 @@
                     </div>
                     <img id="preview-img-cadastro" class="rifa-image-preview">
                 </div>
-                
                 <div class="form-group">
                     <label>Formato dos Números</label>
                     <select id="rf-formato" onchange="updatePreview('criar')"><option value="shape-square">Quadrado</option><option value="shape-circle">Círculo</option><option value="shape-ellipse">Elipse</option><option value="shape-heart">Coração</option><option value="shape-triangle">Triângulo</option><option value="shape-hexagon">Hexágono</option><option value="shape-octagon">Octógono</option></select>
@@ -452,13 +440,11 @@
                 </div>
                 <div class="form-group"><label>Cor Principal</label><input type="color" id="rf-cor" value="#0288d1" onchange="updatePreview('criar')"></div>
                 <div class="form-group"><label>Dados de Pagamento (PIX)</label><input type="text" id="rf-pix-nome" placeholder="Nome do Titular" style="margin-bottom: 5px;"><input type="text" id="rf-pix-chave" placeholder="Chave PIX"></div>
-                
                 <div class="form-group">
                     <label>Plano de Fundo da Grade</label>
                     <select id="rf-bg-style" onchange="updatePreview('criar')"><option value="">Transparente</option><option value="bg-flat">Cor Sólida</option><option value="bg-gradient">Cor Gradiente</option></select>
                 </div>
                 <div class="form-group"><label>Cor do Fundo</label><input type="color" id="rf-bg-color" value="#ffffff" onchange="updatePreview('criar')"></div>
-                
                 <div class="form-group">
                     <label>Ou Imagem de Fundo da Grade</label>
                     <div style="display: flex; gap: 10px; align-items: center;">
@@ -467,7 +453,6 @@
                     </div>
                     <img id="preview-img-bg-cad" class="rifa-image-preview">
                 </div>
-                
                 <button class="btn btn-outline" style="margin-bottom: 15px;" onclick="abrirPreVisualizacao('criar')">👀 Pré-visualizar Grade</button>
                 <button class="btn" onclick="salvarRifa()">Salvar Rifa</button>
             </div>
@@ -484,7 +469,6 @@
                 <div class="form-group"><label>Prêmio</label><input type="text" id="rf-edit-premio"></div>
                 <div class="form-group"><label>Valor por Número (R$)</label><input type="number" id="rf-edit-valor" step="0.01"></div>
                 <div class="form-group"><label>Quantidade de Números</label><input type="number" id="rf-edit-qtd" disabled></div>
-                
                 <div class="form-group">
                     <label>Nova Imagem Produto</label>
                     <div style="display: flex; gap: 10px; align-items: center;">
@@ -493,7 +477,6 @@
                     </div>
                     <img id="preview-img-edicao" class="rifa-image-preview">
                 </div>
-                
                 <div class="form-group">
                     <label>Formato dos Números</label>
                     <select id="rf-edit-formato" onchange="updatePreview('editar')"><option value="shape-square">Quadrado</option><option value="shape-circle">Círculo</option><option value="shape-ellipse">Elipse</option><option value="shape-heart">Coração</option><option value="shape-triangle">Triângulo</option><option value="shape-hexagon">Hexágono</option><option value="shape-octagon">Octógono</option></select>
@@ -504,13 +487,11 @@
                 </div>
                 <div class="form-group"><label>Cor Principal</label><input type="color" id="rf-edit-cor" onchange="updatePreview('editar')"></div>
                 <div class="form-group"><label>Dados de Pagamento (PIX)</label><input type="text" id="rf-edit-pix-nome" style="margin-bottom: 5px;"><input type="text" id="rf-edit-pix-chave"></div>
-                
                 <div class="form-group">
                     <label>Plano de Fundo da Grade</label>
                     <select id="rf-edit-bg-style" onchange="updatePreview('editar')"><option value="">Transparente</option><option value="bg-flat">Cor Sólida</option><option value="bg-gradient">Cor Gradiente</option></select>
                 </div>
                 <div class="form-group"><label>Cor do Fundo</label><input type="color" id="rf-edit-bg-color" onchange="updatePreview('editar')"></div>
-                
                 <div class="form-group">
                     <label>Nova Imagem de Fundo da Grade</label>
                     <div style="display: flex; gap: 10px; align-items: center;">
@@ -519,7 +500,6 @@
                     </div>
                     <img id="preview-img-bg-edit" class="rifa-image-preview">
                 </div>
-
                 <button class="btn btn-outline" style="margin-bottom: 15px;" onclick="abrirPreVisualizacao('editar')">👀 Pré-visualizar Grade</button>
                 <button class="btn btn-warning" onclick="salvarEdicaoRifa()">Salvar Alterações</button>
             </div>
@@ -533,7 +513,7 @@
                 </div>
 
                 <div class="action-buttons" style="margin-bottom: 20px;">
-                    <button id="btn-editar-rifa" class="btn btn-small btn-warning" onclick="abrirEditarRifa(currentRaffleId)">✏️ Editar</button>
+                    <button id="btn-editar-rifa" class="btn btn-small btn-warning" onclick="chamarEdicaoAtual()">✏️ Editar</button>
                     <button id="btn-excluir-rifa" class="btn btn-small btn-danger" onclick="chamarExclusaoAtual()">Excluir</button>
                     <button id="btn-sortear" class="btn btn-small btn-success" style="display:none;" onclick="realizarSorteio()">🎉 Sortear!</button>
                     <button class="btn btn-small" style="background:#4A148C;" onclick="abrirListaCompradores()">📋 Ver Compradores</button>
@@ -545,7 +525,7 @@
                         <input type="text" id="admin-link-input" readonly style="flex: 1; min-width: 150px; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 12px; background: transparent;">
                         <div style="display: flex; gap: 5px; flex-wrap: nowrap;">
                             <button class="btn btn-small" onclick="copiarLink()">Copiar</button>
-                            <button class="btn btn-small btn-success" onclick="compartilharLinkWhatsApp()">WhatsApp</button>
+                            <button class="btn btn-small btn-success" onclick="compartilharLinkGeral()">🔗 Compartilhar</button>
                         </div>
                     </div>
                 </div>
@@ -575,18 +555,14 @@
                     <div id="buyer-title" style="margin:0; text-align:left;"></div>
                     <button class="btn btn-small btn-danger" style="width:auto;" onclick="deslogarComprador()">Sair da Rifa</button>
                 </div>
-                
                 <img id="buyer-img" class="rifa-image-preview" style="display:block; margin: 0 auto 15px auto;">
                 <p id="buyer-desc" style="text-align: center;"></p>
                 <h3 id="buyer-premio"></h3>
                 <p style="text-align: center; font-size: 18px;">Valor do número: <strong>R$ <span id="buyer-valor">0,00</span></strong></p>
-                
                 <p style="text-align: center; color: var(--danger);" id="buyer-instrucoes">Selecione os números desejados:</p>
-                
                 <div id="buyer-grid-container" class="grid-container-custom">
                     <div class="numbers-grid" id="buyer-numbers-grid"></div>
                 </div>
-
                 <button class="btn" id="btn-prosseguir" style="display: none; margin-top: 20px;" onclick="abrirModalDados()">Prosseguir</button>
             </div>
         </div>
@@ -619,11 +595,9 @@
                     <button class="btn btn-small btn-outline" onclick="navigate('screen-dashboard')">Voltar</button>
                 </div>
                 <p style="font-size: 14px; text-align: justify; color: #666;">Acompanhe o volume de chamados de suporte em comparação à avaliação média dos clientes. Menos chamados e notas altas indicam que a plataforma está operando perfeitamente.</p>
-                
                 <div class="chart-box">
                     <canvas id="paretoChart"></canvas>
                 </div>
-
                 <h3 style="margin-top: 30px; text-align: left;">Comentários e Feedbacks</h3>
                 <div id="analytics-feedbacks" style="max-height: 300px; overflow-y: auto; margin-top: 10px;"></div>
             </div>
@@ -638,21 +612,17 @@
                         <button class="btn btn-small btn-outline" onclick="fecharChat()">Voltar</button>
                     </div>
                 </div>
-                
                 <div id="chat-history" class="chat-container"></div>
-                
                 <div id="chat-anexo-preview" style="display:none; text-align:center; margin-bottom:10px; position:relative;">
                     <img id="chat-preview-img" style="height:60px; border-radius:6px;">
                     <button style="position:absolute; top:-5px; right:40%; background:red; color:white; border:none; border-radius:50%; width:20px; height:20px; cursor:pointer;" onclick="removerAnexoChat()">X</button>
                 </div>
-
                 <div id="chat-controls" style="display: flex; gap: 5px;">
                     <input type="file" id="chat-anexo" accept="image/*" style="display:none;" onchange="processarAnexoChat(this)">
                     <button class="btn btn-outline" style="width: auto; padding: 0 15px; font-size:20px;" title="Anexar Imagem" onclick="document.getElementById('chat-anexo').click()">📎</button>
                     <input type="text" id="chat-input" style="flex:1; padding:10px; border-radius:8px; border:1px solid #ccc; font-family:inherit;" placeholder="Digite sua mensagem...">
                     <button class="btn btn-success" style="width: auto; padding: 0 20px;" onclick="enviarMensagemChat()">Enviar</button>
                 </div>
-                
                 <div id="chat-closed-msg" style="display: none; text-align: center; color: var(--danger); font-weight: bold; padding: 15px; background: rgba(255,0,0,0.05); border-radius: 8px;">
                     🔒 Chamado Encerrado
                 </div>
@@ -663,167 +633,6 @@
             </div>
         </div>
 
-        <div id="modal-notificacoes" class="modal-overlay" style="z-index: 10000;">
-            <div class="modal-content" style="max-width: 400px; padding: 20px;">
-                <h3 style="margin-top:0;">🔔 Suas Notificações</h3>
-                <div id="lista-notificacoes" style="max-height:300px; overflow-y:auto; font-size:14px;"></div>
-                <button class="btn btn-outline" style="margin-top:15px; width: 100%;" onclick="fecharModal('modal-notificacoes')">Fechar</button>
-            </div>
-        </div>
-
-        <div id="modal-ajuda" class="modal-overlay" style="z-index: 10000;">
-            <div class="modal-content" style="max-width: 600px; padding: 25px; max-height: 85vh; overflow-y: auto;">
-                <h2 style="margin-top:0; color:var(--primary-blue); text-align:center;">📖 Central de Ajuda</h2>
-                
-                <h3 style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">Manual Rápido</h3>
-                <ul style="padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                    <li><b>Ícones do Topo:</b> <br>
-                        🌙 / ☀️ Alterna entre o visual claro e o escuro do aplicativo.<br>
-                        ⚙️ Personaliza as mensagens automáticas enviadas para o WhatsApp.<br>
-                        🎧 Acesso rápido aos seus chamados de suporte abertos.<br>
-                        🔔 Avisos de números que atrasaram o pagamento ou de rifa 100% vendida.
-                    </li>
-                    <li><b>Criar Rifas:</b> Clique em "+ Nova Rifa" na tela principal. Preencha os dados, escolha o formato e a cor dos números e clique em Salvar.</li>
-                    <li><b>Editar Rifas:</b> Abra a rifa desejada e clique no botão amarelo "✏️ Editar".</li>
-                    <li><b>Compartilhar:</b> Dentro do painel da rifa, clique em "Copiar" ou no botão de "WhatsApp" para mandar o link seguro de compra para as pessoas.</li>
-                    <li><b>Comprovantes:</b> Quando o cliente pagar, clique no número dele e em "✅ Confirmar". Após isso, clique em "📲 Enviar" para gerar e mandar o recibo via PDF/WhatsApp.</li>
-                    <li><b>Sorteio:</b> O botão verde "🎉 Sortear!" só irá aparecer magicamente quando <b>100% dos números da rifa</b> estiverem pagos!</li>
-                </ul>
-
-                <h3 style="border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-top: 20px;">Dúvidas Frequentes (FAQ)</h3>
-                <div style="font-size: 14px; line-height: 1.6;">
-                    <p><b>P: Posso editar a rifa depois de criada?</b><br>
-                    R: Sim! Você pode alterar nome, imagens e cores a qualquer momento. Porém, a <i>quantidade de números</i> é bloqueada para não desconfigurar as reservas já feitas.</p>
-                    <p><b>P: E se o cliente reservar e não pagar?</b><br>
-                    R: Se passar da data de promessa estipulada, o número fica vermelho (Atrasado) e um aviso vai pro seu 🔔. Você pode clicar no número, enviar uma mensagem de cobrança automática ou clicar em "🗑️ Liberar" para voltar a ficar disponível.</p>
-                    <p><b>P: As pessoas precisam ter conta ou baixar o App para comprar minha rifa?</b><br>
-                    R: Não! O link da sua rifa é público e seguro. O cliente só preenche os dados de contato rapidamente no momento de reservar o número. O sistema de login é exclusivo para você (vendedor).</p>
-                </div>
-                
-                <button class="btn btn-outline" style="margin-top:20px; width: 100%;" onclick="fecharModal('modal-ajuda')">Fechar Ajuda</button>
-            </div>
-        </div>
-
-        <div id="modal-feedback" class="modal-overlay" style="z-index: 10000;">
-            <div class="modal-content" style="text-align:center;">
-                <h3 style="margin-top:0;">Chamado Encerrado</h3>
-                
-                <div id="feed-step-1">
-                    <p>Sua solicitação foi resolvida?</p>
-                    <div style="display:flex; gap:10px; justify-content:center;">
-                        <button class="btn btn-success" onclick="setFeedbackResolvido(true)">👍 Sim</button>
-                        <button class="btn btn-danger" onclick="setFeedbackResolvido(false)">👎 Não</button>
-                    </div>
-                </div>
-
-                <div id="feed-step-2" style="display:none;">
-                    <div id="feed-motivo-box" class="form-group" style="display:none; text-align:left;">
-                        <label>Qual foi o motivo da insatisfação?</label>
-                        <textarea id="feed-motivo" rows="2" style="width:100%;"></textarea>
-                    </div>
-                    <p style="margin-top:15px; font-weight:bold;">Avalie o atendimento:</p>
-                    <div class="estrelas" id="feed-estrelas">
-                        <span onclick="setEstrela(1)">★</span><span onclick="setEstrela(2)">★</span><span onclick="setEstrela(3)">★</span><span onclick="setEstrela(4)">★</span><span onclick="setEstrela(5)">★</span>
-                    </div>
-                    <input type="hidden" id="feed-nota" value="0">
-                    <button class="btn btn-primary" style="margin-top:15px;" onclick="enviarFeedback()">Salvar e Fechar</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="modal-termos" class="modal-overlay" style="z-index: 10000;">
-            <div class="modal-content" style="max-width: 500px;">
-                <h3>Termos e Regulamento</h3>
-                <div style="font-size: 13px; max-height: 300px; overflow-y: auto; padding-right: 10px; text-align: justify; line-height:1.5;">
-                    <p><b>1. Reserva e Pagamento:</b> Ao reservar um número, o comprador se compromete a realizar o pagamento e enviar o comprovante de PIX para o organizador no prazo estipulado.</p>
-                    <p><b>2. Sorteio:</b> O sorteio será realizado de forma justa e transparente apenas após a confirmação do pagamento de 100% dos números.</p>
-                    <p><b>3. Prêmio:</b> O prêmio descrito é definitivo e intransferível.</p>
-                    <p><b>4. Transparência:</b> O comprador pode consultar o status das suas cotas a qualquer momento pelo link.</p>
-                    <p><b>5. Vínculo:</b> O fornecedor desta plataforma não tem vínculo com a arrecadação desta rifa.</p>
-                </div>
-                <button class="btn btn-outline" style="margin-top:15px;" onclick="fecharModal('modal-termos')">Fechar Regulamento</button>
-            </div>
-        </div>
-
-        <div id="modal-privacidade" class="modal-overlay" style="z-index: 10000;">
-            <div class="modal-content" style="max-width: 500px;">
-                <h3>Política de Privacidade</h3>
-                <div style="font-size: 13px; max-height: 300px; overflow-y: auto; padding-right: 10px; text-align: justify; line-height:1.5;">
-                    <p>A privacidade dos nossos usuários e visitantes é muito importante para nós. Coletamos apenas as informações mínimas necessárias.</p>
-                    <p>Nenhuma informação financeira ou dados sensíveis são solicitados por esta plataforma.</p>
-                </div>
-                <button class="btn btn-outline" style="margin-top:15px;" onclick="fecharModal('modal-privacidade')">Entendido</button>
-            </div>
-        </div>
-
-        <div id="modal-suporte-publico" class="modal-overlay" style="z-index: 10000;">
-            <div class="modal-content">
-                <h3>Fale com o Desenvolvedor</h3>
-                <p style="font-size: 13px; text-align:center; margin-top:0;">Dúvidas, reclamações ou feedbacks.</p>
-                <div class="form-group"><label>Seu Nome</label><input type="text" id="sup-nome"></div>
-                <div class="form-group"><label>Seu E-mail</label><input type="email" id="sup-email"></div>
-                <div class="form-group"><label>Sua Mensagem</label><textarea id="sup-msg" rows="4" placeholder="Descreva aqui..."></textarea></div>
-                <div class="action-buttons">
-                    <button class="btn btn-outline" onclick="fecharModal('modal-suporte-publico')">Cancelar</button>
-                    <button class="btn btn-success" onclick="enviarTicketSuportePublico()">Enviar Mensagem</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="modal-dados-comprador" class="modal-overlay">
-            <div class="modal-content">
-                <h3>Preencha seus dados</h3>
-                <div class="form-group"><label>Seu Nome Completo</label><input type="text" id="mod-comp-nome"></div>
-                <div class="form-group"><label>Seu Celular (com DDD)</label><input type="number" id="mod-comp-tel"></div>
-                <div class="form-group"><label>Data de Pagamento</label><input type="date" id="mod-comp-data"></div>
-                <div class="form-group" style="display:flex; align-items:flex-start; gap:8px; font-size:13px; text-align:left;">
-                    <input type="checkbox" id="mod-comp-termos" style="width:18px; height:18px; margin-top:2px;">
-                    <label for="mod-comp-termos" style="font-weight:normal; margin:0;">Li e aceito os <a href="javascript:void(0)" style="color:var(--primary-blue);" onclick="abrirModal('modal-termos')">Termos e Regulamento</a> da rifa.</label>
-                </div>
-                <div class="action-buttons">
-                    <button class="btn btn-outline" onclick="fecharModal('modal-dados-comprador')">Cancelar</button>
-                    <button class="btn" onclick="confirmarReserva()">Reservar</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="modal-pagamento" class="modal-overlay">
-            <div class="modal-content" style="text-align:center;">
-                <h3>Reservado com Sucesso!</h3>
-                <div style="background:rgba(0,0,0,0.05); padding:15px; border-radius:8px; margin-bottom:15px;">
-                    <p style="margin:0; font-weight:bold;">Chave PIX para pagamento:</p>
-                    <p id="mod-pix-chave" style="word-break: break-all; color:var(--primary-blue); margin:5px 0; font-size:18px;"></p>
-                    <p style="margin:0; font-size:14px;">Titular: <span id="mod-pix-nome"></span></p>
-                </div>
-                <div class="action-buttons">
-                    <button class="btn btn-success" onclick="abrirComprovanteCompraImediata()">Ver Comprovante</button>
-                    <button class="btn btn-danger" onclick="deslogarComprador()">Sair da Rifa</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="modal-comprovante" class="modal-overlay">
-            <div class="modal-content" style="max-width: 350px;">
-                <div class="recibo-box" id="area-recibo-print">
-                    <div class="recibo-header">🧾 COMPROVANTE</div>
-                    <div class="recibo-row"><span>Rifa:</span> <strong id="rec-nome-rifa"></strong></div>
-                    <div class="recibo-row"><span>Prêmio:</span> <strong id="rec-premio"></strong></div>
-                    <hr style="border-top:1px dashed #ccc;">
-                    <div id="rec-conteudo-dinamico"></div>
-                    <hr style="border-top:1px dashed #ccc;">
-                    <div class="recibo-row"><span>Comprador:</span> <strong id="rec-comprador"></strong></div>
-                    <div class="recibo-row"><span>Telefone:</span> <strong id="rec-tel"></strong></div>
-                    <div style="text-align:center; font-size:10px; margin-top:15px; word-break:break-all;">
-                        Acompanhe em:<br><span id="rec-link" style="color:var(--primary-blue);"></span>
-                    </div>
-                </div>
-                <div class="action-buttons no-print">
-                    <button class="btn btn-success" onclick="window.print()">Salvar PDF / Imprimir</button>
-                    <button class="btn btn-danger" onclick="deslogarComprador()">Sair e Fechar</button>
-                </div>
-            </div>
-        </div>
-
         <div id="screen-consulta" class="screen">
             <div class="card" style="margin-top: 10vh;">
                 <h2>Situação da sua Reserva</h2>
@@ -831,48 +640,211 @@
                 <button class="btn btn-danger" style="margin-top:20px; width:100%;" onclick="deslogarComprador();">Sair para o Início</button>
             </div>
         </div>
+    </div> <div id="modal-notificacoes" class="modal-overlay" style="z-index: 10000;">
+        <div class="modal-content" style="max-width: 400px; padding: 20px;">
+            <h3 style="margin-top:0;">🔔 Suas Notificações</h3>
+            <div id="lista-notificacoes" style="max-height:300px; overflow-y:auto; font-size:14px;"></div>
+            <button class="btn btn-outline" style="margin-top:15px; width: 100%;" onclick="fecharModal('modal-notificacoes')">Fechar</button>
+        </div>
+    </div>
 
-        <div id="modal-admin-numero" class="modal-overlay">
-            <div class="modal-content" style="padding: 20px;">
-                <h3 style="margin-top:0;">Número <span id="mod-adm-num"></span></h3>
-                <p style="margin: 5px 0;"><strong>Comprador:</strong> <span id="mod-adm-nome"></span></p>
-                <p style="margin: 5px 0;"><strong>WhatsApp:</strong> <span id="mod-adm-tel"></span></p>
-                <p style="margin: 5px 0;"><strong>Promessa:</strong> <span id="mod-adm-data"></span></p>
-                <p style="margin: 5px 0 15px 0;"><strong>Status:</strong> <span id="mod-adm-status"></span></p>
-                <div class="action-buttons" style="gap: 5px; margin-bottom: 10px;">
-                    <button class="btn btn-success btn-small" style="flex:1;" id="btn-adm-pagou" onclick="adminAcao('pagou')">✅ Confirmar</button>
-                    <button class="btn btn-outline btn-small" style="flex:1;" onclick="encaminharComprovanteAdmin()">📲 Enviar</button>
-                    <button class="btn btn-danger btn-small" style="flex:1;" id="btn-adm-apagar" onclick="adminAcao('apagar')">🗑️ Liberar</button>
+    <div id="modal-ajuda" class="modal-overlay" style="z-index: 10000;">
+        <div class="modal-content" style="max-width: 600px; padding: 25px; max-height: 85vh; overflow-y: auto;">
+            <h2 style="margin-top:0; color:var(--primary-blue); text-align:center;">📖 Central de Ajuda</h2>
+            <h3 style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">Manual Rápido</h3>
+            <ul style="padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                <li><b>Ícones do Topo:</b> <br>
+                    🌙 / ☀️ Alterna entre o visual claro e o escuro do aplicativo.<br>
+                    ⚙️ Personaliza as mensagens automáticas enviadas para o WhatsApp.<br>
+                    🎧 Acesso rápido aos seus chamados de suporte abertos.<br>
+                    🔔 Avisos de números que atrasaram o pagamento ou de rifa 100% vendida.
+                </li>
+                <li><b>Criar Rifas:</b> Clique em "+ Nova Rifa" na tela principal. Preencha os dados, escolha o formato e a cor dos números e clique em Salvar.</li>
+                <li><b>Editar Rifas:</b> Abra a rifa desejada e clique no botão amarelo "✏️ Editar".</li>
+                <li><b>Compartilhar:</b> Dentro do painel da rifa, clique no botão "🔗 Compartilhar" para mandar o convite direto para WhatsApp, SMS, Teams ou Instagram.</li>
+                <li><b>Comprovantes:</b> Quando o cliente pagar, clique no número dele e em "✅ Confirmar". Após isso, clique em "📲 Enviar" para gerar e mandar o recibo.</li>
+                <li><b>Sorteio:</b> O botão verde "🎉 Sortear!" só irá aparecer magicamente quando <b>100% dos números da rifa</b> estiverem pagos!</li>
+            </ul>
+            <h3 style="border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-top: 20px;">Dúvidas Frequentes (FAQ)</h3>
+            <div style="font-size: 14px; line-height: 1.6;">
+                <p><b>P: Posso editar a rifa depois de criada?</b><br>R: Sim! Você pode alterar nome, imagens e cores a qualquer momento. Porém, a <i>quantidade de números</i> é bloqueada para não desconfigurar as reservas já feitas.</p>
+                <p><b>P: E se o cliente reservar e não pagar?</b><br>R: Se passar da data de promessa, o número fica vermelho (Atrasado) e um aviso vai pro seu 🔔. Você pode clicar no número, mandar uma cobrança ou clicar em "🗑️ Liberar" para voltar a ficar disponível.</p>
+                <p><b>P: As pessoas precisam baixar o App para comprar?</b><br>R: Não! O link da sua rifa é público e seguro pelo navegador. O sistema de login é exclusivo apenas para você (vendedor).</p>
+            </div>
+            <button class="btn btn-outline" style="margin-top:20px; width: 100%;" onclick="fecharModal('modal-ajuda')">Fechar Ajuda</button>
+        </div>
+    </div>
+
+    <div id="modal-feedback" class="modal-overlay" style="z-index: 10000;">
+        <div class="modal-content" style="text-align:center;">
+            <h3 style="margin-top:0;">Chamado Encerrado</h3>
+            <div id="feed-step-1">
+                <p>Sua solicitação foi resolvida?</p>
+                <div style="display:flex; gap:10px; justify-content:center;">
+                    <button class="btn btn-success" onclick="setFeedbackResolvido(true)">👍 Sim</button>
+                    <button class="btn btn-danger" onclick="setFeedbackResolvido(false)">👎 Não</button>
                 </div>
-                <button class="btn" style="background:#999; margin: 0;" onclick="fecharModal('modal-admin-numero')">Fechar Janela</button>
+            </div>
+            <div id="feed-step-2" style="display:none;">
+                <div id="feed-motivo-box" class="form-group" style="display:none; text-align:left;">
+                    <label>Qual foi o motivo da insatisfação?</label>
+                    <textarea id="feed-motivo" rows="2" style="width:100%;"></textarea>
+                </div>
+                <p style="margin-top:15px; font-weight:bold;">Avalie o atendimento:</p>
+                <div class="estrelas" id="feed-estrelas">
+                    <span onclick="setEstrela(1)">★</span><span onclick="setEstrela(2)">★</span><span onclick="setEstrela(3)">★</span><span onclick="setEstrela(4)">★</span><span onclick="setEstrela(5)">★</span>
+                </div>
+                <input type="hidden" id="feed-nota" value="0">
+                <button class="btn btn-primary" style="margin-top:15px;" onclick="enviarFeedback()">Salvar e Fechar</button>
             </div>
         </div>
+    </div>
 
-        <div id="modal-lista-compradores" class="modal-overlay">
-            <div class="modal-content" style="max-width: 600px;">
-                <h3>Lista de Compradores</h3>
-                <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
-                    <input type="text" id="filtro-nome" placeholder="Buscar por nome..." oninput="filtrarLista()" style="flex:1; padding:8px; border-radius:4px; border:1px solid #ccc;">
-                    <select id="filtro-status" onchange="filtrarLista()" style="padding:8px; border-radius:4px; border:1px solid #ccc;">
-                        <option value="">Todos os Status</option>
-                        <option value="paid">Pagos (Garantidos)</option>
-                        <option value="reserved">Reservados</option>
-                        <option value="late">Atrasados</option>
-                        <option value="available">Livres</option>
-                    </select>
-                </div>
-                <div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; border-radius: 6px;">
-                    <table class="table-compradores">
-                        <thead><tr><th>Nº</th><th>Nome</th><th>Celular</th><th>Status</th></tr></thead>
-                        <tbody id="corpo-tabela-compradores"></tbody>
-                    </table>
-                </div>
-                <div class="action-buttons" style="margin-top: 15px;">
-                    <button class="btn btn-outline" onclick="fecharModal('modal-lista-compradores')">Fechar</button>
-                </div>
+    <div id="modal-preview-rifa" class="modal-overlay" style="z-index: 10000;">
+        <div class="modal-content" style="max-width: 500px; padding: 15px;">
+            <h3 style="margin-top:0;">Pré-visualização da Grade</h3>
+            <div id="preview-modal-container" class="grid-container-custom">
+                <div class="numbers-grid" id="preview-modal-grid"></div>
+            </div>
+            <button class="btn btn-outline" style="margin-top:15px; width: 100%;" onclick="fecharModal('modal-preview-rifa')">Fechar Visualização</button>
+        </div>
+    </div>
+
+    <div id="modal-termos" class="modal-overlay" style="z-index: 10000;">
+        <div class="modal-content" style="max-width: 500px;">
+            <h3 style="margin-top:0; color:var(--primary-blue);">📜 Termos e Regulamento</h3>
+            <div style="font-size: 13px; max-height: 300px; overflow-y: auto; padding-right: 10px; text-align: justify; line-height:1.6; color: #444;">
+                <p><b>1. Natureza do Serviço:</b> O RifaOn🍀 é exclusivamente uma plataforma de gestão (SaaS). Não somos uma instituição financeira e não intermediamos ou arrecadamos valores. Toda a logística e arrecadação são de responsabilidade única do organizador da campanha.</p>
+                <p><b>2. Transações e Responsabilidades:</b> Todo o acerto financeiro (incluindo pagamentos via PIX) ocorre de forma direta entre o comprador e o organizador, operando fora do ambiente do aplicativo.</p>
+                <p><b>3. Sistema de Sorteio:</b> Para garantir a máxima transparência a todos os participantes, o algoritmo de sorteio da plataforma só é desbloqueado quando 100% das cotas numéricas estiverem confirmadas e marcadas como "Pagas" pelo organizador.</p>
+                <p><b>4. Compromisso de Reserva:</b> Ao reservar cotas, o participante assume o compromisso de realizar o pagamento e encaminhar o comprovante no prazo acordado. O não cumprimento pode resultar na devolução do número ao status "Livre".</p>
+                <p><b>5. Acesso e Transparência:</b> Através do recibo digital gerado na reserva, o participante possui o direito de consultar o status das suas cotas a qualquer momento.</p>
+            </div>
+            <button class="btn btn-outline" style="margin-top:15px; width:100%;" onclick="fecharModal('modal-termos')">Entendido</button>
+        </div>
+    </div>
+
+    <div id="modal-privacidade" class="modal-overlay" style="z-index: 10000;">
+        <div class="modal-content" style="max-width: 500px;">
+            <h3 style="margin-top:0; color:var(--primary-blue);">🛡️ Política de Privacidade</h3>
+            <div style="font-size: 13px; max-height: 300px; overflow-y: auto; padding-right: 10px; text-align: justify; line-height:1.6; color: #444;">
+                <p>Levamos a sua privacidade e segurança de dados com extrema seriedade. Esta política esclarece como tratamos as suas informações de forma ética e segura.</p>
+                <p><b>1. Coleta Mínima Necessária:</b> A plataforma requer estritamente o mínimo de dados possível (Nome e WhatsApp). A única finalidade desta coleta é identificar o dono da cota e permitir contato em caso de vitória no sorteio.</p>
+                <p><b>2. Proibição de Dados Sensíveis:</b> O RifaOn🍀 <b>jamais</b> solicitará ou armazenará dados sensíveis, senhas de bancos, cartões de crédito, CPF, RG ou históricos financeiros. Todo pagamento ocorre de forma externa via PIX.</p>
+                <p><b>3. Sigilo e Proteção:</b> Seus dados de contato não são públicos. Eles não são vendidos, alugados ou cedidos a nenhuma agência ou terceiros sob nenhuma hipótese.</p>
+                <p><b>4. Infraestrutura de Segurança:</b> Utilizamos os rigorosos padrões e servidores globais do Google Firebase para processar e proteger as informações contra acessos não autorizados.</p>
+            </div>
+            <button class="btn btn-outline" style="margin-top:15px; width:100%;" onclick="fecharModal('modal-privacidade')">Ciente e de Acordo</button>
+        </div>
+    </div>
+
+    <div id="modal-suporte-publico" class="modal-overlay" style="z-index: 10000;">
+        <div class="modal-content">
+            <h3>Fale com o Desenvolvedor</h3>
+            <p style="font-size: 13px; text-align:center; margin-top:0;">Dúvidas, reclamações ou feedbacks.</p>
+            <div class="form-group"><label>Seu Nome</label><input type="text" id="sup-nome"></div>
+            <div class="form-group"><label>Seu E-mail</label><input type="email" id="sup-email"></div>
+            <div class="form-group"><label>Sua Mensagem</label><textarea id="sup-msg" rows="4" placeholder="Descreva aqui..."></textarea></div>
+            <div class="action-buttons">
+                <button class="btn btn-outline" onclick="fecharModal('modal-suporte-publico')">Cancelar</button>
+                <button class="btn btn-success" onclick="enviarTicketSuportePublico()">Enviar Mensagem</button>
             </div>
         </div>
+    </div>
 
+    <div id="modal-dados-comprador" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Preencha seus dados</h3>
+            <div class="form-group"><label>Seu Nome Completo</label><input type="text" id="mod-comp-nome"></div>
+            <div class="form-group"><label>Seu Celular (com DDD)</label><input type="number" id="mod-comp-tel"></div>
+            <div class="form-group"><label>Data de Pagamento Prometido</label><input type="date" id="mod-comp-data"></div>
+            <div class="form-group" style="display:flex; align-items:flex-start; gap:8px; font-size:13px; text-align:left;">
+                <input type="checkbox" id="mod-comp-termos" style="width:18px; height:18px; margin-top:2px;">
+                <label for="mod-comp-termos" style="font-weight:normal; margin:0;">Li e aceito os <a href="javascript:void(0)" style="color:var(--primary-blue);" onclick="abrirModal('modal-termos')">Termos e Regulamento</a> da rifa.</label>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-outline" onclick="fecharModal('modal-dados-comprador')">Cancelar</button>
+                <button class="btn" onclick="confirmarReserva()">Reservar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-pagamento" class="modal-overlay">
+        <div class="modal-content" style="text-align:center;">
+            <h3>Reservado com Sucesso!</h3>
+            <div style="background:rgba(0,0,0,0.05); padding:15px; border-radius:8px; margin-bottom:15px;">
+                <p style="margin:0; font-weight:bold;">Chave PIX para pagamento:</p>
+                <p id="mod-pix-chave" style="word-break: break-all; color:var(--primary-blue); margin:5px 0; font-size:18px;"></p>
+                <p style="margin:0; font-size:14px;">Titular: <span id="mod-pix-nome"></span></p>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-success" onclick="abrirComprovanteCompraImediata()">Ver Comprovante</button>
+                <button class="btn btn-danger" onclick="deslogarComprador()">Sair da Rifa</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-comprovante" class="modal-overlay">
+        <div class="modal-content" style="max-width: 350px;">
+            <div class="recibo-box" id="area-recibo-print">
+                <div class="recibo-header">🧾 COMPROVANTE</div>
+                <div class="recibo-row"><span>Rifa:</span> <strong id="rec-nome-rifa"></strong></div>
+                <div class="recibo-row"><span>Prêmio:</span> <strong id="rec-premio"></strong></div>
+                <hr style="border-top:1px dashed #ccc;">
+                <div id="rec-conteudo-dinamico"></div>
+                <hr style="border-top:1px dashed #ccc;">
+                <div class="recibo-row"><span>Comprador:</span> <strong id="rec-comprador"></strong></div>
+                <div class="recibo-row"><span>Telefone:</span> <strong id="rec-tel"></strong></div>
+                <div style="text-align:center; font-size:10px; margin-top:15px; word-break:break-all;">
+                    Acompanhe em:<br><span id="rec-link" style="color:var(--primary-blue);"></span>
+                </div>
+            </div>
+            <div class="action-buttons no-print">
+                <button class="btn btn-success" onclick="window.print()">Salvar PDF / Imprimir</button>
+                <button class="btn btn-danger" onclick="deslogarComprador()">Sair e Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-admin-numero" class="modal-overlay">
+        <div class="modal-content" style="padding: 20px;">
+            <h3 style="margin-top:0;">Número <span id="mod-adm-num"></span></h3>
+            <p style="margin: 5px 0;"><strong>Comprador:</strong> <span id="mod-adm-nome"></span></p>
+            <p style="margin: 5px 0;"><strong>WhatsApp:</strong> <span id="mod-adm-tel"></span></p>
+            <p style="margin: 5px 0;"><strong>Promessa:</strong> <span id="mod-adm-data"></span></p>
+            <p style="margin: 5px 0 15px 0;"><strong>Status:</strong> <span id="mod-adm-status"></span></p>
+            <div class="action-buttons" style="gap: 5px; margin-bottom: 10px;">
+                <button class="btn btn-success btn-small" style="flex:1;" id="btn-adm-pagou" onclick="adminAcao('pagou')">✅ Confirmar</button>
+                <button class="btn btn-outline btn-small" style="flex:1;" onclick="encaminharComprovanteAdmin()">📲 Enviar</button>
+                <button class="btn btn-danger btn-small" style="flex:1;" id="btn-adm-apagar" onclick="adminAcao('apagar')">🗑️ Liberar</button>
+            </div>
+            <button class="btn" style="background:#999; margin: 0; width:100%;" onclick="fecharModal('modal-admin-numero')">Fechar Janela</button>
+        </div>
+    </div>
+
+    <div id="modal-lista-compradores" class="modal-overlay">
+        <div class="modal-content" style="max-width: 600px;">
+            <h3>Lista de Compradores</h3>
+            <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                <input type="text" id="filtro-nome" placeholder="Buscar por nome..." oninput="filtrarLista()" style="flex:1; padding:8px; border-radius:4px; border:1px solid #ccc;">
+                <select id="filtro-status" onchange="filtrarLista()" style="padding:8px; border-radius:4px; border:1px solid #ccc;">
+                    <option value="">Todos os Status</option>
+                    <option value="paid">Pagos (Garantidos)</option>
+                    <option value="reserved">Reservados</option>
+                    <option value="late">Atrasados</option>
+                    <option value="available">Livres</option>
+                </select>
+            </div>
+            <div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; border-radius: 6px;">
+                <table class="table-compradores">
+                    <thead><tr><th>Nº</th><th>Nome</th><th>Celular</th><th>Status</th></tr></thead>
+                    <tbody id="corpo-tabela-compradores"></tbody>
+                </table>
+            </div>
+            <div class="action-buttons" style="margin-top: 15px;">
+                <button class="btn btn-outline" style="width:100%;" onclick="fecharModal('modal-lista-compradores')">Fechar</button>
+            </div>
+        </div>
     </div>
 
     <footer class="footer no-print">
@@ -882,8 +854,9 @@
             <a href="javascript:void(0)" onclick="abrirRotaSuporte()">Suporte</a>
         </div>
         <div class="footer-copy">
-            © 2026 RifaOn🍀. Todos os direitos reservados | Desenvolvido por L.H.A.R.
+            © 2026 RifaOn🍀. Todos os direitos reservados.
         </div>
+        <button class="btn-help-footer no-print" onclick="abrirModal('modal-ajuda')" title="Central de Ajuda">?</button>
     </footer>
 
     <script>
@@ -930,7 +903,10 @@
         let globalNotifs = [];
         let lastNotifsHash = ""; 
 
-        // CONFIGURAÇÕES VISUAIS GERAIS
+        // ==========================================
+        // UTILIDADES E NAVEGAÇÃO
+        // ==========================================
+
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
             const isDark = document.body.classList.contains('dark-mode');
@@ -954,13 +930,22 @@
             return nomeCompleto.trim().split(' ')[0];
         }
 
-        function hideLoader() { document.getElementById('loading-overlay').style.display = 'none'; }
-        function showLoader() { document.getElementById('loading-overlay').style.display = 'flex'; }
+        function hideLoader() { 
+            document.getElementById('loading-overlay').style.display = 'none'; 
+        }
+        
+        function showLoader() { 
+            document.getElementById('loading-overlay').style.display = 'flex'; 
+        }
 
-        function abrirModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
+        function abrirModal(id) { 
+            document.getElementById(id).style.display = 'flex'; 
+        }
+        
+        function fecharModal(id) { 
+            document.getElementById(id).style.display = 'none'; 
+        }
 
-        // NAVEGAÇÃO E SEGURANÇA
         function deslogarComprador() {
             currentRaffleId = null;
             selectedNumbers = [];
@@ -994,7 +979,10 @@
             }
         }
 
-        // CARREGAMENTO INICIAL
+        // ==========================================
+        // CARREGAMENTO INICIAL DO SISTEMA
+        // ==========================================
+
         window.addEventListener('load', () => {
             setTimeout(hideLoader, 8000); 
 
@@ -1048,7 +1036,6 @@
                     hideLoader();
                     ativarAtualizacoesEmTempoReal(); 
 
-                    // Verifica se acessou via link do comprador
                     if (rifaUrlId && consultaTel) {
                         currentRaffleId = rifaUrlId;
                         realizarConsultaPublica(rifaUrlId, consultaTel);
@@ -1065,7 +1052,6 @@
                         return; 
                     }
 
-                    // Se não for link, entra nas regras de sessão logada
                     if (user) {
                         const sessionData = sessionStorage.getItem('rifa_logged_user');
                         if(sessionData) {
@@ -1097,7 +1083,10 @@
             });
         });
 
-        // REGRAS DE NOTIFICAÇÕES
+        // ==========================================
+        // NOTIFICAÇÕES E SLA
+        // ==========================================
+
         function recalcularNotificacoesSLA() {
             if(!currentUserEmail) return;
             globalNotifs = [];
@@ -1218,7 +1207,10 @@
             return mudou;
         }
 
-        // SISTEMA DE USUARIOS
+        // ==========================================
+        // SISTEMA DE USUÁRIOS
+        // ==========================================
+
         function loginComGoogle() {
             showLoader();
             const provider = new firebase.auth.GoogleAuthProvider();
@@ -1276,6 +1268,15 @@
             });
         }
 
+        function fazerLogout() { 
+            auth.signOut().then(() => {
+                currentUserEmail = ""; 
+                sessionStorage.clear();
+                localStorage.removeItem('rifa_logged_user'); 
+                navigate('screen-welcome');
+            });
+        }
+
         function recuperarSenha() {
             const email = document.getElementById('forgot-email').value;
             if(!email) { alert("Digite seu e-mail cadastrado."); return; }
@@ -1291,7 +1292,10 @@
             });
         }
 
-        // SUPORTE E CHAT
+        // ==========================================
+        // SISTEMA DE SUPORTE CHAT INTEGRADO
+        // ==========================================
+
         function abrirRotaSuporte() {
             if (!currentUserEmail) {
                 abrirModal('modal-suporte-publico');
@@ -1317,6 +1321,10 @@
                 hideLoader();
                 alert("Suporte cadastrado com sucesso, aguarde até 7 dias para ter retorno.");
                 fecharModal('modal-suporte-publico');
+                
+                const linkApp = window.location.href.split('?')[0];
+                const msgApp = `🛑 *NOVO TICKET DE SUPORTE*\n\n*Nome:* ${n}\n*E-mail:* ${e}\n*Mensagem:* ${m}\n\nAcesse o Painel Mestre no App para gerenciar: ${linkApp}`;
+                window.open(`https://wa.me/5512991643067?text=${encodeURIComponent(msgApp)}`, '_blank');
             }).catch(e => { hideLoader(); alert("Erro ao enviar: " + e.message); });
         }
 
@@ -1446,9 +1454,13 @@
                         const isMeAdmin = currentUserEmail.toLowerCase() === EMAIL_MESTRE.toLowerCase();
                         
                         let alignClass = '';
-                        if(isSistema) { alignClass = 'msg-sistema'; } 
-                        else if (!isMeAdmin) { alignClass = isUser ? 'msg-user' : 'msg-admin'; } 
-                        else { alignClass = isUser ? 'msg-admin' : 'msg-user'; }
+                        if(isSistema) {
+                            alignClass = 'msg-sistema';
+                        } else if (!isMeAdmin) { 
+                            alignClass = isUser ? 'msg-user' : 'msg-admin'; 
+                        } else { 
+                            alignClass = isUser ? 'msg-admin' : 'msg-user'; 
+                        }
 
                         let anexoHtml = msg.anexo ? `<br><img src="${msg.anexo}" style="max-width:200px; border-radius:8px; margin-top:5px;">` : '';
 
@@ -1487,6 +1499,7 @@
                 
                 hideLoader();
                 navigate('screen-support-chat');
+                
                 setTimeout(() => { container.scrollTop = container.scrollHeight; }, 100);
             });
         }
@@ -1508,7 +1521,6 @@
                 r.readAsDataURL(input.files[0]);
             }
         }
-
         function removerAnexoChat() {
             chatAnexoBase64 = "";
             document.getElementById('chat-anexo').value = '';
@@ -1616,6 +1628,9 @@
             }
         }
 
+        // ==========================================
+        // GRÁFICOS DO PAINEL MASTER
+        // ==========================================
         function abrirRelatoriosMaster() {
             showLoader();
             database.ref('suporte').once('value').then(snap => {
@@ -1697,7 +1712,10 @@
             });
         }
 
-        // FUNCIONALIDADES GERAIS
+        // ==========================================
+        // SISTEMA DE CRIAÇÃO E EDIÇÃO DE RIFAS
+        // ==========================================
+
         function obterMsgTemplate(tipo) {
             const defaults = {
                 link: "Compre números na minha rifa e concorra a: {premio}!\n\nAcesse o link e garanta o seu: {link}",
@@ -1721,195 +1739,105 @@
             const user = auth.currentUser;
             if(!user) return;
             
-            userConfig = {
-                link: document.getElementById('cfg-msg-link').value,
-                comprovante: document.getElementById('cfg-msg-comp').value,
-                cobranca: document.getElementById('cfg-msg-cob').value,
-                ganhador: document.getElementById('cfg-msg-ganhador').value
-            };
+            userConfig = { link: document.getElementById('cfg-msg-link').value, comprovante: document.getElementById('cfg-msg-comp').value, cobranca: document.getElementById('cfg-msg-cob').value, ganhador: document.getElementById('cfg-msg-ganhador').value };
             database.ref('usuarios/' + user.uid + '/config').set(userConfig).then(() => {
-                alert("Configurações salvas!");
-                atualizarDashboard();
-                navigate('screen-dashboard');
+                alert("Configurações salvas!"); atualizarDashboard(); navigate('screen-dashboard');
             });
         }
 
         function processarImagem(input, previewId, tipo) {
             if (input.files[0]) {
-                const r = new FileReader();
-                r.onload = function(e) {
-                    const img = new Image();
-                    img.onload = function() {
+                const r = new FileReader(); r.onload = function(e) {
+                    const img = new Image(); img.onload = function() {
                         const canvas = document.createElement('canvas'); const w = 600; const sc = w / img.width;
                         canvas.width = w; canvas.height = img.height * sc; canvas.getContext('2d').drawImage(img, 0, 0, w, canvas.height);
-                        
-                        if(tipo === 'produto') {
-                            imageBase64Temp = canvas.toDataURL('image/jpeg', 0.7);
-                            document.getElementById(previewId).src = imageBase64Temp; 
-                            document.getElementById(previewId).style.display = 'block';
-                        } else if(tipo === 'fundo') {
-                            bgImageBase64Temp = canvas.toDataURL('image/jpeg', 0.5);
-                            document.getElementById(previewId).src = bgImageBase64Temp; 
-                            document.getElementById(previewId).style.display = 'block';
-                            updatePreview('editar');
-                        }
-                    }
-                    img.src = e.target.result;
-                }
-                r.readAsDataURL(input.files[0]);
+                        if(tipo === 'produto') { imageBase64Temp = canvas.toDataURL('image/jpeg', 0.7); document.getElementById(previewId).src = imageBase64Temp; document.getElementById(previewId).style.display = 'block'; } 
+                        else if(tipo === 'fundo') { bgImageBase64Temp = canvas.toDataURL('image/jpeg', 0.5); document.getElementById(previewId).src = bgImageBase64Temp; document.getElementById(previewId).style.display = 'block'; updatePreview('editar'); }
+                    }; img.src = e.target.result;
+                }; r.readAsDataURL(input.files[0]);
             }
         }
 
         function removerImagem(tipo, tela) {
-            if (tipo === 'produto') {
-                removerImgProduto = true;
-                imageBase64Temp = "";
-                let inputId = tela === 'cadastro' ? 'rf-img' : 'rf-edit-img';
-                let previewId = tela === 'cadastro' ? 'preview-img-cadastro' : 'preview-img-edicao';
-                document.getElementById(inputId).value = '';
-                document.getElementById(previewId).style.display = 'none';
-                document.getElementById(previewId).src = '';
-            } else if (tipo === 'fundo') {
-                removerImgFundo = true;
-                bgImageBase64Temp = "";
-                let inputId = tela === 'cadastro' ? 'rf-bg-img' : 'rf-edit-bg-img';
-                let previewId = tela === 'cadastro' ? 'preview-img-bg-cad' : 'preview-img-bg-edit';
-                document.getElementById(inputId).value = '';
-                document.getElementById(previewId).style.display = 'none';
-                document.getElementById(previewId).src = '';
-                updatePreview(tela === 'cadastro' ? 'criar' : 'editar');
-            }
+            if (tipo === 'produto') { removerImgProduto = true; imageBase64Temp = ""; let inputId = tela === 'cadastro' ? 'rf-img' : 'rf-edit-img'; let previewId = tela === 'cadastro' ? 'preview-img-cadastro' : 'preview-img-edicao'; document.getElementById(inputId).value = ''; document.getElementById(previewId).style.display = 'none'; document.getElementById(previewId).src = ''; } 
+            else if (tipo === 'fundo') { removerImgFundo = true; bgImageBase64Temp = ""; let inputId = tela === 'cadastro' ? 'rf-bg-img' : 'rf-edit-bg-img'; let previewId = tela === 'cadastro' ? 'preview-img-bg-cad' : 'preview-img-bg-edit'; document.getElementById(inputId).value = ''; document.getElementById(previewId).style.display = 'none'; document.getElementById(previewId).src = ''; updatePreview(tela === 'cadastro' ? 'criar' : 'editar'); }
         }
 
-        function abrirPreVisualizacao(origem) {
-            updatePreview(origem);
-            abrirModal('modal-preview-rifa');
+        function abrirPreVisualizacao(origem) { 
+            try {
+                updatePreview(origem); 
+                abrirModal('modal-preview-rifa'); 
+            } catch(e) {
+                console.log(e);
+            }
         }
 
         function updatePreview(origem) {
             if(!origem) origem = document.getElementById('screen-new-raffle').classList.contains('active') ? 'criar' : 'editar';
-            
             let prefixo = origem === 'editar' ? 'rf-edit-' : 'rf-';
-            
-            const formato = document.getElementById(prefixo + 'formato').value;
-            const colorStyle = document.getElementById(prefixo + 'color-style').value;
-            const cor = document.getElementById(prefixo + 'cor').value;
-            const bgStyle = document.getElementById(prefixo + 'bg-style').value;
+            const formato = document.getElementById(prefixo + 'formato').value; 
+            const colorStyle = document.getElementById(prefixo + 'color-style').value; 
+            const cor = document.getElementById(prefixo + 'cor').value; 
+            const bgStyle = document.getElementById(prefixo + 'bg-style').value; 
             const bgColor = document.getElementById(prefixo + 'bg-color').value;
             
             let imgBgAtual = "";
-            if (origem === 'editar') {
-                if (removerImgFundo) {
-                    imgBgAtual = "";
-                } else if (bgImageBase64Temp !== "") {
-                    imgBgAtual = bgImageBase64Temp;
-                } else {
-                    const r = rifas.find(x => x.id === currentRaffleId);
-                    imgBgAtual = r ? r.bgImagem : "";
-                }
-            } else {
-                imgBgAtual = bgImageBase64Temp;
-            }
+            if (origem === 'editar') { 
+                if (removerImgFundo) { imgBgAtual = ""; } 
+                else if (bgImageBase64Temp !== "") { imgBgAtual = bgImageBase64Temp; } 
+                else { const r = rifas.find(x => x.id === currentRaffleId); imgBgAtual = r ? r.bgImagem : ""; } 
+            } 
+            else { imgBgAtual = bgImageBase64Temp; }
 
-            const gridContainer = document.getElementById('preview-modal-container');
+            const gridContainer = document.getElementById('preview-modal-container'); 
             const grid = document.getElementById('preview-modal-grid');
             
-            grid.innerHTML = "";
+            grid.innerHTML = ""; 
             gridContainer.className = "grid-container-custom";
             
-            if (bgStyle === 'bg-flat') {
-                gridContainer.style.background = bgColor;
-            } else if (bgStyle === 'bg-gradient') {
-                gridContainer.style.background = `linear-gradient(135deg, ${bgColor} 0%, rgba(0,0,0,0.8) 100%)`;
-            } else {
-                gridContainer.style.background = "transparent";
-            }
-
-            if (imgBgAtual) {
-                gridContainer.style.backgroundImage = `url(${imgBgAtual})`;
-            }
+            if (bgStyle === 'bg-flat') { gridContainer.style.background = bgColor; } 
+            else if (bgStyle === 'bg-gradient') { gridContainer.style.background = `linear-gradient(135deg, ${bgColor} 0%, rgba(0,0,0,0.8) 100%)`; } 
+            else { gridContainer.style.background = "transparent"; }
+            
+            if (imgBgAtual) { gridContainer.style.backgroundImage = `url(${imgBgAtual})`; }
 
             for (let i = 1; i <= 20; i++) {
-                const div = document.createElement('div');
-                div.className = `number-item ${formato} ${colorStyle}`; 
-                
-                if (colorStyle === 'color-translucent') div.style.opacity = '0.6';
+                const div = document.createElement('div'); div.className = `number-item ${formato} ${colorStyle}`; 
+                if (colorStyle === 'color-translucent') div.style.opacity = '0.6'; 
                 if (colorStyle === 'color-matte') div.style.filter = 'grayscale(30%) contrast(80%)';
-                
-                if (colorStyle === 'color-gradient') {
-                    div.style.background = `linear-gradient(135deg, ${cor}, #222)`;
-                    div.style.border = 'none';
-                } else if (colorStyle === 'color-flat') {
-                    div.style.backgroundColor = cor;
-                    div.style.border = 'none';
-                } else {
-                    div.style.backgroundColor = cor;
-                    div.style.borderColor = cor;
-                }
-                
-                div.style.color = '#fff';
-                div.innerText = i;
-                grid.appendChild(div);
+                if (colorStyle === 'color-gradient') { div.style.background = `linear-gradient(135deg, ${cor}, #222)`; div.style.border = 'none'; } 
+                else if (colorStyle === 'color-flat') { div.style.backgroundColor = cor; div.style.border = 'none'; } 
+                else { div.style.backgroundColor = cor; div.style.borderColor = cor; }
+                div.style.color = '#fff'; div.innerText = i; grid.appendChild(div);
             }
         }
 
         function salvarRifa() {
-            const qtd = parseInt(document.getElementById('rf-qtd').value); 
-            const numeros = [];
-            for (let i=1; i<=qtd; i++) { 
-                numeros.push({ numero: i, status: 'available', comprador: '', telefone: '', dataPromessa: '' }); 
-            }
-            
-            const novaRifa = { 
-                id: Date.now().toString(), donoDaRifa: currentUserEmail, nome: document.getElementById('rf-nome').value, 
-                desc: document.getElementById('rf-desc').value, premio: document.getElementById('rf-premio').value, 
-                valor: parseFloat(document.getElementById('rf-valor').value), qtd: qtd, imagem: imageBase64Temp, 
-                formato: document.getElementById('rf-formato').value, colorStyle: document.getElementById('rf-color-style').value, cor: document.getElementById('rf-cor').value, 
-                pixNome: document.getElementById('rf-pix-nome').value, pixChave: document.getElementById('rf-pix-chave').value, 
-                bgStyle: document.getElementById('rf-bg-style').value, bgColor: document.getElementById('rf-bg-color').value, bgImagem: bgImageBase64Temp,
-                numeros: numeros 
-            };
-            
-            rifas.push(novaRifa);
-            database.ref('rifas').set(rifas).then(() => { 
-                imageBase64Temp = ""; bgImageBase64Temp = ""; 
-                removerImgProduto = false; removerImgFundo = false;
-                alert("Rifa criada com sucesso!"); atualizarDashboard(); navigate('screen-dashboard'); 
-            });
+            const qtd = parseInt(document.getElementById('rf-qtd').value); const numeros = [];
+            for (let i=1; i<=qtd; i++) { numeros.push({ numero: i, status: 'available', comprador: '', telefone: '', dataPromessa: '' }); }
+            const novaRifa = { id: Date.now().toString(), donoDaRifa: currentUserEmail, nome: document.getElementById('rf-nome').value, desc: document.getElementById('rf-desc').value, premio: document.getElementById('rf-premio').value, valor: parseFloat(document.getElementById('rf-valor').value), qtd: qtd, imagem: imageBase64Temp, formato: document.getElementById('rf-formato').value, colorStyle: document.getElementById('rf-color-style').value, cor: document.getElementById('rf-cor').value, pixNome: document.getElementById('rf-pix-nome').value, pixChave: document.getElementById('rf-pix-chave').value, bgStyle: document.getElementById('rf-bg-style').value, bgColor: document.getElementById('rf-bg-color').value, bgImagem: bgImageBase64Temp, numeros: numeros };
+            rifas.push(novaRifa); database.ref('rifas').set(rifas).then(() => { imageBase64Temp = ""; bgImageBase64Temp = ""; removerImgProduto = false; removerImgFundo = false; alert("Rifa criada com sucesso!"); atualizarDashboard(); navigate('screen-dashboard'); });
         }
 
         function abrirEditarRifa(id) {
-            currentRaffleId = id; 
-            const r = rifas.find(x => x.id === id);
-            if(!r) return;
+            currentRaffleId = id; const r = rifas.find(x => x.id === id); if(!r) return;
+            removerImgProduto = false; removerImgFundo = false; 
+            document.getElementById('rf-edit-nome').value = r.nome || ''; 
+            document.getElementById('rf-edit-desc').value = r.desc || ''; 
+            document.getElementById('rf-edit-premio').value = r.premio || ''; 
+            document.getElementById('rf-edit-valor').value = r.valor || 0; 
+            document.getElementById('rf-edit-qtd').value = r.qtd || 100; 
+            document.getElementById('rf-edit-formato').value = r.formato || 'shape-square'; 
+            document.getElementById('rf-edit-color-style').value = r.colorStyle || ''; 
+            document.getElementById('rf-edit-cor').value = r.cor || '#0288d1'; 
+            document.getElementById('rf-edit-bg-style').value = r.bgStyle || ''; 
+            document.getElementById('rf-edit-bg-color').value = r.bgColor || '#ffffff'; 
+            document.getElementById('rf-edit-pix-nome').value = r.pixNome || ''; 
+            document.getElementById('rf-edit-pix-chave').value = r.pixChave || ''; 
             
-            removerImgProduto = false;
-            removerImgFundo = false;
-
-            document.getElementById('rf-edit-nome').value = r.nome || '';
-            document.getElementById('rf-edit-desc').value = r.desc || '';
-            document.getElementById('rf-edit-premio').value = r.premio || '';
-            document.getElementById('rf-edit-valor').value = r.valor || 0;
-            document.getElementById('rf-edit-qtd').value = r.qtd || 100;
-            
-            document.getElementById('rf-edit-formato').value = r.formato || 'shape-square';
-            document.getElementById('rf-edit-color-style').value = r.colorStyle || '';
-            document.getElementById('rf-edit-cor').value = r.cor || '#0288d1';
-            document.getElementById('rf-edit-bg-style').value = r.bgStyle || '';
-            document.getElementById('rf-edit-bg-color').value = r.bgColor || '#ffffff';
-            
-            document.getElementById('rf-edit-pix-nome').value = r.pixNome || '';
-            document.getElementById('rf-edit-pix-chave').value = r.pixChave || '';
-            
-            imageBase64Temp = ""; 
-            bgImageBase64Temp = ""; 
-
-            const p1 = document.getElementById('preview-img-edicao');
-            if (r.imagem) { p1.src = r.imagem; p1.style.display = 'block'; } else { p1.style.display = 'none'; }
-            
-            const p2 = document.getElementById('preview-img-bg-edit');
-            if (r.bgImagem) { p2.src = r.bgImagem; p2.style.display = 'block'; } else { p2.style.display = 'none'; }
-
+            imageBase64Temp = ""; bgImageBase64Temp = ""; 
+            const p1 = document.getElementById('preview-img-edicao'); if (r.imagem) { p1.src = r.imagem; p1.style.display = 'block'; } else { p1.style.display = 'none'; }
+            const p2 = document.getElementById('preview-img-bg-edit'); if (r.bgImagem) { p2.src = r.bgImagem; p2.style.display = 'block'; } else { p2.style.display = 'none'; }
             navigate('screen-edit-raffle');
         }
 
@@ -1917,532 +1845,187 @@
             const i = rifas.findIndex(x => x.id === currentRaffleId);
             if(i !== -1) {
                 rifas[i].nome = document.getElementById('rf-edit-nome').value; 
-                rifas[i].desc = document.getElementById('rf-edit-desc').value;
+                rifas[i].desc = document.getElementById('rf-edit-desc').value; 
                 rifas[i].premio = document.getElementById('rf-edit-premio').value; 
-                rifas[i].valor = parseFloat(document.getElementById('rf-edit-valor').value);
+                rifas[i].valor = parseFloat(document.getElementById('rf-edit-valor').value); 
                 rifas[i].formato = document.getElementById('rf-edit-formato').value; 
-                rifas[i].colorStyle = document.getElementById('rf-edit-color-style').value;
-                rifas[i].cor = document.getElementById('rf-edit-cor').value;
+                rifas[i].colorStyle = document.getElementById('rf-edit-color-style').value; 
+                rifas[i].cor = document.getElementById('rf-edit-cor').value; 
                 rifas[i].bgStyle = document.getElementById('rf-edit-bg-style').value; 
-                rifas[i].bgColor = document.getElementById('rf-edit-bg-color').value;
+                rifas[i].bgColor = document.getElementById('rf-edit-bg-color').value; 
                 rifas[i].pixNome = document.getElementById('rf-edit-pix-nome').value; 
                 rifas[i].pixChave = document.getElementById('rf-edit-pix-chave').value;
-                
-                if (removerImgProduto) {
-                    rifas[i].imagem = ""; 
-                } else if (imageBase64Temp !== "") {
-                    rifas[i].imagem = imageBase64Temp; 
-                }
-                
-                if (removerImgFundo) {
-                    rifas[i].bgImagem = ""; 
-                } else if (bgImageBase64Temp !== "") {
-                    rifas[i].bgImagem = bgImageBase64Temp; 
-                }
-
-                database.ref('rifas').set(rifas).then(() => { 
-                    alert("Rifa editada com sucesso!"); 
-                    abrirAdminRifa(currentRaffleId); 
-                });
+                if (removerImgProduto) { rifas[i].imagem = ""; } else if (imageBase64Temp !== "") { rifas[i].imagem = imageBase64Temp; }
+                if (removerImgFundo) { rifas[i].bgImagem = ""; } else if (bgImageBase64Temp !== "") { rifas[i].bgImagem = bgImageBase64Temp; }
+                database.ref('rifas').set(rifas).then(() => { alert("Rifa editada com sucesso!"); abrirAdminRifa(currentRaffleId); });
             }
         }
+
+        // ==========================================
+        // SISTEMA VISUAL DA GRADE E INTERAÇÃO
+        // ==========================================
 
         function aplicarCoresNumero(div, num, rifa) {
             if (num.status === 'available') { 
-                const cStyle = rifa.colorStyle || '';
-                if (cStyle === 'color-translucent') div.style.opacity = '0.6';
-                if (cStyle === 'color-matte') div.style.filter = 'grayscale(30%) contrast(80%)';
-                
-                if (cStyle === 'color-gradient') {
-                    div.style.background = `linear-gradient(135deg, ${rifa.cor}, #222)`;
-                    div.style.border = 'none';
-                } else if (cStyle === 'color-flat') {
-                    div.style.backgroundColor = rifa.cor;
-                    div.style.border = 'none';
-                } else {
-                    div.style.backgroundColor = rifa.cor;
-                    div.style.borderColor = rifa.cor;
-                }
-                div.style.color = '#fff';
+                const cStyle = rifa.colorStyle || ''; 
+                if (cStyle === 'color-translucent') div.style.opacity = '0.6'; 
+                if (cStyle === 'color-matte') div.style.filter = 'grayscale(30%) contrast(80%)'; 
+                if (cStyle === 'color-gradient') { div.style.background = `linear-gradient(135deg, ${rifa.cor}, #222)`; div.style.border = 'none'; } 
+                else if (cStyle === 'color-flat') { div.style.backgroundColor = rifa.cor; div.style.border = 'none'; } 
+                else { div.style.backgroundColor = rifa.cor; div.style.borderColor = rifa.cor; } 
+                div.style.color = '#fff'; 
             } 
-            else { 
-                div.className = `number-item ${rifa.formato} status-${num.status}`; 
-            }
+            else { div.className = `number-item ${rifa.formato} status-${num.status}`; }
         }
 
         function aplicarFundoContainer(containerId, rifa) {
-            const container = document.getElementById(containerId);
-            if(!container) return;
-            
-            const bgS = rifa.bgStyle || '';
-            const bgC = rifa.bgColor || '#ffffff';
-            const bgI = rifa.bgImagem || '';
-
-            if (bgS === 'bg-flat') {
-                container.style.background = bgC;
-            } else if (bgS === 'bg-gradient') {
-                container.style.background = `linear-gradient(135deg, ${bgC} 0%, rgba(0,0,0,0.8) 100%)`;
-            } else {
-                container.style.background = "transparent";
-            }
-
-            if (bgI) {
-                container.style.backgroundImage = `url(${bgI})`;
-            }
+            const container = document.getElementById(containerId); if(!container) return;
+            const bgS = rifa.bgStyle || ''; const bgC = rifa.bgColor || '#ffffff'; const bgI = rifa.bgImagem || '';
+            if (bgS === 'bg-flat') { container.style.background = bgC; } else if (bgS === 'bg-gradient') { container.style.background = `linear-gradient(135deg, ${bgC} 0%, rgba(0,0,0,0.8) 100%)`; } else { container.style.background = "transparent"; }
+            if (bgI) { container.style.backgroundImage = `url(${bgI})`; }
         }
 
         function atualizarDashboard() {
-            const lista = document.getElementById('raffle-list');
-            lista.innerHTML = "";
+            const lista = document.getElementById('raffle-list'); lista.innerHTML = "";
             const mr = rifas.filter(r => r.donoDaRifa === currentUserEmail);
-            
-            if (mr.length === 0) { 
-                lista.innerHTML = "<p style='text-align:center; color:var(--footer-text);'>Nenhuma rifa cadastrada.</p>"; 
-                return; 
-            }
-
+            if (mr.length === 0) { lista.innerHTML = "<p style='text-align:center; color:var(--footer-text);'>Nenhuma rifa cadastrada.</p>"; return; }
             mr.forEach(r => {
-                const div = document.createElement('div');
-                div.className = "raffle-card-dash";
-                div.onclick = () => abrirAdminRifa(r.id);
-                
-                const bg = r.imagem ? `background-image: url('${r.imagem}');` : '';
-                const htmlConcluido = r.concluida ? `<div class="badge-concluido">Concluído</div>` : '';
-
-                let grid = '';
-                r.numeros.forEach(n => {
-                    let st = '';
-                    let cCls = '';
-                    if (n.status === 'available') {
-                        st = `background-color: ${r.cor}; border-color: ${r.cor}; color: #fff;`;
-                    } else {
-                        cCls = `status-${n.status}`;
-                    }
-                    grid += `<div class="number-item ${r.formato || 'shape-square'} ${cCls}" style="${st}">${n.numero}</div>`;
-                });
-                
+                const div = document.createElement('div'); div.className = "raffle-card-dash"; div.onclick = () => abrirAdminRifa(r.id);
+                const bg = r.imagem ? `background-image: url('${r.imagem}');` : ''; const htmlConcluido = r.concluida ? `<div class="badge-concluido">Concluído</div>` : '';
+                let grid = ''; r.numeros.forEach(n => { let st = ''; let cCls = ''; if (n.status === 'available') st = `background-color: ${r.cor}; border-color: ${r.cor}; color: #fff;`; else cCls = `status-${n.status}`; grid += `<div class="number-item ${r.formato || 'shape-square'} ${cCls}" style="${st}">${n.numero}</div>`; });
                 let titleHtml = `<div class="raffle-card-title font-rifa" style="color: ${r.cor};">${r.nome}</div>`;
-                if (r.concluida && r.ganhador) {
-                    titleHtml += `<p style="margin:0 0 10px 0; color:var(--text-dark); font-weight:bold;">🏆 Ganhador: Nº ${r.ganhador.numero}</p>`;
-                }
-
-                div.innerHTML = `${htmlConcluido}<div class="raffle-card-bg" style="${bg}"></div><div class="raffle-card-overlay"></div><div class="raffle-card-content">${titleHtml}<div class="mini-numbers-grid">${grid}</div></div>`;
-                lista.appendChild(div);
+                if (r.concluida && r.ganhador) { titleHtml += `<p style="margin:0 0 10px 0; color:var(--text-dark); font-weight:bold;">🏆 Ganhador: Nº ${r.ganhador.numero}</p>`; }
+                div.innerHTML = `${htmlConcluido}<div class="raffle-card-bg" style="${bg}"></div><div class="raffle-card-overlay"></div><div class="raffle-card-content">${titleHtml}<div class="mini-numbers-grid">${grid}</div></div>`; lista.appendChild(div);
             });
         }
 
         function abrirAdminRifa(id) {
-            currentRaffleId = id; 
-            const r = rifas.find(x => x.id === id);
-            
-            if(!r) { navigate('screen-dashboard'); return; }
-
+            currentRaffleId = id; const r = rifas.find(x => x.id === id); if(!r) { navigate('screen-dashboard'); return; }
             if(checarAtrasosLocal(r)) database.ref('rifas').set(rifas);
-
             document.getElementById('admin-raffle-title').innerHTML = `<span class="font-rifa" style="color: ${r.cor}; font-size: 28px;">${r.nome}</span>` + (r.concluida ? ' <span style="font-size:14px; background:var(--success); padding:3px 8px; border-radius:12px; color:white; vertical-align: middle; margin-left: 10px;">Concluída</span>' : '');
             document.getElementById('admin-link-input').value = `${window.location.href.split('?')[0]}?rifa=${id}`;
-            
-            if(r.concluida) {
-                document.getElementById('btn-editar-rifa').style.display = 'none';
-                document.getElementById('btn-sortear').style.display = 'none';
-            } else {
-                document.getElementById('btn-editar-rifa').style.display = 'block';
-            }
-
-            atualizarEstatisticas(r); 
-            aplicarFundoContainer('admin-grid-container', r);
-            renderizarGridAdmin(r); 
-            navigate('screen-admin-raffle');
+            if(r.concluida) { document.getElementById('btn-editar-rifa').style.display = 'none'; document.getElementById('btn-sortear').style.display = 'none'; } else { document.getElementById('btn-editar-rifa').style.display = 'block'; }
+            atualizarEstatisticas(r); aplicarFundoContainer('admin-grid-container', r); renderizarGridAdmin(r); navigate('screen-admin-raffle');
         }
 
         function atualizarEstatisticas(r) {
-            let d = 0, res = 0, v = 0, a = 0;
-            
-            r.numeros.forEach(n => {
-                if (n.status === 'available') d++;
-                if (n.status === 'reserved') res++;
-                if (n.status === 'late') a++;
-                if (n.status === 'paid') v++;
-            });
-            
-            const tArrec = v * r.valor;
-            const tPend = (res + a) * r.valor;
-            const tEsp = r.qtd * r.valor;
-            const prog = r.qtd > 0 ? ((v / r.qtd) * 100).toFixed(1) : 0;
-            
-            document.getElementById('stat-disp').innerText = d;
-            document.getElementById('stat-res').innerText = res;
-            document.getElementById('stat-vend').innerText = v;
-            document.getElementById('stat-val-total').innerText = `R$ ${tEsp.toFixed(2)}`;
-            document.getElementById('stat-val-rec').innerText = `R$ ${tArrec.toFixed(2)}`;
-            document.getElementById('stat-val-pend').innerText = `R$ ${tPend.toFixed(2)}`;
-            document.getElementById('admin-progress').style.width = prog + '%';
-            document.getElementById('admin-progress').innerText = prog + '% Vendido';
-            
-            if(!r.concluida) {
-                document.getElementById('btn-sortear').style.display = (v === r.qtd && r.qtd > 0) ? 'block' : 'none';
-            }
+            let d = 0, res = 0, v = 0, a = 0; r.numeros.forEach(n => { if (n.status === 'available') d++; if (n.status === 'reserved') res++; if (n.status === 'late') a++; if (n.status === 'paid') v++; });
+            const tArrec = v * r.valor; const tPend = (res + a) * r.valor; const tEsp = r.qtd * r.valor; const prog = r.qtd > 0 ? ((v / r.qtd) * 100).toFixed(1) : 0;
+            document.getElementById('stat-disp').innerText = d; document.getElementById('stat-res').innerText = res; document.getElementById('stat-vend').innerText = v; document.getElementById('stat-val-total').innerText = `R$ ${tEsp.toFixed(2)}`; document.getElementById('stat-val-rec').innerText = `R$ ${tArrec.toFixed(2)}`; document.getElementById('stat-val-pend').innerText = `R$ ${tPend.toFixed(2)}`; document.getElementById('admin-progress').style.width = prog + '%'; document.getElementById('admin-progress').innerText = prog + '% Vendido';
+            if(!r.concluida) { document.getElementById('btn-sortear').style.display = (v === r.qtd && r.qtd > 0) ? 'block' : 'none'; }
         }
 
         function renderizarGridAdmin(r) {
-            const grid = document.getElementById('admin-numbers-grid');
-            grid.innerHTML = "";
-            
+            const grid = document.getElementById('admin-numbers-grid'); grid.innerHTML = "";
             r.numeros.forEach((n, idx) => {
-                const div = document.createElement('div');
-                div.className = `number-item ${r.formato}`;
-                aplicarCoresNumero(div, n, r); 
-                
-                if (r.concluida && r.ganhador && r.ganhador.numero === n.numero) {
-                    div.innerHTML = `<span class="crown-icon">👑</span>${n.numero}`;
-                    div.style.boxShadow = "0 0 12px rgba(255,215,0,1)";
-                    div.style.transform = "scale(1.15)";
-                    div.style.zIndex = "5";
-                    div.style.border = "2px solid #ffd700";
-                } else {
-                    div.innerText = n.numero;
-                }
-
-                div.onclick = () => abrirModalAdminNumero(idx, r);
-                grid.appendChild(div);
+                const div = document.createElement('div'); div.className = `number-item ${r.formato}`; aplicarCoresNumero(div, n, r); 
+                if (r.concluida && r.ganhador && r.ganhador.numero === n.numero) { div.innerHTML = `<span class="crown-icon">👑</span>${n.numero}`; div.style.boxShadow = "0 0 12px rgba(255,215,0,1)"; div.style.transform = "scale(1.15)"; div.style.zIndex = "5"; div.style.border = "2px solid #ffd700"; } else { div.innerText = n.numero; }
+                div.onclick = () => abrirModalAdminNumero(idx, r); grid.appendChild(div);
             });
         }
 
         function abrirModalAdminNumero(idx, r) {
-            const n = r.numeros[idx];
-            if (n.status === 'available') return;
-            
-            adminIndexSelecionado = idx;
-            document.getElementById('mod-adm-num').innerText = n.numero;
-            document.getElementById('mod-adm-nome').innerText = n.comprador;
-            document.getElementById('mod-adm-tel').innerText = n.telefone;
-            
-            let d = n.dataPromessa;
-            if(d && d.includes('-')) {
-                const p = d.split('-');
-                d = `${p[2]}/${p[1]}/${p[0]}`;
-            }
-            document.getElementById('mod-adm-data').innerText = d;
-            
-            let st = "Reservado";
-            if(n.status === 'paid') st = "Pago (Garantido)";
-            if(n.status === 'late') st = "Atrasado";
-            document.getElementById('mod-adm-status').innerText = st;
-            
-            if(r.concluida) {
-                document.getElementById('btn-adm-pagou').style.display = 'none';
-                document.getElementById('btn-adm-apagar').style.display = 'none';
-            } else {
-                document.getElementById('btn-adm-pagou').style.display = n.status === 'paid' ? 'none' : 'block';
-                document.getElementById('btn-adm-apagar').style.display = 'block';
-            }
+            const n = r.numeros[idx]; if (n.status === 'available') return;
+            adminIndexSelecionado = idx; document.getElementById('mod-adm-num').innerText = n.numero; document.getElementById('mod-adm-nome').innerText = n.comprador; document.getElementById('mod-adm-tel').innerText = n.telefone; let d = n.dataPromessa; if(d && d.includes('-')) { const p = d.split('-'); d = `${p[2]}/${p[1]}/${p[0]}`; } document.getElementById('mod-adm-data').innerText = d; let st = "Reservado"; if(n.status === 'paid') st = "Pago (Garantido)"; if(n.status === 'late') st = "Atrasado"; document.getElementById('mod-adm-status').innerText = st;
+            if(r.concluida) { document.getElementById('btn-adm-pagou').style.display = 'none'; document.getElementById('btn-adm-apagar').style.display = 'none'; } else { document.getElementById('btn-adm-pagou').style.display = n.status === 'paid' ? 'none' : 'block'; document.getElementById('btn-adm-apagar').style.display = 'block'; }
             abrirModal('modal-admin-numero');
         }
 
         function adminAcao(acao) {
-            const r = rifas.find(x => x.id === currentRaffleId);
-            const n = r.numeros[adminIndexSelecionado];
-            
-            if(r.concluida) return;
-
-            if (acao === 'pagou') {
-                n.status = 'paid';
-                database.ref('rifas').set(rifas);
-                fecharModal('modal-admin-numero');
-            } 
-            else if (acao === 'apagar') {
-                if (n.status === 'late') {
-                    let tpl = obterMsgTemplate('cobranca');
-                    let msg = tpl.replace(/{nome}/g, n.comprador).replace(/{numero}/g, n.numero).replace(/{rifa}/g, r.nome);
-                    if (confirm("Deseja mandar mensagem cobrando antes de excluir?\n\n[OK] = Sim\n[Cancelar] = Excluir Direto")) {
-                        const t = n.telefone.replace(/\D/g,'');
-                        window.open(`https://wa.me/55${t}?text=${encodeURIComponent(msg)}`, '_blank');
-                        fecharModal('modal-admin-numero');
-                        return; 
-                    }
-                }
-                if(confirm("Confirmar exclusão e liberar número?")) {
-                    n.status = 'available';
-                    n.comprador = '';
-                    n.telefone = '';
-                    n.dataPromessa = '';
-                    database.ref('rifas').set(rifas);
-                    fecharModal('modal-admin-numero');
-                }
+            const r = rifas.find(x => x.id === currentRaffleId); const n = r.numeros[adminIndexSelecionado]; if(r.concluida) return;
+            if (acao === 'pagou') { n.status = 'paid'; database.ref('rifas').set(rifas); fecharModal('modal-admin-numero'); } else if (acao === 'apagar') {
+                if (n.status === 'late') { let tpl = obterMsgTemplate('cobranca'); let msg = tpl.replace(/{nome}/g, n.comprador).replace(/{numero}/g, n.numero).replace(/{rifa}/g, r.nome); if (confirm("Deseja mandar mensagem cobrando antes de excluir?\n\n[OK] = Sim\n[Cancelar] = Excluir Direto")) { const t = n.telefone.replace(/\D/g,''); window.open(`https://wa.me/55${t}?text=${encodeURIComponent(msg)}`, '_blank'); fecharModal('modal-admin-numero'); return; } }
+                if(confirm("Confirmar exclusão e liberar número?")) { n.status = 'available'; n.comprador = ''; n.telefone = ''; n.dataPromessa = ''; database.ref('rifas').set(rifas); fecharModal('modal-admin-numero'); }
             }
         }
 
         function encaminharComprovanteAdmin() {
-            const r = rifas.find(x => x.id === currentRaffleId);
-            const n = r.numeros[adminIndexSelecionado];
-            const tc = r.numeros.filter(x => x.telefone === n.telefone);
-            
-            let p=[], rs=[], a=[];
-            tc.forEach(x => {
-                if(x.status === 'paid') p.push(x.numero);
-                if(x.status === 'reserved') rs.push(x.numero);
-                if(x.status === 'late') a.push(x.numero);
-            });
-
-            const l = window.location.href.split('?')[0] + `?rifa=${r.id}&consulta=${n.telefone}`;
-            
-            let det = '';
-            if(p.length > 0) det += `\n✅ *Garantidos:* ${p.join(', ')}`;
-            if(rs.length > 0) det += `\n⏳ *Reservados:* ${rs.join(', ')}`;
-            if(a.length > 0) det += `\n⚠️ *Atrasados:* ${a.join(', ')}`;
-            
-            let tpl = obterMsgTemplate('comprovante');
-            let msg = tpl.replace(/{rifa}/g, r.nome)
-                         .replace(/{premio}/g, r.premio)
-                         .replace(/{detalhes}/g, det)
-                         .replace(/{qtd_total}/g, tc.length)
-                         .replace(/{valor_total}/g, (tc.length * r.valor).toFixed(2))
-                         .replace(/{link}/g, l)
-                         .replace(/{nome}/g, n.comprador);
-
-            window.open(`https://wa.me/55${n.telefone.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`, '_blank');
+            const r = rifas.find(x => x.id === currentRaffleId); const n = r.numeros[adminIndexSelecionado]; const tc = r.numeros.filter(x => x.telefone === n.telefone); let p=[], rs=[], a=[]; tc.forEach(x => { if(x.status === 'paid') p.push(x.numero); if(x.status === 'reserved') rs.push(x.numero); if(x.status === 'late') a.push(x.numero); });
+            const l = window.location.href.split('?')[0] + `?rifa=${r.id}&consulta=${n.telefone}`; let det = ''; if(p.length > 0) det += `\n✅ *Garantidos:* ${p.join(', ')}`; if(rs.length > 0) det += `\n⏳ *Reservados:* ${rs.join(', ')}`; if(a.length > 0) det += `\n⚠️ *Atrasados:* ${a.join(', ')}`;
+            let tpl = obterMsgTemplate('comprovante'); let msg = tpl.replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio).replace(/{detalhes}/g, det).replace(/{qtd_total}/g, tc.length).replace(/{valor_total}/g, (tc.length * r.valor).toFixed(2)).replace(/{link}/g, l).replace(/{nome}/g, n.comprador); window.open(`https://wa.me/55${n.telefone.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
         function simularLinkComprador() {
             const r = rifas.find(x => x.id === currentRaffleId);
-            
-            document.getElementById('buyer-title').innerHTML = `<span class="font-rifa" style="color: ${r.cor}; font-size: 32px;">${r.nome}</span>` + (r.concluida ? ' <span style="font-size:14px; background:var(--success); padding:3px 8px; border-radius:12px; color:white; vertical-align: middle; margin-left: 10px;">Concluída</span>' : '');
-            document.getElementById('buyer-desc').innerText = r.desc;
-            document.getElementById('buyer-premio').innerText = "Prêmio: " + r.premio;
-            document.getElementById('buyer-valor').innerText = r.valor.toFixed(2);
-            
-            const img = document.getElementById('buyer-img');
-            if (r.imagem) { img.src = r.imagem; img.style.display = 'block'; } else { img.style.display = 'none'; }
-
-            if(r.concluida) {
-                document.getElementById('buyer-instrucoes').innerHTML = `<b>RIFA ENCERRADA.</b><br> O Ganhador foi: Número ${r.ganhador.numero} (${r.ganhador.comprador})`;
-            } else {
-                document.getElementById('buyer-instrucoes').innerHTML = `Selecione os números desejados:`;
-            }
-
-            document.getElementById('btn-prosseguir').style.display = selectedNumbers.length > 0 ? 'block' : 'none';
-            
-            aplicarFundoContainer('buyer-grid-container', r);
-            renderizarGridComprador(r); 
-            navigate('screen-buyer');
+            document.getElementById('buyer-title').innerHTML = `<span class="font-rifa" style="color: ${r.cor}; font-size: 32px;">${r.nome}</span>` + (r.concluida ? ' <span style="font-size:14px; background:var(--success); padding:3px 8px; border-radius:12px; color:white; vertical-align: middle; margin-left: 10px;">Concluída</span>' : ''); document.getElementById('buyer-desc').innerText = r.desc; document.getElementById('buyer-premio').innerText = "Prêmio: " + r.premio; document.getElementById('buyer-valor').innerText = r.valor.toFixed(2); const img = document.getElementById('buyer-img'); if (r.imagem) { img.src = r.imagem; img.style.display = 'block'; } else { img.style.display = 'none'; }
+            if(r.concluida) { document.getElementById('buyer-instrucoes').innerHTML = `<b>RIFA ENCERRADA.</b><br> O Ganhador foi: Número ${r.ganhador.numero} (${r.ganhador.comprador})`; } else { document.getElementById('buyer-instrucoes').innerHTML = `Selecione os números desejados:`; }
+            document.getElementById('btn-prosseguir').style.display = selectedNumbers.length > 0 ? 'block' : 'none'; aplicarFundoContainer('buyer-grid-container', r); renderizarGridComprador(r); navigate('screen-buyer');
         }
 
         function renderizarGridComprador(r) {
-            const grid = document.getElementById('buyer-numbers-grid');
-            grid.innerHTML = "";
-            
+            const grid = document.getElementById('buyer-numbers-grid'); grid.innerHTML = "";
             r.numeros.forEach((n, index) => {
-                const div = document.createElement('div');
-                div.className = `number-item ${r.formato}`; 
-
-                if (r.concluida && r.ganhador && r.ganhador.numero === n.numero) {
-                    div.innerHTML = `<span class="crown-icon">👑</span>${n.numero}`;
-                    div.style.boxShadow = "0 0 10px rgba(255,215,0,1)";
-                    div.style.border = "2px solid #ffd700";
-                    div.style.zIndex = "5";
-                } else {
-                    div.innerText = n.numero;
-                }
+                const div = document.createElement('div'); div.className = `number-item ${r.formato}`; 
+                if (r.concluida && r.ganhador && r.ganhador.numero === n.numero) { div.innerHTML = `<span class="crown-icon">👑</span>${n.numero}`; div.style.boxShadow = "0 0 10px rgba(255,215,0,1)"; div.style.border = "2px solid #ffd700"; div.style.zIndex = "5"; } else { div.innerText = n.numero; }
                 
                 if (n.status === 'available' || selectedNumbers.includes(index)) {
-                    aplicarCoresNumero(div, n, r);
-                    
-                    if(selectedNumbers.includes(index)) {
-                        div.classList.add('selected');
-                    }
-
+                    aplicarCoresNumero(div, n, r); if(selectedNumbers.includes(index)) div.classList.add('selected');
                     div.onclick = () => {
                         if(r.concluida) return; 
-                        
-                        if(r.numeros[index].status !== 'available' && !selectedNumbers.includes(index)) {
-                            alert('Número já reservado.'); return;
-                        }
-                        
+                        if(r.numeros[index].status !== 'available' && !selectedNumbers.includes(index)) { alert('Número já reservado.'); return; }
                         div.classList.toggle('selected');
-                        if (div.classList.contains('selected')) {
-                            selectedNumbers.push(index);
-                        } else {
-                            selectedNumbers = selectedNumbers.filter(id => id !== index);
-                        }
-                        
+                        if (div.classList.contains('selected')) { selectedNumbers.push(index); } else { selectedNumbers = selectedNumbers.filter(id => id !== index); }
                         document.getElementById('btn-prosseguir').style.display = selectedNumbers.length > 0 ? 'block' : 'none';
                     };
                 } else {
-                    div.style.opacity = '0.5';
-                    div.style.cursor = 'not-allowed';
-                    div.style.backgroundColor = '#9e9e9e';
-                    div.style.borderColor = '#ccc';
-                    div.style.color = '#fff';
-                    div.className = `number-item ${r.formato} status-${n.status}`;
+                    div.style.opacity = '0.5'; div.style.cursor = 'not-allowed'; div.style.backgroundColor = '#9e9e9e'; div.style.borderColor = '#ccc'; div.style.color = '#fff'; div.className = `number-item ${r.formato} status-${n.status}`;
                 }
                 grid.appendChild(div);
             });
         }
 
-        function abrirModalDados() {
-            document.getElementById('mod-comp-nome').value = '';
-            document.getElementById('mod-comp-tel').value = '';
-            document.getElementById('mod-comp-data').value = new Date().toISOString().split('T')[0];
-            document.getElementById('mod-comp-termos').checked = false; 
-            abrirModal('modal-dados-comprador');
-        }
+        function abrirModalDados() { document.getElementById('mod-comp-nome').value = ''; document.getElementById('mod-comp-tel').value = ''; document.getElementById('mod-comp-data').value = new Date().toISOString().split('T')[0]; document.getElementById('mod-comp-termos').checked = false; abrirModal('modal-dados-comprador'); }
 
         function confirmarReserva() {
-            const aceitouTermos = document.getElementById('mod-comp-termos').checked;
-            if(!aceitouTermos) { alert("Você precisa ler e aceitar os Termos e Regulamento para reservar seu número."); return; }
-
-            const n = document.getElementById('mod-comp-nome').value;
-            const t = document.getElementById('mod-comp-tel').value;
-            const d = document.getElementById('mod-comp-data').value;
-            
-            if(!n || !t || !d) { alert("Preencha todos os campos!"); return; }
-            
-            const r = rifas.find(x => x.id === currentRaffleId);
-            ultimaCompraIds = [...selectedNumbers];
-            
-            selectedNumbers.forEach(idx => {
-                r.numeros[idx].status = 'reserved';
-                r.numeros[idx].comprador = n;
-                r.numeros[idx].telefone = t;
-                r.numeros[idx].dataPromessa = d;
-            });
-            
-            database.ref('rifas').set(rifas).then(() => {
-                selectedNumbers = [];
-                fecharModal('modal-dados-comprador');
-                document.getElementById('mod-pix-chave').innerText = r.pixChave;
-                document.getElementById('mod-pix-nome').innerText = r.pixNome;
-                abrirModal('modal-pagamento');
-            });
+            const aceitouTermos = document.getElementById('mod-comp-termos').checked; if(!aceitouTermos) { alert("Você precisa ler e aceitar os Termos e Regulamento para reservar seu número."); return; } const n = document.getElementById('mod-comp-nome').value; const t = document.getElementById('mod-comp-tel').value; const d = document.getElementById('mod-comp-data').value; if(!n || !t || !d) { alert("Preencha todos os campos!"); return; }
+            const r = rifas.find(x => x.id === currentRaffleId); ultimaCompraIds = [...selectedNumbers]; selectedNumbers.forEach(idx => { r.numeros[idx].status = 'reserved'; r.numeros[idx].comprador = n; r.numeros[idx].telefone = t; r.numeros[idx].dataPromessa = d; });
+            database.ref('rifas').set(rifas).then(() => { selectedNumbers = []; fecharModal('modal-dados-comprador'); document.getElementById('mod-pix-chave').innerText = r.pixChave; document.getElementById('mod-pix-nome').innerText = r.pixNome; abrirModal('modal-pagamento'); });
         }
 
         function abrirComprovanteCompraImediata() {
-            fecharModal('modal-pagamento');
-            const r = rifas.find(x => x.id === currentRaffleId);
-            const nComprados = ultimaCompraIds.map(idx => r.numeros[idx]);
-            
-            if(nComprados.length === 0) return;
-            
-            const l = `${window.location.href.split('?')[0]}?rifa=${r.id}&consulta=${nComprados[0].telefone}`;
-            document.getElementById('rec-nome-rifa').innerText = r.nome;
-            document.getElementById('rec-premio').innerText = r.premio;
-            document.getElementById('rec-comprador').innerText = nComprados[0].comprador;
-            document.getElementById('rec-tel').innerText = nComprados[0].telefone;
-            document.getElementById('rec-link').innerText = l;
-            
-            document.getElementById('rec-conteudo-dinamico').innerHTML = `
-                <div class="recibo-row"><span>Números (Nesta Reserva):</span> <strong>${nComprados.map(x => x.numero).join(', ')}</strong></div>
-                <div class="recibo-row"><span>Valor Unitário:</span> <strong>R$ ${r.valor.toFixed(2)}</strong></div>
-                <div class="recibo-row"><span>Total desta compra:</span> <strong style="color:var(--danger)">R$ ${(nComprados.length * r.valor).toFixed(2)}</strong></div>
-                <div class="recibo-row"><span>Status:</span> <strong>Reservado ⏳</strong></div>
-            `;
-            abrirModal('modal-comprovante');
+            fecharModal('modal-pagamento'); const r = rifas.find(x => x.id === currentRaffleId); const nComprados = ultimaCompraIds.map(idx => r.numeros[idx]); if(nComprados.length === 0) return; const l = `${window.location.href.split('?')[0]}?rifa=${r.id}&consulta=${nComprados[0].telefone}`; document.getElementById('rec-nome-rifa').innerText = r.nome; document.getElementById('rec-premio').innerText = r.premio; document.getElementById('rec-comprador').innerText = nComprados[0].comprador; document.getElementById('rec-tel').innerText = nComprados[0].telefone; document.getElementById('rec-link').innerText = l; document.getElementById('rec-conteudo-dinamico').innerHTML = ` <div class="recibo-row"><span>Números (Nesta Reserva):</span> <strong>${nComprados.map(x => x.numero).join(', ')}</strong></div> <div class="recibo-row"><span>Valor Unitário:</span> <strong>R$ ${r.valor.toFixed(2)}</strong></div> <div class="recibo-row"><span>Total desta compra:</span> <strong style="color:var(--danger)">R$ ${(nComprados.length * r.valor).toFixed(2)}</strong></div> <div class="recibo-row"><span>Status:</span> <strong>Reservado ⏳</strong></div> `; abrirModal('modal-comprovante');
         }
 
         function realizarConsultaPublica(rId, tel) {
-            const r = rifas.find(x => x.id === rId);
-            const dr = document.getElementById('area-consulta-resultado');
+            const r = rifas.find(x => x.id === rId); const dr = document.getElementById('area-consulta-resultado'); if(!r) { dr.innerHTML = "<p>Não encontrada.</p>"; navigate('screen-consulta'); return; } const m = r.numeros.filter(n => n.telefone === tel); if(m.length === 0) { dr.innerHTML = `<p>Sem reservas.</p>`; } else { let pg=[], rs=[], at=[]; m.forEach(n => { if(n.status === 'paid') pg.push(n.numero); if(n.status === 'reserved') rs.push(n.numero); if(n.status === 'late') at.push(n.numero); }); let b = ''; if(pg.length>0) b+=`<div class="recibo-block"><span style="color:var(--success);">✅ Pagos:</span><br>Números: ${pg.join(', ')}<br>Valor: R$ ${(pg.length * r.valor).toFixed(2)}</div>`; if(rs.length>0) b+=`<div class="recibo-block"><span style="color:var(--warning);">⏳ Reservados:</span><br>Números: ${rs.join(', ')}<br>Valor: R$ ${(rs.length * r.valor).toFixed(2)}</div>`; if(at.length>0) b+=`<div class="recibo-block"><span style="color:var(--danger);">⚠️ Pendentes:</span><br>Números: ${at.join(', ')}<br>Valor: R$ ${(at.length * r.valor).toFixed(2)}</div>`; dr.innerHTML = `<div style="background:var(--card-bg); padding:15px; border-radius:8px; border:1px solid #ccc; font-size: 14px;"><p><strong>Comprador:</strong> ${m[0].comprador}</p><p><strong>Telefone:</strong> ${m[0].telefone}</p><p><strong>Rifa:</strong> <span class="font-rifa" style="color:${r.cor}; font-size:18px;">${r.nome}</span></p><hr>${b}<hr><p style="text-align:right;"><strong>Total Geral: R$ ${(m.length * r.valor).toFixed(2)}</strong></p><button class="btn btn-success" onclick="window.print()" style="margin-top:15px;">Salvar PDF</button></div>`; } navigate('screen-consulta');
+        }
+
+        function copiarLink() { const i = document.getElementById("admin-link-input"); i.select(); document.execCommand("copy"); alert("Copiado!"); }
+        
+        // COMPARTILHAR UNIVERSAL COM WEB SHARE API
+        function compartilharLinkGeral() { 
+            const r = rifas.find(x => x.id === currentRaffleId); 
+            const link = document.getElementById("admin-link-input").value; 
+            let tpl = obterMsgTemplate('link'); 
+            let msg = tpl.replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio).replace(/{link}/g, link); 
             
-            if(!r) { dr.innerHTML = "<p>Não encontrada.</p>"; navigate('screen-consulta'); return; }
-            
-            const m = r.numeros.filter(n => n.telefone === tel);
-            if(m.length === 0) {
-                dr.innerHTML = `<p>Sem reservas.</p>`;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Convite RifaOn🍀',
+                    text: msg
+                }).catch(e => console.log("Compartilhamento cancelado", e));
             } else {
-                let pg=[], rs=[], at=[];
-                m.forEach(n => {
-                    if(n.status === 'paid') pg.push(n.numero);
-                    if(n.status === 'reserved') rs.push(n.numero);
-                    if(n.status === 'late') at.push(n.numero);
-                });
-                
-                let b = '';
-                if(pg.length>0) b+=`<div class="recibo-block"><span style="color:var(--success);">✅ Pagos:</span><br>Números: ${pg.join(', ')}<br>Valor: R$ ${(pg.length * r.valor).toFixed(2)}</div>`;
-                if(rs.length>0) b+=`<div class="recibo-block"><span style="color:var(--warning);">⏳ Reservados:</span><br>Números: ${rs.join(', ')}<br>Valor: R$ ${(rs.length * r.valor).toFixed(2)}</div>`;
-                if(at.length>0) b+=`<div class="recibo-block"><span style="color:var(--danger);">⚠️ Pendentes:</span><br>Números: ${at.join(', ')}<br>Valor: R$ ${(at.length * r.valor).toFixed(2)}</div>`;
-                
-                dr.innerHTML = `<div style="background:var(--card-bg); padding:15px; border-radius:8px; border:1px solid #ccc; font-size: 14px;"><p><strong>Comprador:</strong> ${m[0].comprador}</p><p><strong>Telefone:</strong> ${m[0].telefone}</p><p><strong>Rifa:</strong> <span class="font-rifa" style="color:${r.cor}; font-size:18px;">${r.nome}</span></p><hr>${b}<hr><p style="text-align:right;"><strong>Total Geral: R$ ${(m.length * r.valor).toFixed(2)}</strong></p><button class="btn btn-success" onclick="window.print()" style="margin-top:15px;">Salvar PDF</button></div>`;
-            }
-            navigate('screen-consulta');
-        }
-
-        function copiarLink() {
-            const i = document.getElementById("admin-link-input");
-            i.select(); document.execCommand("copy"); alert("Copiado!");
-        }
-
-        function compartilharLinkWhatsApp() {
-            const r = rifas.find(x => x.id === currentRaffleId);
-            const link = document.getElementById("admin-link-input").value;
-            let tpl = obterMsgTemplate('link');
-            let msg = tpl.replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio).replace(/{link}/g, link);
-            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-        }
-
-        function chamarEdicaoAtual() {
-            abrirEditarRifa(currentRaffleId);
-        }
-
-        function chamarExclusaoAtual() {
-            if (confirm("Excluir Rifa?")) {
-                rifas = rifas.filter(x => x.id !== currentRaffleId);
-                database.ref('rifas').set(rifas);
-                atualizarDashboard();
-                navigate('screen-dashboard');
+                window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank'); 
             }
         }
+
+        function chamarEdicaoAtual() { abrirEditarRifa(currentRaffleId); }
+        function chamarExclusaoAtual() { if (confirm("Excluir Rifa?")) { rifas = rifas.filter(x => x.id !== currentRaffleId); database.ref('rifas').set(rifas); atualizarDashboard(); navigate('screen-dashboard'); } }
 
         function realizarSorteio() {
-            const r = rifas.find(x => x.id === currentRaffleId);
-            const todosPagos = r.numeros.every(n => n.status === 'paid');
-            
-            if(!todosPagos) { alert("Atenção: Todos os números precisam estar PAGOS para sortear!"); return; }
-            
+            const r = rifas.find(x => x.id === currentRaffleId); const todosPagos = r.numeros.every(n => n.status === 'paid'); if(!todosPagos) { alert("Atenção: Todos os números precisam estar PAGOS para sortear!"); return; }
             if(confirm("Deseja realmente sortear? A rifa será finalizada e não poderá ser desfeita.")) {
-                const ganhador = r.numeros[Math.floor(Math.random() * r.qtd)];
-                r.concluida = true;
-                r.ganhador = ganhador;
-                
-                database.ref('rifas').set(rifas).then(() => {
-                    alert(`🎉 BINGO! SORTEIO REALIZADO!\n\nNúmero Sorteado: ${ganhador.numero}\nGanhador(a): ${ganhador.comprador}`);
-                    let tpl = obterMsgTemplate('ganhador');
-                    let msg = tpl.replace(/{nome}/g, ganhador.comprador).replace(/{numero}/g, ganhador.numero).replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio);
-                    window.open(`https://wa.me/55${ganhador.telefone.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-                    abrirAdminRifa(currentRaffleId); 
-                });
+                const ganhador = r.numeros[Math.floor(Math.random() * r.qtd)]; r.concluida = true; r.ganhador = ganhador;
+                database.ref('rifas').set(rifas).then(() => { alert(`🎉 BINGO! SORTEIO REALIZADO!\n\nNúmero Sorteado: ${ganhador.numero}\nGanhador(a): ${ganhador.comprador}`); let tpl = obterMsgTemplate('ganhador'); let msg = tpl.replace(/{nome}/g, ganhador.comprador).replace(/{numero}/g, ganhador.numero).replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio); window.open(`https://wa.me/55${ganhador.telefone.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`, '_blank'); abrirAdminRifa(currentRaffleId); });
             }
         }
 
-        function abrirListaCompradores() {
-            document.getElementById('filtro-nome').value = '';
-            document.getElementById('filtro-status').value = '';
-            renderizarListaCompradores();
-            abrirModal('modal-lista-compradores');
-        }
-
-        function filtrarLista() {
-            renderizarListaCompradores();
-        }
-
+        function abrirListaCompradores() { document.getElementById('filtro-nome').value = ''; document.getElementById('filtro-status').value = ''; renderizarListaCompradores(); abrirModal('modal-lista-compradores'); }
+        function filtrarLista() { renderizarListaCompradores(); }
         function renderizarListaCompradores() {
-            const r = rifas.find(x => x.id === currentRaffleId);
-            const tbody = document.getElementById('corpo-tabela-compradores');
-            const fNome = document.getElementById('filtro-nome').value.toLowerCase();
-            const fStatus = document.getElementById('filtro-status').value;
-            
-            tbody.innerHTML = '';
-            
+            const r = rifas.find(x => x.id === currentRaffleId); const tbody = document.getElementById('corpo-tabela-compradores'); const fNome = document.getElementById('filtro-nome').value.toLowerCase(); const fStatus = document.getElementById('filtro-status').value; tbody.innerHTML = '';
             r.numeros.forEach(n => {
-                const nomeStr = (n.comprador || '').toLowerCase();
-                if (fNome && !nomeStr.includes(fNome)) return;
-                if (fStatus && n.status !== fStatus) return;
-                
-                let st = '';
-                if(n.status === 'available') st = '<span class="badge-st" style="background:#999;">Livre</span>';
-                if(n.status === 'paid') st = '<span class="badge-st" style="background:var(--success);">Pago</span>';
-                if(n.status === 'reserved') st = '<span class="badge-st" style="background:var(--warning);">Reserv.</span>';
-                if(n.status === 'late') st = '<span class="badge-st" style="background:var(--danger);">Atraso</span>';
-                
+                const nomeStr = (n.comprador || '').toLowerCase(); if (fNome && !nomeStr.includes(fNome)) return; if (fStatus && n.status !== fStatus) return; let st = ''; if(n.status === 'available') st = '<span class="badge-st" style="background:#999;">Livre</span>'; if(n.status === 'paid') st = '<span class="badge-st" style="background:var(--success);">Pago</span>'; if(n.status === 'reserved') st = '<span class="badge-st" style="background:var(--warning);">Reserv.</span>'; if(n.status === 'late') st = '<span class="badge-st" style="background:var(--danger);">Atraso</span>';
                 tbody.innerHTML += `<tr><td><b>${n.numero}</b></td><td>${n.comprador || '-'}</td><td>${n.telefone || '-'}</td><td>${st}</td></tr>`;
             });
         }
