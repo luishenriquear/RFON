@@ -1,0 +1,17 @@
+{
+  "name": "RifaOn",
+  "short_name": "RifaOn",
+  "description": "Crie e gerencie suas rifas de forma fácil e segura.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#e0f7fa",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Four_leaf_clover.png/512px-Four_leaf_clover.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+
