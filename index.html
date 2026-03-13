@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RifaOn</title>
+    <title>RifaOn🍀</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -31,7 +31,6 @@
             --footer-text: #9ca3af;
         }
 
-        /* VARIAVEIS MODO ESCURO */
         body.dark-mode {
             --bg-baby-blue: #0f172a;
             --bg-bottom: #1e293b;
@@ -73,30 +72,22 @@
         }
         .btn-nav:hover { background: rgba(255,255,255,0.2); color: #fff; }
 
-        /* Logotipo Inteligente e Adaptativo */
+        /* Logotipo Adaptativo */
         .logo-container { text-align: center; margin-bottom: 30px; }
-        
         .logo-title { 
             font-family: 'Tw Cen MT Condensed', 'Tw Cen MT', 'Oswald', sans-serif; 
-            /* Tamanho dinâmico: cresce no PC, ajusta no celular */
             font-size: clamp(64px, 8vw, 130px); 
             font-weight: 700; margin: 0; letter-spacing: 0px; 
             display: inline-block; position: relative;
         }
         .logo-rifa { color: #538cb3; }
         .logo-on { color: #d34c31; }
-        .logo-clover { 
-            color: var(--gold); 
-            /* Tamanho e posições relativas ao tamanho da letra para nunca desalinhar */
-            font-size: 0.4em; position: absolute; 
-            top: 0.1em; right: -0.45em; text-shadow: 0 0 5px rgba(255,215,0,0.8);
-        }
+        .logo-clover { color: var(--gold); font-size: 0.4em; position: absolute; top: 0.1em; right: -0.45em; text-shadow: 0 0 5px rgba(255,215,0,0.8); }
         
         .logo-subtitle { 
             font-size: clamp(16px, 1.8vw, 24px); color: #555; margin-top: 15px; 
-            line-height: 1.5; padding: 0 10px; font-weight: 500;
-            display: block; animation: wave 3s ease-in-out infinite; 
-            max-width: 800px; margin-left: auto; margin-right: auto;
+            line-height: 1.5; padding: 0 10px; font-weight: 500; display: block; 
+            animation: wave 3s ease-in-out infinite; max-width: 800px; margin-left: auto; margin-right: auto;
         }
         body.dark-mode .logo-subtitle { color: #cbd5e1; }
         @keyframes wave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
@@ -129,6 +120,23 @@
         .btn-warning { background: var(--warning); color: white; }
         .btn-small { padding: 8px 12px; font-size: 14px; width: auto; }
 
+        /* Botões de Ícones do Dashboard */
+        .btn-icon { 
+            width: 40px; height: 40px; border-radius: 8px; font-size: 20px; padding: 0; 
+            display: flex; align-items: center; justify-content: center; 
+            background: rgba(0,0,0,0.05); border: 1px solid #ccc; cursor: pointer; 
+            position: relative; transition: 0.3s; color: var(--text-dark);
+        }
+        body.dark-mode .btn-icon { background: rgba(255,255,255,0.05); border-color: #555; color: #fff; }
+        .btn-icon:hover { background: rgba(0,0,0,0.1); }
+        .btn-icon.btn-danger { background: var(--danger); color: white; border: none; }
+        .btn-icon.btn-warning { background: var(--warning); color: white; border: none; }
+        .badge-notif { 
+            position: absolute; top: -5px; right: -5px; background: red; color: white; 
+            font-size: 10px; font-weight: bold; width: 18px; height: 18px; 
+            border-radius: 50%; display: flex; justify-content: center; align-items: center; 
+        }
+
         .form-group { margin-bottom: 15px; width: 100%; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px; }
         .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; background: transparent; color: var(--text-dark); transition: 0.3s; font-family: inherit;}
@@ -158,7 +166,6 @@
         .numbers-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;}
         .number-item { position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: #eee; border: 2px solid #ccc; color: #333; cursor: pointer; font-weight: bold; transition: 0.2s; font-size: 14px; box-sizing: border-box; }
         .crown-icon { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: 22px; z-index: 5; text-shadow: 0 0 5px rgba(255,215,0,0.8); }
-
         body.dark-mode .number-item { background: #333; border-color: #555; color: #fff;}
 
         .mini-numbers-grid { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; width: 100%; max-height: 200px; overflow-y: auto; padding: 5px; }
@@ -189,7 +196,7 @@
         body.dark-mode .stat-box { background: rgba(255,255,255,0.05); }
 
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; overflow-y: auto; padding: 20px; }
-        .modal-content { background: var(--card-bg); padding: 25px; border-radius: 12px; width: 100%; max-width: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); margin: auto; color: var(--text-dark);}
+        .modal-content { background: var(--card-bg); padding: 25px; border-radius: 12px; width: 100%; max-width: 400px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); margin: auto; color: var(--text-dark);}
         
         .table-compradores { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
         .table-compradores th { padding: 10px 5px; background-color: var(--primary-blue); color: white; position: sticky; top: 0; z-index: 2; }
@@ -203,7 +210,7 @@
         .recibo-block { margin-bottom: 10px; padding: 5px; border: 1px solid #ddd; border-radius: 5px; background: rgba(255,255,255,0.5);}
         body.dark-mode .recibo-block { background: rgba(0,0,0,0.2); border-color: #555;}
 
-        /* CHAT SUPORTE ESTILOS */
+        /* CHAT E FEEDBACK ESTILOS */
         .chat-container { display: flex; flex-direction: column; gap: 10px; height: 350px; overflow-y: auto; background: rgba(0,0,0,0.03); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #ccc; }
         body.dark-mode .chat-container { background: rgba(0,0,0,0.3); border-color: #444;}
         .msg-bubble { padding: 10px 15px; border-radius: 15px; max-width: 85%; font-size: 14px; line-height: 1.4; position: relative;}
@@ -211,8 +218,10 @@
         .msg-admin { background: #e2e8f0; color: #333; align-self: flex-start; border-bottom-left-radius: 0; }
         body.dark-mode .msg-admin { background: #334155; color: #fff; }
         .msg-time { font-size: 10px; opacity: 0.7; margin-top: 5px; text-align: right; display: block;}
+        
+        .estrelas { font-size: 30px; color: #ccc; display: flex; justify-content: center; gap: 5px; cursor: pointer; margin: 15px 0;}
+        .estrelas span.ativa { color: var(--gold); }
 
-        /* Rodapé Profissional */
         .footer { background: var(--footer-bg); color: var(--footer-text); text-align: center; padding: 30px 20px 20px 20px; margin-top: auto; font-size: 14px; width: 100%; }
         .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 15px; }
         .footer a { color: var(--footer-text); text-decoration: none; transition: 0.3s; cursor: pointer; font-weight: bold;}
@@ -237,7 +246,7 @@
         window.onerror = function(msg, url, line) {
             const loader = document.getElementById('loading-overlay');
             if(loader) loader.style.display = 'none';
-            console.error("Erro interno capturado. A tela foi destravada. Msg: " + msg);
+            console.error("Erro interno. Tela destravada. Msg: " + msg);
         };
     </script>
 
@@ -258,7 +267,7 @@
 
     <div class="main-content">
         <div id="screen-welcome" class="screen">
-            <div style="margin-top: 5vh; background: transparent; padding: 25px; text-align: center;">
+            <div style="margin-top: 10vh; background: transparent; padding: 25px; text-align: center;">
                 <div class="logo-container">
                     <h1 class="logo-title">
                         <span class="logo-rifa">Rifa</span><span class="logo-on">On</span><span class="logo-clover">🍀</span>
@@ -346,12 +355,14 @@
         <div id="screen-dashboard" class="screen">
             <div class="header">
                 <div>Olá, <strong id="lbl-username" style="color:var(--primary-blue);">Carregando...</strong></div>
-                <div style="display:flex; gap:5px; flex-wrap:wrap;">
-                    <button class="btn btn-small btn-outline" style="border-color:#888; color:#888;" onclick="abrirConfiguracoes()">⚙️ Msgs</button>
-                    <button id="btn-master-panel" class="btn btn-small btn-warning" style="display:none;" onclick="abrirPainelMestre()">👑 Suporte Master</button>
-                    <button id="btn-user-support" class="btn btn-small btn-outline" style="border-color:#555; color:#555;" onclick="carregarMeusChamados()">🎧 Chamados</button>
-                    
-                    <button class="btn btn-small btn-danger" onclick="fazerLogout()">Sair</button>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                    <button class="btn-icon" title="Notificações" onclick="abrirModalNotificacoes()">
+                        🔔<span id="notif-badge" class="badge-notif" style="display:none;"></span>
+                    </button>
+                    <button class="btn-icon" title="Mensagens Automáticas" onclick="abrirConfiguracoes()">⚙️</button>
+                    <button id="btn-user-support" class="btn-icon" title="Chamados de Suporte" onclick="carregarMeusChamados()">🎧</button>
+                    <button id="btn-master-panel" class="btn-icon btn-warning" title="Painel Master" style="display:none;" onclick="abrirPainelMestre()">👑</button>
+                    <button class="btn-icon btn-danger" title="Sair" onclick="fazerLogout()">🚪</button>
                 </div>
             </div>
             
@@ -431,7 +442,7 @@
                     <label>Nova Imagem Produto</label>
                     <div style="display: flex; gap: 10px; align-items: center;">
                         <input type="file" id="rf-edit-img" accept="image/*" onchange="processarImagem(this, 'preview-img-edicao', 'produto')" style="flex:1;">
-                        <button class="btn btn-small btn-danger" style="width: auto; margin:0;" onclick="removerImagem('produto', 'edicao')">🗑️</button>
+                        <button class="btn btn-small btn-danger" style="width: auto; margin:0;" onclick="removerImagem('produto', 'edicao')">🗑️ Apagar</button>
                     </div>
                     <img id="preview-img-edicao" class="rifa-image-preview">
                 </div>
@@ -457,7 +468,7 @@
                     <label>Nova Imagem de Fundo da Grade</label>
                     <div style="display: flex; gap: 10px; align-items: center;">
                         <input type="file" id="rf-edit-bg-img" accept="image/*" onchange="processarImagem(this, 'preview-img-bg-edit', 'fundo')" style="flex:1;">
-                        <button class="btn btn-small btn-danger" style="width: auto; margin:0;" onclick="removerImagem('fundo', 'edicao')">🗑️</button>
+                        <button class="btn btn-small btn-danger" style="width: auto; margin:0;" onclick="removerImagem('fundo', 'edicao')">🗑️ Apagar</button>
                     </div>
                     <img id="preview-img-bg-edit" class="rifa-image-preview">
                 </div>
@@ -471,7 +482,7 @@
             <div class="card">
                 <div class="top-bar">
                     <div id="admin-raffle-title" style="margin:0; text-align:left;"></div>
-                    <button class="btn btn-small btn-outline" onclick="navigate('screen-dashboard')">Voltar</button>
+                    <button class="btn btn-small btn-outline" onclick="atualizarDashboard(); navigate('screen-dashboard')">Voltar</button>
                 </div>
 
                 <div class="action-buttons" style="margin-bottom: 20px;">
@@ -491,6 +502,8 @@
                         </div>
                     </div>
                 </div>
+
+                <button class="btn btn-outline" style="margin-bottom: 15px;" onclick="simularLinkComprador()">Testar como Comprador</button>
 
                 <div class="progress-container"><div id="admin-progress" class="progress-bar">0%</div></div>
 
@@ -545,7 +558,7 @@
         <div id="screen-master-support" class="screen">
             <div class="card">
                 <div class="top-bar">
-                    <h2 style="margin:0;">👑 Tickets Gerais</h2>
+                    <h2 style="margin:0;">👑 Tickets de Suporte</h2>
                     <button class="btn btn-small btn-outline" onclick="navigate('screen-dashboard')">Voltar</button>
                 </div>
                 <div id="master-tickets-list" style="margin-top: 15px;"></div>
@@ -556,12 +569,59 @@
             <div class="card">
                 <div class="top-bar">
                     <h3 id="chat-title" style="margin:0;">Atendimento</h3>
-                    <button class="btn btn-small btn-outline" onclick="fecharChat()">Voltar</button>
+                    <div style="display:flex; gap:5px;">
+                        <button class="btn btn-small btn-danger" onclick="iniciarEncerramentoChamado()">Encerrar Chamado</button>
+                        <button class="btn btn-small btn-outline" onclick="fecharChat()">Voltar</button>
+                    </div>
                 </div>
+                
                 <div id="chat-history" class="chat-container"></div>
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" id="chat-input" style="flex:1; padding:10px; border-radius:8px; border:1px solid #ccc;" placeholder="Digite sua mensagem...">
+                
+                <div id="chat-anexo-preview" style="display:none; text-align:center; margin-bottom:10px; position:relative;">
+                    <img id="chat-preview-img" style="height:60px; border-radius:6px;">
+                    <button style="position:absolute; top:-5px; right:40%; background:red; color:white; border:none; border-radius:50%; width:20px; height:20px; cursor:pointer;" onclick="removerAnexoChat()">X</button>
+                </div>
+
+                <div style="display: flex; gap: 5px;">
+                    <input type="file" id="chat-anexo" accept="image/*" style="display:none;" onchange="processarAnexoChat(this)">
+                    <button class="btn btn-outline" style="width: auto; padding: 0 15px; font-size:20px;" title="Anexar Imagem" onclick="document.getElementById('chat-anexo').click()">📎</button>
+                    <input type="text" id="chat-input" style="flex:1; padding:10px; border-radius:8px; border:1px solid #ccc; font-family:inherit;" placeholder="Digite sua mensagem...">
                     <button class="btn btn-success" style="width: auto; padding: 0 20px;" onclick="enviarMensagemChat()">Enviar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-notificacoes" class="modal-overlay" style="z-index: 10000;">
+            <div class="modal-content" style="max-width: 400px; padding: 20px;">
+                <h3 style="margin-top:0;">🔔 Suas Notificações</h3>
+                <div id="lista-notificacoes" style="max-height:300px; overflow-y:auto; font-size:14px;"></div>
+                <button class="btn btn-outline" style="margin-top:15px;" onclick="fecharModal('modal-notificacoes')">Fechar</button>
+            </div>
+        </div>
+
+        <div id="modal-feedback" class="modal-overlay" style="z-index: 10000;">
+            <div class="modal-content" style="text-align:center;">
+                <h3 style="margin-top:0;">Chamado Encerrado</h3>
+                
+                <div id="feed-step-1">
+                    <p>Sua solicitação foi resolvida?</p>
+                    <div style="display:flex; gap:10px; justify-content:center;">
+                        <button class="btn btn-success" onclick="setFeedbackResolvido(true)">👍 Sim</button>
+                        <button class="btn btn-danger" onclick="setFeedbackResolvido(false)">👎 Não</button>
+                    </div>
+                </div>
+
+                <div id="feed-step-2" style="display:none;">
+                    <div id="feed-motivo-box" class="form-group" style="display:none; text-align:left;">
+                        <label>Qual foi o motivo da insatisfação?</label>
+                        <textarea id="feed-motivo" rows="2"></textarea>
+                    </div>
+                    <p style="margin-top:15px; font-weight:bold;">Avalie o atendimento:</p>
+                    <div class="estrelas" id="feed-estrelas">
+                        <span onclick="setEstrela(1)">★</span><span onclick="setEstrela(2)">★</span><span onclick="setEstrela(3)">★</span><span onclick="setEstrela(4)">★</span><span onclick="setEstrela(5)">★</span>
+                    </div>
+                    <input type="hidden" id="feed-nota" value="0">
+                    <button class="btn btn-primary" style="margin-top:15px;" onclick="enviarFeedback()">Salvar e Fechar</button>
                 </div>
             </div>
         </div>
@@ -768,12 +828,17 @@
         let bgImageBase64Temp = ""; 
         let removerImgProduto = false;
         let removerImgFundo = false;
+        let chatAnexoBase64 = "";
 
         let adminIndexSelecionado = null;
         let ultimaCompraIds = [];
         let currentSupportTicketId = null; 
         
+        let feedbackTicketId = null;
+        let isResolvidoFeedback = true;
+        
         const EMAIL_MESTRE = 'luishenriquear@bol.com.br'; 
+        let globalNotifs = []; // Armazena notificacoes
 
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
@@ -809,10 +874,10 @@
             const urlBase = window.location.href.split('?')[0];
             window.history.replaceState({}, document.title, urlBase);
             
-            // Força o deslogue completo para garantir segurança e fecha a visão do Admin
+            // Força o deslogue completo
             auth.signOut().then(() => {
                 currentUserEmail = "";
-                sessionStorage.clear(); // Limpa as memórias de aba
+                sessionStorage.clear(); 
                 navigate('screen-welcome');
             }).catch(() => {
                 navigate('screen-welcome');
@@ -857,11 +922,11 @@
                     currentUserEmail = user.email;
                     
                     if(user.email.toLowerCase() === EMAIL_MESTRE.toLowerCase()) {
-                        document.getElementById('btn-master-panel').style.display = 'inline-block';
+                        document.getElementById('btn-master-panel').style.display = 'flex';
                         document.getElementById('btn-user-support').style.display = 'none';
                     } else {
                         document.getElementById('btn-master-panel').style.display = 'none';
-                        document.getElementById('btn-user-support').style.display = 'inline-block';
+                        document.getElementById('btn-user-support').style.display = 'flex';
                     }
 
                     database.ref('usuarios/' + user.uid).once('value').then(uSnap => {
@@ -935,12 +1000,83 @@
             });
         });
 
+        // --- SISTEMA DE NOTIFICAÇÕES (SINO) ---
+        function recalcularNotificacoes() {
+            if(!currentUserEmail) return;
+            globalNotifs = [];
+
+            // 1. Notificacoes das Rifas
+            const minhasRifas = rifas.filter(r => r.donoDaRifa === currentUserEmail);
+            minhasRifas.forEach(r => {
+                let res = 0, late = 0, paid = 0;
+                r.numeros.forEach(n => {
+                    if(n.status === 'reserved') res++;
+                    if(n.status === 'late') late++;
+                    if(n.status === 'paid') paid++;
+                });
+                if(res > 0) globalNotifs.push({ texto: `Rifa "${r.nome}": ${res} número(s) recém reservado(s).`, tipo: 'warning', acao: `abrirAdminRifa('${r.id}')` });
+                if(late > 0) globalNotifs.push({ texto: `Rifa "${r.nome}": ${late} pagamento(s) em atraso!`, tipo: 'danger', acao: `abrirAdminRifa('${r.id}')` });
+                if(r.qtd > 0 && paid === r.qtd && !r.concluida) globalNotifs.push({ texto: `A Rifa "${r.nome}" está 100% vendida! Pronta para sortear.`, tipo: 'success', acao: `abrirAdminRifa('${r.id}')` });
+            });
+
+            // 2. Notificacoes de Suporte
+            if(currentUserEmail.toLowerCase() !== EMAIL_MESTRE.toLowerCase()) {
+                database.ref('suporte').orderByChild('email').equalTo(currentUserEmail).once('value').then(snap => {
+                    const data = snap.val() || {};
+                    Object.keys(data).forEach(k => {
+                        if(data[k].status === 'respondido') {
+                            globalNotifs.push({ texto: `Seu chamado de suporte foi respondido!`, tipo: 'info', acao: `abrirChat('${k}')` });
+                        }
+                    });
+                    renderNotifBadge();
+                });
+            } else {
+                database.ref('suporte').orderByChild('status').equalTo('aberto').once('value').then(snap => {
+                    const data = snap.val() || {};
+                    let abertos = Object.keys(data).length;
+                    if(abertos > 0) globalNotifs.push({ texto: `Você tem ${abertos} chamado(s) aguardando resposta!`, tipo: 'danger', acao: `abrirPainelMestre()` });
+                    renderNotifBadge();
+                });
+            }
+        }
+
+        function renderNotifBadge() {
+            const badge = document.getElementById('notif-badge');
+            if(globalNotifs.length > 0) {
+                badge.innerText = globalNotifs.length > 9 ? '9+' : globalNotifs.length;
+                badge.style.display = 'flex';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        function abrirModalNotificacoes() {
+            const lista = document.getElementById('lista-notificacoes');
+            lista.innerHTML = '';
+            if(globalNotifs.length === 0) {
+                lista.innerHTML = '<p style="text-align:center; color:#888;">Nenhuma notificação no momento.</p>';
+            } else {
+                globalNotifs.forEach(n => {
+                    let icon = '📌';
+                    if(n.tipo === 'warning') icon = '⏳';
+                    if(n.tipo === 'danger') icon = '⚠️';
+                    if(n.tipo === 'success') icon = '🎉';
+                    lista.innerHTML += `<div style="background:rgba(0,0,0,0.05); border:1px solid #ccc; padding:10px; border-radius:6px; margin-bottom:8px; cursor:pointer; color:var(--text-dark);" onclick="fecharModal('modal-notificacoes'); ${n.acao};">
+                        <b>${icon}</b> ${n.texto}
+                    </div>`;
+                });
+            }
+            abrirModal('modal-notificacoes');
+        }
+
         function ativarAtualizacoesEmTempoReal() {
             database.ref('rifas').on('value', (snapshot) => {
                 rifas = parseFirebaseArray(snapshot.val());
                 let mudouAtrasos = false;
                 rifas.forEach(r => { if(checarAtrasosLocal(r)) mudouAtrasos = true; });
                 if(mudouAtrasos) database.ref('rifas').set(rifas);
+
+                recalcularNotificacoes();
 
                 if (document.getElementById('screen-dashboard').classList.contains('active')) atualizarDashboard();
                 if (document.getElementById('screen-admin-raffle').classList.contains('active') && currentRaffleId) {
@@ -1137,16 +1273,27 @@
                     lista.innerHTML = '<p style="text-align:center;">Nenhum chamado de suporte.</p>';
                 } else {
                     tickets.forEach(t => {
-                        const cor = t.status === 'aberto' ? 'var(--danger)' : 'var(--success)';
+                        const cor = t.status === 'aberto' ? 'var(--danger)' : (t.status === 'fechado' ? '#888' : 'var(--success)');
                         const msgs = t.mensagens || [];
-                        const unread = msgs.length > 0 && msgs[msgs.length-1].remetente === 'user' ? '⚠️ Nova' : '';
+                        const unread = msgs.length > 0 && msgs[msgs.length-1].remetente === 'user' && t.status !== 'fechado' ? '⚠️ Nova' : '';
+                        
+                        let fbHtml = '';
+                        if(t.status === 'fechado' && t.feedback) {
+                            const fColor = t.feedback.resolvido ? 'green' : 'red';
+                            fbHtml = `<div style="margin-top:10px; font-size:12px; background:rgba(0,0,0,0.05); padding:5px; border-radius:4px;">
+                                <b style="color:${fColor}">Resolvido: ${t.feedback.resolvido ? 'Sim' : 'Não'}</b> | Nota: ⭐ ${t.feedback.nota}<br>
+                                ${t.feedback.motivo ? '<i>Motivo: '+t.feedback.motivo+'</i>' : ''}
+                            </div>`;
+                        }
+
                         lista.innerHTML += `
                             <div style="background:var(--card-bg); padding:15px; border-radius:8px; border-left:4px solid ${cor}; margin-bottom:10px; cursor:pointer;" onclick="abrirChat('${t.id}')">
                                 <div style="display:flex; justify-content:space-between; font-size:12px; color:#666;">
-                                    <b>${t.data}</b> <span style="color:${cor}; text-transform:uppercase;">${t.status} ${unread}</span>
+                                    <b>${t.data}</b> <span style="color:${cor}; text-transform:uppercase; font-weight:bold;">${t.status} ${unread}</span>
                                 </div>
                                 <h4 style="margin:5px 0;">${t.nome}</h4>
                                 <p style="font-size:12px; margin:0;">${t.email}</p>
+                                ${fbHtml}
                             </div>
                         `;
                     });
@@ -1171,15 +1318,18 @@
                 if(t.mensagens) {
                     t.mensagens.forEach(msg => {
                         const isUser = msg.remetente === 'user';
-                        const isMeUser = currentUserEmail.toLowerCase() !== EMAIL_MESTRE.toLowerCase();
+                        const isMeAdmin = currentUserEmail.toLowerCase() === EMAIL_MESTRE.toLowerCase();
                         
                         let alignClass = '';
-                        if (isMeUser) { alignClass = isUser ? 'msg-user' : 'msg-admin'; } 
+                        if (!isMeAdmin) { alignClass = isUser ? 'msg-user' : 'msg-admin'; } 
                         else { alignClass = isUser ? 'msg-admin' : 'msg-user'; }
+
+                        let anexoHtml = msg.anexo ? `<br><img src="${msg.anexo}" style="max-width:200px; border-radius:8px; margin-top:5px;">` : '';
 
                         container.innerHTML += `
                             <div class="msg-bubble ${alignClass}">
                                 ${msg.texto}
+                                ${anexoHtml}
                                 <span class="msg-time">${msg.data}</span>
                             </div>
                         `;
@@ -1195,22 +1345,34 @@
             });
         }
 
-        function fecharChat() {
-            if(currentSupportTicketId) {
-                database.ref('suporte/' + currentSupportTicketId).off();
+        function processarAnexoChat(input) {
+            if (input.files[0]) {
+                const r = new FileReader();
+                r.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas'); const w = 400; const sc = w / img.width;
+                        canvas.width = w; canvas.height = img.height * sc; canvas.getContext('2d').drawImage(img, 0, 0, w, canvas.height);
+                        chatAnexoBase64 = canvas.toDataURL('image/jpeg', 0.6);
+                        document.getElementById('chat-preview-img').src = chatAnexoBase64;
+                        document.getElementById('chat-anexo-preview').style.display = 'block';
+                    }
+                    img.src = e.target.result;
+                }
+                r.readAsDataURL(input.files[0]);
             }
-            currentSupportTicketId = null;
-            if (currentUserEmail.toLowerCase() === EMAIL_MESTRE.toLowerCase()) {
-                abrirPainelMestre();
-            } else {
-                carregarMeusChamados();
-            }
+        }
+        function removerAnexoChat() {
+            chatAnexoBase64 = "";
+            document.getElementById('chat-anexo').value = '';
+            document.getElementById('chat-anexo-preview').style.display = 'none';
         }
 
         function enviarMensagemChat() {
             const input = document.getElementById('chat-input');
             const texto = input.value;
-            if(!texto || texto.trim() === '' || !currentSupportTicketId) return;
+            if((!texto || texto.trim() === '') && chatAnexoBase64 === '') return;
+            if(!currentSupportTicketId) return;
             
             const isMeAdmin = currentUserEmail.toLowerCase() === EMAIL_MESTRE.toLowerCase();
             const novoRemetente = isMeAdmin ? 'admin' : 'user';
@@ -1219,15 +1381,77 @@
             database.ref('suporte/' + currentSupportTicketId).once('value').then(snap => {
                 const t = snap.val();
                 let msgs = t.mensagens || [];
-                msgs.push({ remetente: novoRemetente, texto: texto, data: new Date().toLocaleString('pt-BR') });
+                msgs.push({ remetente: novoRemetente, texto: texto, data: new Date().toLocaleString('pt-BR'), anexo: chatAnexoBase64 });
                 
                 database.ref('suporte/' + currentSupportTicketId).update({
                     mensagens: msgs,
                     status: novoStatus
                 }).then(() => {
                     input.value = '';
+                    removerAnexoChat();
                 });
             });
+        }
+
+        function iniciarEncerramentoChamado() {
+            if(currentUserEmail.toLowerCase() === EMAIL_MESTRE.toLowerCase()) {
+                if(confirm("Deseja encerrar este chamado?")) {
+                    database.ref('suporte/' + currentSupportTicketId).update({ status: 'fechado' });
+                    alert("Chamado encerrado.");
+                    fecharChat();
+                }
+            } else {
+                feedbackTicketId = currentSupportTicketId;
+                document.getElementById('feed-step-1').style.display = 'block';
+                document.getElementById('feed-step-2').style.display = 'none';
+                document.getElementById('feed-motivo-box').style.display = 'none';
+                abrirModal('modal-feedback');
+            }
+        }
+
+        function setFeedbackResolvido(valor) {
+            isResolvidoFeedback = valor;
+            document.getElementById('feed-step-1').style.display = 'none';
+            document.getElementById('feed-step-2').style.display = 'block';
+            document.getElementById('feed-motivo-box').style.display = valor ? 'none' : 'block';
+            setEstrela(0); // Reseta estrelas
+        }
+
+        function setEstrela(nota) {
+            document.getElementById('feed-nota').value = nota;
+            const spans = document.getElementById('feed-estrelas').getElementsByTagName('span');
+            for(let i=0; i<5; i++) {
+                if(i < nota) spans[i].classList.add('ativa');
+                else spans[i].classList.remove('ativa');
+            }
+        }
+
+        function enviarFeedback() {
+            const nota = parseInt(document.getElementById('feed-nota').value);
+            const motivo = document.getElementById('feed-motivo').value;
+            if(nota === 0) return alert("Por favor, avalie com uma nota de 1 a 5 estrelas.");
+            if(!isResolvidoFeedback && motivo.trim() === '') return alert("Por favor, diga o motivo da insatisfação para que possamos melhorar.");
+
+            showLoader();
+            database.ref('suporte/' + feedbackTicketId).update({
+                status: 'fechado',
+                feedback: { resolvido: isResolvidoFeedback, nota: nota, motivo: isResolvidoFeedback ? '' : motivo }
+            }).then(() => {
+                hideLoader();
+                fecharModal('modal-feedback');
+                alert("Obrigado pelo seu feedback! Ele nos ajuda a melhorar a plataforma.");
+                fecharChat();
+            });
+        }
+
+        function fecharChat() {
+            if(currentSupportTicketId) database.ref('suporte/' + currentSupportTicketId).off();
+            currentSupportTicketId = null;
+            if (currentUserEmail.toLowerCase() === EMAIL_MESTRE.toLowerCase()) {
+                abrirPainelMestre();
+            } else {
+                carregarMeusChamados();
+            }
         }
 
         // --- SISTEMA DE PERSONALIZAÇÃO DE MENSAGENS ---
@@ -1286,7 +1510,7 @@
                             bgImageBase64Temp = canvas.toDataURL('image/jpeg', 0.5);
                             document.getElementById(previewId).src = bgImageBase64Temp; 
                             document.getElementById(previewId).style.display = 'block';
-                            updatePreview('editar'); // Atualiza a tela de visualizacao
+                            updatePreview('editar');
                         }
                     }
                     img.src = e.target.result;
@@ -1322,7 +1546,6 @@
 
         function updatePreview(origem) {
             if(!origem) origem = document.getElementById('screen-new-raffle').classList.contains('active') ? 'criar' : 'editar';
-            
             let prefixo = origem === 'editar' ? 'rf-edit-' : 'rf-';
             
             const formato = document.getElementById(prefixo + 'formato').value;
