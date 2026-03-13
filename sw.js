@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rifaon-cache-v2';
+const CACHE_NAME = 'rifaon-cache-v3';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -9,5 +9,5 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  event.respondWith(fetch(event.request));
+  event.respondWith(fetch(event.request).catch(() => new Response('App Offline')));
 });
