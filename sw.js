@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rifaon-cache-v1';
+const CACHE_NAME = 'rifaon-cache-v2';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
