@@ -73,6 +73,23 @@
         }
         .btn-nav:hover { background: rgba(255,255,255,0.2); color: #fff; }
 
+        /* Botão Tema e Ajuda (Flutuantes) */
+        .theme-toggle {
+            position: fixed; bottom: 20px; left: 20px; width: 45px; height: 45px;
+            background: var(--footer-bg); color: white; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; font-size: 20px;
+            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 1000; border: none; transition: 0.3s;
+        }
+        .theme-toggle:hover { transform: scale(1.1); }
+
+        .help-toggle {
+            position: fixed; bottom: 20px; right: 20px; width: 45px; height: 45px;
+            background: var(--primary-blue); color: white; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; font-size: 24px; font-weight: bold;
+            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 1000; border: none; transition: 0.3s;
+        }
+        .help-toggle:hover { transform: scale(1.1); }
+
         .logo-container { text-align: center; margin-bottom: 30px; }
         .logo-title { 
             font-family: 'Tw Cen MT Condensed', 'Tw Cen MT', 'Oswald', sans-serif; 
@@ -157,6 +174,7 @@
         .numbers-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;}
         .number-item { position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: #eee; border: 2px solid #ccc; color: #333; cursor: pointer; font-weight: bold; transition: 0.2s; font-size: 14px; box-sizing: border-box; }
         .crown-icon { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: 22px; z-index: 5; text-shadow: 0 0 5px rgba(255,215,0,0.8); }
+
         body.dark-mode .number-item { background: #333; border-color: #555; color: #fff;}
 
         .mini-numbers-grid { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; width: 100%; max-height: 200px; overflow-y: auto; padding: 5px; }
@@ -186,8 +204,8 @@
         .stat-box span { display: block; font-size: 18px; font-weight: bold; color: var(--primary-blue); margin-top: 5px;}
         body.dark-mode .stat-box { background: rgba(255,255,255,0.05); }
 
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; overflow-y: auto; padding: 20px; }
-        .modal-content { background: var(--card-bg); padding: 25px; border-radius: 12px; width: 100%; max-width: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); margin: auto; color: var(--text-dark);}
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; overflow-y: auto; padding: 20px; }
+        .modal-content { background: var(--card-bg); padding: 25px; border-radius: 12px; width: 100%; max-width: 400px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); margin: auto; color: var(--text-dark);}
         
         .table-compradores { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
         .table-compradores th { padding: 10px 5px; background-color: var(--primary-blue); color: white; position: sticky; top: 0; z-index: 2; }
@@ -230,6 +248,7 @@
             #modal-comprovante { position: absolute; left: 0; top: 0; width: 100%; background: white; padding: 0; }
             .main-navbar, .footer { display: none !important; }
             .modal-overlay { background: transparent; }
+            .theme-toggle, .help-toggle { display: none !important;}
             .no-print { display: none !important; }
         }
     </style>
@@ -240,7 +259,7 @@
         window.onerror = function(msg, url, line) {
             const loader = document.getElementById('loading-overlay');
             if(loader) loader.style.display = 'none';
-            console.error("Erro interno capturado. A tela foi destravada. Msg: " + msg);
+            console.error("Erro interno. Tela destravada. Msg: " + msg);
         };
     </script>
 
@@ -250,9 +269,11 @@
         </div>
         <div class="nav-actions">
             <button class="btn-nav" onclick="alert('Aplicativo oficial em desenvolvimento. Em breve nas lojas de aplicativos!')">⬇️ App</button>
-            <button class="btn-nav" id="theme-toggle-btn" onclick="toggleTheme()">🌙</button>
         </div>
     </nav>
+
+    <button class="theme-toggle no-print" id="theme-toggle-btn" onclick="toggleTheme()">🌙</button>
+    <button class="help-toggle no-print" onclick="abrirModal('modal-ajuda')">?</button>
 
     <div id="loading-overlay">
         <div class="spinner"></div>
@@ -500,6 +521,8 @@
                     </div>
                 </div>
 
+                <button class="btn btn-outline" style="margin-bottom: 15px;" onclick="simularLinkComprador()">Testar como Comprador</button>
+
                 <div class="progress-container"><div id="admin-progress" class="progress-bar">0%</div></div>
 
                 <div class="stats-grid">
@@ -582,7 +605,7 @@
                 <div class="top-bar">
                     <h3 id="chat-title" style="margin:0;">Atendimento</h3>
                     <div style="display:flex; gap:5px;">
-                        <button class="btn btn-small btn-danger" onclick="iniciarEncerramentoChamado()">Encerrar Chamado</button>
+                        <button id="btn-encerrar-chamado" class="btn btn-small btn-danger" onclick="iniciarEncerramentoChamado()">Encerrar Chamado</button>
                         <button class="btn btn-small btn-outline" onclick="fecharChat()">Voltar</button>
                     </div>
                 </div>
@@ -614,7 +637,43 @@
             <div class="modal-content" style="max-width: 400px; padding: 20px;">
                 <h3 style="margin-top:0;">🔔 Suas Notificações</h3>
                 <div id="lista-notificacoes" style="max-height:300px; overflow-y:auto; font-size:14px;"></div>
-                <button class="btn btn-outline" style="margin-top:15px;" onclick="fecharModal('modal-notificacoes')">Fechar</button>
+                <button class="btn btn-outline" style="margin-top:15px; width: 100%;" onclick="fecharModal('modal-notificacoes')">Fechar</button>
+            </div>
+        </div>
+
+        <div id="modal-ajuda" class="modal-overlay" style="z-index: 10000;">
+            <div class="modal-content" style="max-width: 600px; padding: 25px; max-height: 85vh; overflow-y: auto;">
+                <h2 style="margin-top:0; color:var(--primary-blue); text-align:center;">📖 Central de Ajuda</h2>
+                
+                <h3 style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">Manual Rápido</h3>
+                <ul style="padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li><b>Ícones do Topo:</b> <br>
+                        ⚙️ Personaliza as mensagens automáticas enviadas para o WhatsApp.<br>
+                        🎧 Acesso rápido aos seus chamados de suporte abertos.<br>
+                        🔔 Avisos de números que atrasaram o pagamento ou de rifa 100% vendida.<br>
+                        👑 <i>(Somente para Conta Master)</i> Gerencia todos os chamados dos usuários.<br>
+                        📊 <i>(Somente para Conta Master)</i> Acompanha a qualidade do sistema.
+                    </li>
+                    <li><b>Criar Rifas:</b> Clique em "+ Nova Rifa" na tela principal. Preencha os dados, escolha o formato e a cor dos números e clique em Salvar.</li>
+                    <li><b>Editar Rifas:</b> Abra a rifa desejada e clique no botão amarelo "✏️ Editar".</li>
+                    <li><b>Compartilhar:</b> Dentro do painel da rifa, clique em "Copiar" ou no botão de "WhatsApp" para mandar o link seguro de compra para as pessoas.</li>
+                    <li><b>Comprovantes:</b> Quando o cliente pagar, clique no número dele e em "✅ Confirmar". Após isso, clique em "📲 Enviar" para gerar e mandar o recibo via PDF/WhatsApp.</li>
+                    <li><b>Sorteio:</b> O botão verde "🎉 Sortear!" só irá aparecer magicamente quando <b>100% dos números da rifa</b> estiverem pagos!</li>
+                </ul>
+
+                <h3 style="border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-top: 20px;">Dúvidas Frequentes (FAQ)</h3>
+                <div style="font-size: 14px; line-height: 1.6;">
+                    <p><b>P: Posso editar a rifa depois de criada?</b><br>
+                    R: Sim! Você pode alterar nome, imagens e cores a qualquer momento. Porém, a <i>quantidade de números</i> é bloqueada para não desconfigurar as reservas já feitas.</p>
+
+                    <p><b>P: E se o cliente reservar e não pagar?</b><br>
+                    R: Se passar da data de promessa estipulada, o número fica vermelho (Atrasado) e um aviso vai pro seu 🔔. Você pode clicar no número, enviar uma mensagem de cobrança automática ou clicar em "🗑️ Liberar" para voltar a ficar disponível.</p>
+
+                    <p><b>P: As pessoas precisam ter conta ou baixar o App para comprar minha rifa?</b><br>
+                    R: Não! O link da sua rifa é público e seguro. O cliente só preenche os dados de contato rapidamente no momento de reservar o número. O sistema de login é exclusivo para você (vendedor).</p>
+                </div>
+                
+                <button class="btn btn-outline" style="margin-top:20px; width: 100%;" onclick="fecharModal('modal-ajuda')">Fechar Ajuda</button>
             </div>
         </div>
 
@@ -673,8 +732,9 @@
             <div class="modal-content" style="max-width: 500px;">
                 <h3>Política de Privacidade</h3>
                 <div style="font-size: 13px; max-height: 300px; overflow-y: auto; padding-right: 10px; text-align: justify; line-height:1.5;">
-                    <p>A privacidade dos nossos usuários e visitantes é muito importante para nós. Coletamos apenas as informações mínimas necessárias.</p>
-                    <p>Nenhuma informação financeira ou dados sensíveis são solicitados por esta plataforma.</p>
+                    <p>A privacidade dos nossos usuários e visitantes é muito importante para nós. Coletamos apenas as informações mínimas necessárias (nome e telefone de contato) exclusivamente para garantir a identificação correta do dono da cota e para comunicação de vitórias no sorteio.</p>
+                    <p>Nenhuma informação financeira, senha bancária ou dados sensíveis são solicitados por esta plataforma. O pagamento via PIX é realizado fora do ambiente do site.</p>
+                    <p>Os dados armazenados não são vendidos ou compartilhados com terceiros e são mantidos com protocolos de segurança padrão de mercado.</p>
                 </div>
                 <button class="btn btn-outline" style="margin-top:15px;" onclick="fecharModal('modal-privacidade')">Entendido</button>
             </div>
@@ -831,7 +891,7 @@
         try {
             if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         } catch (e) {
-            alert("Falha critica ao iniciar sistema. Verifique a conexão.");
+            console.error(e);
         }
         
         const auth = firebase.auth(); 
@@ -858,6 +918,7 @@
         
         const EMAIL_MESTRE = 'luishenriquear@bol.com.br'; 
         let globalNotifs = [];
+        let lastNotifsHash = ""; // Variavel para controlar o 'visto' na bolinha vermelha
 
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
@@ -931,7 +992,6 @@
                 queryString = window.location.hash.substring(window.location.hash.indexOf('?'));
             }
             const urlParams = new URLSearchParams(queryString);
-            
             const rifaUrlId = urlParams.get('rifa');
             const consultaTel = urlParams.get('consulta');
 
@@ -972,7 +1032,6 @@
                     hideLoader();
                     ativarAtualizacoesEmTempoReal(); 
 
-                    // REGRA 1: LINK COMPARTILHADO (COMPRADOR)
                     if (rifaUrlId && consultaTel) {
                         currentRaffleId = rifaUrlId;
                         realizarConsultaPublica(rifaUrlId, consultaTel);
@@ -989,7 +1048,6 @@
                         return; 
                     }
 
-                    // REGRA 2: ADMIN LOGADO (MEMORIA DE ABA)
                     if (user) {
                         const sessionData = sessionStorage.getItem('rifa_logged_user');
                         if(sessionData) {
@@ -1053,7 +1111,6 @@
                     const t = data[k];
                     const lastTime = t.atualizadoEm || t.criadoEm;
                     
-                    // Lógica de Auto-Close e SLA
                     if (t.status === 'respondido' && (now - lastTime > SEVEN_DAYS)) {
                         ticketsParaAutoClose.push(k);
                     }
@@ -1073,7 +1130,6 @@
                     }
                 });
 
-                // Executa o Auto-Close no Banco
                 ticketsParaAutoClose.forEach(k => {
                     let msgs = data[k].mensagens || [];
                     msgs.push({ remetente: 'sistema', texto: 'Chat encerrado automaticamente por falta de interatividade (7 dias). Se necessário, abra um novo chamado.', data: new Date().toLocaleString('pt-BR') });
@@ -1086,7 +1142,8 @@
 
         function renderNotifBadge() {
             const badge = document.getElementById('notif-badge');
-            if(globalNotifs.length > 0) {
+            const currentHash = JSON.stringify(globalNotifs);
+            if(globalNotifs.length > 0 && currentHash !== lastNotifsHash) {
                 badge.innerText = globalNotifs.length > 9 ? '9+' : globalNotifs.length;
                 badge.style.display = 'flex';
             } else {
@@ -1095,6 +1152,9 @@
         }
 
         function abrirModalNotificacoes() {
+            lastNotifsHash = JSON.stringify(globalNotifs); // Marca como vistas
+            renderNotifBadge(); // Esconde a bolinha
+            
             const lista = document.getElementById('lista-notificacoes');
             lista.innerHTML = '';
             if(globalNotifs.length === 0) {
@@ -1266,7 +1326,7 @@
                 const data = snap.val() || {};
                 let meusTickets = Object.keys(data).map(k => ({...data[k], id: k})).reverse();
                 
-                // Filtro: Se o chamado foi fechado a mais de 7 dias, some da lista do usuário
+                // Remove visualmente os fechados há mais de 7 dias
                 const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
                 meusTickets = meusTickets.filter(t => {
                     if(t.status === 'fechado' && t.fechadoEm) {
@@ -1333,7 +1393,6 @@
                         const unread = msgs.length > 0 && msgs[msgs.length-1].remetente === 'user' && t.status !== 'fechado' ? '⚠️ Nova' : '';
                         let dtFormatada = new Date(t.criadoEm).toLocaleDateString('pt-BR');
 
-                        // Checa SLA (7 dias) para Master
                         let slaAlerta = '';
                         if (t.status === 'aberto' || t.status === 'reaberto') {
                             const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
@@ -1408,7 +1467,8 @@
                     });
                 }
 
-                // Controle de Interface (Fechamento)
+                // Oculta/Exibe o botao de encerrar dependendo do status
+                const btnEncerrar = document.getElementById('btn-encerrar-chamado');
                 const ctrls = document.getElementById('chat-controls');
                 const closedMsg = document.getElementById('chat-closed-msg');
                 const waitMsg = document.getElementById('chat-waiting-msg');
@@ -1416,6 +1476,7 @@
                 
                 ctrls.style.display = 'none'; closedMsg.style.display = 'none';
                 waitMsg.style.display = 'none'; btnAvaliar.style.display = 'none';
+                btnEncerrar.style.display = 'none';
 
                 if (t.status === 'fechado') {
                     closedMsg.style.display = 'block';
@@ -1427,6 +1488,7 @@
                     }
                 } else {
                     ctrls.style.display = 'flex';
+                    btnEncerrar.style.display = 'block';
                 }
                 
                 hideLoader();
@@ -1498,7 +1560,6 @@
                         alert("Aguardando feedback do cliente.");
                     }
                 } else {
-                    // Visao Cliente
                     feedbackTicketId = currentSupportTicketId;
                     document.getElementById('feed-step-1').style.display = 'block';
                     document.getElementById('feed-step-2').style.display = 'none';
@@ -1535,16 +1596,11 @@
             
             if (isResolvidoFeedback) {
                 database.ref('suporte/' + feedbackTicketId).update({
-                    status: 'fechado',
-                    fechadoEm: Date.now(),
-                    feedback: { resolvido: true, nota: nota, motivo: '' }
+                    status: 'fechado', fechadoEm: Date.now(), feedback: { resolvido: true, nota: nota, motivo: '' }
                 }).then(() => { finishFeedback(); });
             } else {
                 database.ref('suporte/' + feedbackTicketId).update({
-                    status: 'reaberto',
-                    masterPodeFechar: false,
-                    atualizadoEm: Date.now(),
-                    feedback: { resolvido: false, nota: nota, motivo: motivo }
+                    status: 'reaberto', masterPodeFechar: false, atualizadoEm: Date.now(), feedback: { resolvido: false, nota: nota, motivo: motivo }
                 }).then(() => { finishFeedback(); });
             }
         }
@@ -1573,7 +1629,6 @@
                 const data = snap.val() || {};
                 const tickets = Object.keys(data).map(k => data[k]);
                 
-                // Processamento de Dados (Agrupar por Mes/Ano)
                 let mesesData = {};
                 let feedbackHtml = '';
 
@@ -1583,14 +1638,12 @@
                     let mesAno = ("0" + (dt.getMonth() + 1)).slice(-2) + "/" + dt.getFullYear();
                     
                     if(!mesesData[mesAno]) mesesData[mesAno] = { chamados: 0, somaNotas: 0, qtdNotas: 0 };
-                    
                     mesesData[mesAno].chamados += 1;
                     
                     if(t.feedback && t.feedback.nota) {
                         mesesData[mesAno].somaNotas += t.feedback.nota;
                         mesesData[mesAno].qtdNotas += 1;
 
-                        // Adiciona na lista visual
                         const corF = t.feedback.resolvido ? 'green' : 'red';
                         feedbackHtml += `<div style="background:rgba(0,0,0,0.05); padding:10px; border-radius:6px; margin-bottom:8px; font-size:12px;">
                             <b>Data:</b> ${new Date(t.fechadoEm || t.atualizadoEm).toLocaleDateString('pt-BR')} | 
@@ -1600,7 +1653,6 @@
                     }
                 });
 
-                // Ordenar labels de meses
                 const labels = Object.keys(mesesData).sort((a,b) => {
                     let partsA = a.split('/'); let partsB = b.split('/');
                     return new Date(partsA[1], partsA[0]-1) - new Date(partsB[1], partsB[0]-1);
@@ -1634,12 +1686,12 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Qtd de Chamados (Volume)',
+                        label: 'Qtd de Chamados',
                         data: dataChamados,
                         backgroundColor: 'rgba(2, 136, 209, 0.7)',
                         yAxisID: 'y'
                     }, {
-                        label: 'Média de Avaliação (1 a 5 ⭐)',
+                        label: 'Média ⭐',
                         data: dataMedia,
                         type: 'line',
                         borderColor: '#FFD700',
@@ -1648,13 +1700,7 @@
                         yAxisID: 'y1'
                     }]
                 },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: { beginAtZero: true, type: 'linear', position: 'left', title: { display: true, text: 'Nº Chamados' } },
-                        y1: { beginAtZero: true, max: 5, type: 'linear', position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'Nota' } }
-                    }
-                }
+                options: { responsive: true, scales: { y: { beginAtZero: true, type: 'linear', position: 'left', title: { display: true, text: 'Chamados' } }, y1: { beginAtZero: true, max: 5, type: 'linear', position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'Nota' } } } }
             });
         }
 
@@ -1682,222 +1728,90 @@
             const user = auth.currentUser;
             if(!user) return;
             
-            userConfig = {
-                link: document.getElementById('cfg-msg-link').value,
-                comprovante: document.getElementById('cfg-msg-comp').value,
-                cobranca: document.getElementById('cfg-msg-cob').value,
-                ganhador: document.getElementById('cfg-msg-ganhador').value
-            };
-
+            userConfig = { link: document.getElementById('cfg-msg-link').value, comprovante: document.getElementById('cfg-msg-comp').value, cobranca: document.getElementById('cfg-msg-cob').value, ganhador: document.getElementById('cfg-msg-ganhador').value };
             database.ref('usuarios/' + user.uid + '/config').set(userConfig).then(() => {
-                alert("Configurações salvas!");
-                atualizarDashboard();
-                navigate('screen-dashboard');
+                alert("Configurações salvas!"); atualizarDashboard(); navigate('screen-dashboard');
             });
         }
 
-        // --- SISTEMA DE IMAGENS E RIFA ---
+        // --- SISTEMA DE IMAGENS ---
         function processarImagem(input, previewId, tipo) {
             if (input.files[0]) {
-                const r = new FileReader();
-                r.onload = function(e) {
-                    const img = new Image();
-                    img.onload = function() {
+                const r = new FileReader(); r.onload = function(e) {
+                    const img = new Image(); img.onload = function() {
                         const canvas = document.createElement('canvas'); const w = 600; const sc = w / img.width;
                         canvas.width = w; canvas.height = img.height * sc; canvas.getContext('2d').drawImage(img, 0, 0, w, canvas.height);
-                        
-                        if(tipo === 'produto') {
-                            imageBase64Temp = canvas.toDataURL('image/jpeg', 0.7);
-                            document.getElementById(previewId).src = imageBase64Temp; 
-                            document.getElementById(previewId).style.display = 'block';
-                        } else if(tipo === 'fundo') {
-                            bgImageBase64Temp = canvas.toDataURL('image/jpeg', 0.5);
-                            document.getElementById(previewId).src = bgImageBase64Temp; 
-                            document.getElementById(previewId).style.display = 'block';
-                            updatePreview('editar');
-                        }
-                    }
-                    img.src = e.target.result;
-                }
-                r.readAsDataURL(input.files[0]);
+                        if(tipo === 'produto') { imageBase64Temp = canvas.toDataURL('image/jpeg', 0.7); document.getElementById(previewId).src = imageBase64Temp; document.getElementById(previewId).style.display = 'block'; } 
+                        else if(tipo === 'fundo') { bgImageBase64Temp = canvas.toDataURL('image/jpeg', 0.5); document.getElementById(previewId).src = bgImageBase64Temp; document.getElementById(previewId).style.display = 'block'; updatePreview('editar'); }
+                    }; img.src = e.target.result;
+                }; r.readAsDataURL(input.files[0]);
             }
         }
 
         function removerImagem(tipo, tela) {
-            if (tipo === 'produto') {
-                removerImgProduto = true; imageBase64Temp = "";
-                let inputId = tela === 'cadastro' ? 'rf-img' : 'rf-edit-img';
-                let previewId = tela === 'cadastro' ? 'preview-img-cadastro' : 'preview-img-edicao';
-                document.getElementById(inputId).value = '';
-                document.getElementById(previewId).style.display = 'none';
-                document.getElementById(previewId).src = '';
-            } else if (tipo === 'fundo') {
-                removerImgFundo = true; bgImageBase64Temp = "";
-                let inputId = tela === 'cadastro' ? 'rf-bg-img' : 'rf-edit-bg-img';
-                let previewId = tela === 'cadastro' ? 'preview-img-bg-cad' : 'preview-img-bg-edit';
-                document.getElementById(inputId).value = '';
-                document.getElementById(previewId).style.display = 'none';
-                document.getElementById(previewId).src = '';
-                updatePreview(tela === 'cadastro' ? 'criar' : 'editar');
-            }
+            if (tipo === 'produto') { removerImgProduto = true; imageBase64Temp = ""; let inputId = tela === 'cadastro' ? 'rf-img' : 'rf-edit-img'; let previewId = tela === 'cadastro' ? 'preview-img-cadastro' : 'preview-img-edicao'; document.getElementById(inputId).value = ''; document.getElementById(previewId).style.display = 'none'; document.getElementById(previewId).src = ''; } 
+            else if (tipo === 'fundo') { removerImgFundo = true; bgImageBase64Temp = ""; let inputId = tela === 'cadastro' ? 'rf-bg-img' : 'rf-edit-bg-img'; let previewId = tela === 'cadastro' ? 'preview-img-bg-cad' : 'preview-img-bg-edit'; document.getElementById(inputId).value = ''; document.getElementById(previewId).style.display = 'none'; document.getElementById(previewId).src = ''; updatePreview(tela === 'cadastro' ? 'criar' : 'editar'); }
         }
 
-        function abrirPreVisualizacao(origem) {
-            updatePreview(origem);
-            abrirModal('modal-preview-rifa');
-        }
+        function abrirPreVisualizacao(origem) { updatePreview(origem); abrirModal('modal-preview-rifa'); }
 
         function updatePreview(origem) {
             if(!origem) origem = document.getElementById('screen-new-raffle').classList.contains('active') ? 'criar' : 'editar';
             let prefixo = origem === 'editar' ? 'rf-edit-' : 'rf-';
-            
-            const formato = document.getElementById(prefixo + 'formato').value;
-            const colorStyle = document.getElementById(prefixo + 'color-style').value;
-            const cor = document.getElementById(prefixo + 'cor').value;
-            const bgStyle = document.getElementById(prefixo + 'bg-style').value;
-            const bgColor = document.getElementById(prefixo + 'bg-color').value;
+            const formato = document.getElementById(prefixo + 'formato').value; const colorStyle = document.getElementById(prefixo + 'color-style').value; const cor = document.getElementById(prefixo + 'cor').value; const bgStyle = document.getElementById(prefixo + 'bg-style').value; const bgColor = document.getElementById(prefixo + 'bg-color').value;
             
             let imgBgAtual = "";
-            if (origem === 'editar') {
-                if (removerImgFundo) { imgBgAtual = ""; } 
-                else if (bgImageBase64Temp !== "") { imgBgAtual = bgImageBase64Temp; } 
-                else { const r = rifas.find(x => x.id === currentRaffleId); imgBgAtual = r ? r.bgImagem : ""; }
-            } else {
-                imgBgAtual = bgImageBase64Temp;
-            }
+            if (origem === 'editar') { if (removerImgFundo) { imgBgAtual = ""; } else if (bgImageBase64Temp !== "") { imgBgAtual = bgImageBase64Temp; } else { const r = rifas.find(x => x.id === currentRaffleId); imgBgAtual = r ? r.bgImagem : ""; } } 
+            else { imgBgAtual = bgImageBase64Temp; }
 
-            const gridContainer = document.getElementById('preview-modal-container');
-            const grid = document.getElementById('preview-modal-grid');
-            
-            grid.innerHTML = "";
-            gridContainer.className = "grid-container-custom";
-            
-            if (bgStyle === 'bg-flat') { gridContainer.style.background = bgColor; } 
-            else if (bgStyle === 'bg-gradient') { gridContainer.style.background = `linear-gradient(135deg, ${bgColor} 0%, rgba(0,0,0,0.8) 100%)`; } 
-            else { gridContainer.style.background = "transparent"; }
-
+            const gridContainer = document.getElementById('preview-modal-container'); const grid = document.getElementById('preview-modal-grid');
+            grid.innerHTML = ""; gridContainer.className = "grid-container-custom";
+            if (bgStyle === 'bg-flat') { gridContainer.style.background = bgColor; } else if (bgStyle === 'bg-gradient') { gridContainer.style.background = `linear-gradient(135deg, ${bgColor} 0%, rgba(0,0,0,0.8) 100%)`; } else { gridContainer.style.background = "transparent"; }
             if (imgBgAtual) { gridContainer.style.backgroundImage = `url(${imgBgAtual})`; }
 
             for (let i = 1; i <= 20; i++) {
-                const div = document.createElement('div');
-                div.className = `number-item ${formato} ${colorStyle}`; 
-                
-                if (colorStyle === 'color-translucent') div.style.opacity = '0.6';
-                if (colorStyle === 'color-matte') div.style.filter = 'grayscale(30%) contrast(80%)';
-                
-                if (colorStyle === 'color-gradient') {
-                    div.style.background = `linear-gradient(135deg, ${cor}, #222)`; div.style.border = 'none';
-                } else if (colorStyle === 'color-flat') {
-                    div.style.backgroundColor = cor; div.style.border = 'none';
-                } else {
-                    div.style.backgroundColor = cor; div.style.borderColor = cor;
-                }
-                
-                div.style.color = '#fff';
-                div.innerText = i;
-                grid.appendChild(div);
+                const div = document.createElement('div'); div.className = `number-item ${formato} ${colorStyle}`; 
+                if (colorStyle === 'color-translucent') div.style.opacity = '0.6'; if (colorStyle === 'color-matte') div.style.filter = 'grayscale(30%) contrast(80%)';
+                if (colorStyle === 'color-gradient') { div.style.background = `linear-gradient(135deg, ${cor}, #222)`; div.style.border = 'none'; } else if (colorStyle === 'color-flat') { div.style.backgroundColor = cor; div.style.border = 'none'; } else { div.style.backgroundColor = cor; div.style.borderColor = cor; }
+                div.style.color = '#fff'; div.innerText = i; grid.appendChild(div);
             }
         }
 
+        // --- SISTEMA DA RIFA ---
         function salvarRifa() {
             const qtd = parseInt(document.getElementById('rf-qtd').value); const numeros = [];
             for (let i=1; i<=qtd; i++) { numeros.push({ numero: i, status: 'available', comprador: '', telefone: '', dataPromessa: '' }); }
-            
-            const novaRifa = { 
-                id: Date.now().toString(), donoDaRifa: currentUserEmail, nome: document.getElementById('rf-nome').value, 
-                desc: document.getElementById('rf-desc').value, premio: document.getElementById('rf-premio').value, 
-                valor: parseFloat(document.getElementById('rf-valor').value), qtd: qtd, imagem: imageBase64Temp, 
-                formato: document.getElementById('rf-formato').value, colorStyle: document.getElementById('rf-color-style').value, cor: document.getElementById('rf-cor').value, 
-                pixNome: document.getElementById('rf-pix-nome').value, pixChave: document.getElementById('rf-pix-chave').value, 
-                bgStyle: document.getElementById('rf-bg-style').value, bgColor: document.getElementById('rf-bg-color').value, bgImagem: bgImageBase64Temp,
-                numeros: numeros 
-            };
-            
-            rifas.push(novaRifa);
-            database.ref('rifas').set(rifas).then(() => { 
-                imageBase64Temp = ""; bgImageBase64Temp = ""; removerImgProduto = false; removerImgFundo = false;
-                alert("Rifa criada com sucesso!"); atualizarDashboard(); navigate('screen-dashboard'); 
-            });
+            const novaRifa = { id: Date.now().toString(), donoDaRifa: currentUserEmail, nome: document.getElementById('rf-nome').value, desc: document.getElementById('rf-desc').value, premio: document.getElementById('rf-premio').value, valor: parseFloat(document.getElementById('rf-valor').value), qtd: qtd, imagem: imageBase64Temp, formato: document.getElementById('rf-formato').value, colorStyle: document.getElementById('rf-color-style').value, cor: document.getElementById('rf-cor').value, pixNome: document.getElementById('rf-pix-nome').value, pixChave: document.getElementById('rf-pix-chave').value, bgStyle: document.getElementById('rf-bg-style').value, bgColor: document.getElementById('rf-bg-color').value, bgImagem: bgImageBase64Temp, numeros: numeros };
+            rifas.push(novaRifa); database.ref('rifas').set(rifas).then(() => { imageBase64Temp = ""; bgImageBase64Temp = ""; removerImgProduto = false; removerImgFundo = false; alert("Rifa criada com sucesso!"); atualizarDashboard(); navigate('screen-dashboard'); });
         }
 
         function abrirEditarRifa(id) {
-            currentRaffleId = id; const r = rifas.find(x => x.id === id);
-            if(!r) return;
-            
-            removerImgProduto = false; removerImgFundo = false;
-            document.getElementById('rf-edit-nome').value = r.nome; document.getElementById('rf-edit-desc').value = r.desc;
-            document.getElementById('rf-edit-premio').value = r.premio; document.getElementById('rf-edit-valor').value = r.valor;
-            document.getElementById('rf-edit-qtd').value = r.qtd; 
-            
-            document.getElementById('rf-edit-formato').value = r.formato || 'shape-square';
-            document.getElementById('rf-edit-color-style').value = r.colorStyle || '';
-            document.getElementById('rf-edit-cor').value = r.cor || '#0288d1';
-            document.getElementById('rf-edit-bg-style').value = r.bgStyle || '';
-            document.getElementById('rf-edit-bg-color').value = r.bgColor || '#ffffff';
-            
-            document.getElementById('rf-edit-pix-nome').value = r.pixNome;
-            document.getElementById('rf-edit-pix-chave').value = r.pixChave;
-            
-            imageBase64Temp = ""; bgImageBase64Temp = ""; 
-
-            const p1 = document.getElementById('preview-img-edicao');
-            if (r.imagem) { p1.src = r.imagem; p1.style.display = 'block'; } else { p1.style.display = 'none'; }
-            
-            const p2 = document.getElementById('preview-img-bg-edit');
-            if (r.bgImagem) { p2.src = r.bgImagem; p2.style.display = 'block'; } else { p2.style.display = 'none'; }
-
+            currentRaffleId = id; const r = rifas.find(x => x.id === id); if(!r) return;
+            removerImgProduto = false; removerImgFundo = false; document.getElementById('rf-edit-nome').value = r.nome; document.getElementById('rf-edit-desc').value = r.desc; document.getElementById('rf-edit-premio').value = r.premio; document.getElementById('rf-edit-valor').value = r.valor; document.getElementById('rf-edit-qtd').value = r.qtd; document.getElementById('rf-edit-formato').value = r.formato || 'shape-square'; document.getElementById('rf-edit-color-style').value = r.colorStyle || ''; document.getElementById('rf-edit-cor').value = r.cor || '#0288d1'; document.getElementById('rf-edit-bg-style').value = r.bgStyle || ''; document.getElementById('rf-edit-bg-color').value = r.bgColor || '#ffffff'; document.getElementById('rf-edit-pix-nome').value = r.pixNome; document.getElementById('rf-edit-pix-chave').value = r.pixChave; imageBase64Temp = ""; bgImageBase64Temp = ""; 
+            const p1 = document.getElementById('preview-img-edicao'); if (r.imagem) { p1.src = r.imagem; p1.style.display = 'block'; } else { p1.style.display = 'none'; }
+            const p2 = document.getElementById('preview-img-bg-edit'); if (r.bgImagem) { p2.src = r.bgImagem; p2.style.display = 'block'; } else { p2.style.display = 'none'; }
             navigate('screen-edit-raffle');
         }
 
         function salvarEdicaoRifa() {
             const i = rifas.findIndex(x => x.id === currentRaffleId);
             if(i !== -1) {
-                rifas[i].nome = document.getElementById('rf-edit-nome').value; 
-                rifas[i].desc = document.getElementById('rf-edit-desc').value;
-                rifas[i].premio = document.getElementById('rf-edit-premio').value; 
-                rifas[i].valor = parseFloat(document.getElementById('rf-edit-valor').value);
-                rifas[i].formato = document.getElementById('rf-edit-formato').value; 
-                rifas[i].colorStyle = document.getElementById('rf-edit-color-style').value;
-                rifas[i].cor = document.getElementById('rf-edit-cor').value;
-                rifas[i].bgStyle = document.getElementById('rf-edit-bg-style').value; 
-                rifas[i].bgColor = document.getElementById('rf-edit-bg-color').value;
-                rifas[i].pixNome = document.getElementById('rf-edit-pix-nome').value; 
-                rifas[i].pixChave = document.getElementById('rf-edit-pix-chave').value;
-                
+                rifas[i].nome = document.getElementById('rf-edit-nome').value; rifas[i].desc = document.getElementById('rf-edit-desc').value; rifas[i].premio = document.getElementById('rf-edit-premio').value; rifas[i].valor = parseFloat(document.getElementById('rf-edit-valor').value); rifas[i].formato = document.getElementById('rf-edit-formato').value; rifas[i].colorStyle = document.getElementById('rf-edit-color-style').value; rifas[i].cor = document.getElementById('rf-edit-cor').value; rifas[i].bgStyle = document.getElementById('rf-edit-bg-style').value; rifas[i].bgColor = document.getElementById('rf-edit-bg-color').value; rifas[i].pixNome = document.getElementById('rf-edit-pix-nome').value; rifas[i].pixChave = document.getElementById('rf-edit-pix-chave').value;
                 if (removerImgProduto) { rifas[i].imagem = ""; } else if (imageBase64Temp !== "") { rifas[i].imagem = imageBase64Temp; }
                 if (removerImgFundo) { rifas[i].bgImagem = ""; } else if (bgImageBase64Temp !== "") { rifas[i].bgImagem = bgImageBase64Temp; }
-
                 database.ref('rifas').set(rifas).then(() => { alert("Rifa editada com sucesso!"); abrirAdminRifa(currentRaffleId); });
             }
         }
 
         function aplicarCoresNumero(div, num, rifa) {
-            if (num.status === 'available') { 
-                const cStyle = rifa.colorStyle || '';
-                if (cStyle === 'color-translucent') div.style.opacity = '0.6';
-                if (cStyle === 'color-matte') div.style.filter = 'grayscale(30%) contrast(80%)';
-                
-                if (cStyle === 'color-gradient') {
-                    div.style.background = `linear-gradient(135deg, ${rifa.cor}, #222)`; div.style.border = 'none';
-                } else if (cStyle === 'color-flat') {
-                    div.style.backgroundColor = rifa.cor; div.style.border = 'none';
-                } else {
-                    div.style.backgroundColor = rifa.cor; div.style.borderColor = rifa.cor;
-                }
-                div.style.color = '#fff';
-            } 
+            if (num.status === 'available') { const cStyle = rifa.colorStyle || ''; if (cStyle === 'color-translucent') div.style.opacity = '0.6'; if (cStyle === 'color-matte') div.style.filter = 'grayscale(30%) contrast(80%)'; if (cStyle === 'color-gradient') { div.style.background = `linear-gradient(135deg, ${rifa.cor}, #222)`; div.style.border = 'none'; } else if (cStyle === 'color-flat') { div.style.backgroundColor = rifa.cor; div.style.border = 'none'; } else { div.style.backgroundColor = rifa.cor; div.style.borderColor = rifa.cor; } div.style.color = '#fff'; } 
             else { div.className = `number-item ${rifa.formato} status-${num.status}`; }
         }
 
         function aplicarFundoContainer(containerId, rifa) {
-            const container = document.getElementById(containerId);
-            if(!container) return;
+            const container = document.getElementById(containerId); if(!container) return;
             const bgS = rifa.bgStyle || ''; const bgC = rifa.bgColor || '#ffffff'; const bgI = rifa.bgImagem || '';
-
-            if (bgS === 'bg-flat') { container.style.background = bgC; } 
-            else if (bgS === 'bg-gradient') { container.style.background = `linear-gradient(135deg, ${bgC} 0%, rgba(0,0,0,0.8) 100%)`; } 
-            else { container.style.background = "transparent"; }
-
+            if (bgS === 'bg-flat') { container.style.background = bgC; } else if (bgS === 'bg-gradient') { container.style.background = `linear-gradient(135deg, ${bgC} 0%, rgba(0,0,0,0.8) 100%)`; } else { container.style.background = "transparent"; }
             if (bgI) { container.style.backgroundImage = `url(${bgI})`; }
         }
 
@@ -1905,201 +1819,92 @@
             const lista = document.getElementById('raffle-list'); lista.innerHTML = "";
             const mr = rifas.filter(r => r.donoDaRifa === currentUserEmail);
             if (mr.length === 0) { lista.innerHTML = "<p style='text-align:center; color:var(--footer-text);'>Nenhuma rifa cadastrada.</p>"; return; }
-
             mr.forEach(r => {
                 const div = document.createElement('div'); div.className = "raffle-card-dash"; div.onclick = () => abrirAdminRifa(r.id);
-                const bg = r.imagem ? `background-image: url('${r.imagem}');` : '';
-                const htmlConcluido = r.concluida ? `<div class="badge-concluido">Concluído</div>` : '';
-
-                let grid = '';
-                r.numeros.forEach(n => {
-                    let st = ''; let cCls = '';
-                    if (n.status === 'available') st = `background-color: ${r.cor}; border-color: ${r.cor}; color: #fff;`;
-                    else cCls = `status-${n.status}`;
-                    grid += `<div class="number-item ${r.formato || 'shape-square'} ${cCls}" style="${st}">${n.numero}</div>`;
-                });
-                
+                const bg = r.imagem ? `background-image: url('${r.imagem}');` : ''; const htmlConcluido = r.concluida ? `<div class="badge-concluido">Concluído</div>` : '';
+                let grid = ''; r.numeros.forEach(n => { let st = ''; let cCls = ''; if (n.status === 'available') st = `background-color: ${r.cor}; border-color: ${r.cor}; color: #fff;`; else cCls = `status-${n.status}`; grid += `<div class="number-item ${r.formato || 'shape-square'} ${cCls}" style="${st}">${n.numero}</div>`; });
                 let titleHtml = `<div class="raffle-card-title font-rifa" style="color: ${r.cor};">${r.nome}</div>`;
                 if (r.concluida && r.ganhador) { titleHtml += `<p style="margin:0 0 10px 0; color:var(--text-dark); font-weight:bold;">🏆 Ganhador: Nº ${r.ganhador.numero}</p>`; }
-
-                div.innerHTML = `${htmlConcluido}<div class="raffle-card-bg" style="${bg}"></div><div class="raffle-card-overlay"></div><div class="raffle-card-content">${titleHtml}<div class="mini-numbers-grid">${grid}</div></div>`;
-                lista.appendChild(div);
+                div.innerHTML = `${htmlConcluido}<div class="raffle-card-bg" style="${bg}"></div><div class="raffle-card-overlay"></div><div class="raffle-card-content">${titleHtml}<div class="mini-numbers-grid">${grid}</div></div>`; lista.appendChild(div);
             });
         }
 
         function abrirAdminRifa(id) {
-            currentRaffleId = id; const r = rifas.find(x => x.id === id);
-            if(!r) { navigate('screen-dashboard'); return; }
+            currentRaffleId = id; const r = rifas.find(x => x.id === id); if(!r) { navigate('screen-dashboard'); return; }
             if(checarAtrasosLocal(r)) database.ref('rifas').set(rifas);
-
             document.getElementById('admin-raffle-title').innerHTML = `<span class="font-rifa" style="color: ${r.cor}; font-size: 28px;">${r.nome}</span>` + (r.concluida ? ' <span style="font-size:14px; background:var(--success); padding:3px 8px; border-radius:12px; color:white; vertical-align: middle; margin-left: 10px;">Concluída</span>' : '');
             document.getElementById('admin-link-input').value = `${window.location.href.split('?')[0]}?rifa=${id}`;
-            
-            if(r.concluida) { document.getElementById('btn-editar-rifa').style.display = 'none'; document.getElementById('btn-sortear').style.display = 'none'; } 
-            else { document.getElementById('btn-editar-rifa').style.display = 'block'; }
-
+            if(r.concluida) { document.getElementById('btn-editar-rifa').style.display = 'none'; document.getElementById('btn-sortear').style.display = 'none'; } else { document.getElementById('btn-editar-rifa').style.display = 'block'; }
             atualizarEstatisticas(r); aplicarFundoContainer('admin-grid-container', r); renderizarGridAdmin(r); navigate('screen-admin-raffle');
         }
 
         function atualizarEstatisticas(r) {
-            let d = 0, res = 0, v = 0, a = 0;
-            r.numeros.forEach(n => { if (n.status === 'available') d++; if (n.status === 'reserved') res++; if (n.status === 'late') a++; if (n.status === 'paid') v++; });
-            const tArrec = v * r.valor; const tPend = (res + a) * r.valor; const tEsp = r.qtd * r.valor;
-            const prog = r.qtd > 0 ? ((v / r.qtd) * 100).toFixed(1) : 0;
-            document.getElementById('stat-disp').innerText = d; document.getElementById('stat-res').innerText = res;
-            document.getElementById('stat-vend').innerText = v; document.getElementById('stat-val-total').innerText = `R$ ${tEsp.toFixed(2)}`;
-            document.getElementById('stat-val-rec').innerText = `R$ ${tArrec.toFixed(2)}`; document.getElementById('stat-val-pend').innerText = `R$ ${tPend.toFixed(2)}`;
-            document.getElementById('admin-progress').style.width = prog + '%'; document.getElementById('admin-progress').innerText = prog + '% Vendido';
+            let d = 0, res = 0, v = 0, a = 0; r.numeros.forEach(n => { if (n.status === 'available') d++; if (n.status === 'reserved') res++; if (n.status === 'late') a++; if (n.status === 'paid') v++; });
+            const tArrec = v * r.valor; const tPend = (res + a) * r.valor; const tEsp = r.qtd * r.valor; const prog = r.qtd > 0 ? ((v / r.qtd) * 100).toFixed(1) : 0;
+            document.getElementById('stat-disp').innerText = d; document.getElementById('stat-res').innerText = res; document.getElementById('stat-vend').innerText = v; document.getElementById('stat-val-total').innerText = `R$ ${tEsp.toFixed(2)}`; document.getElementById('stat-val-rec').innerText = `R$ ${tArrec.toFixed(2)}`; document.getElementById('stat-val-pend').innerText = `R$ ${tPend.toFixed(2)}`; document.getElementById('admin-progress').style.width = prog + '%'; document.getElementById('admin-progress').innerText = prog + '% Vendido';
             if(!r.concluida) { document.getElementById('btn-sortear').style.display = (v === r.qtd && r.qtd > 0) ? 'block' : 'none'; }
         }
 
         function renderizarGridAdmin(r) {
             const grid = document.getElementById('admin-numbers-grid'); grid.innerHTML = "";
             r.numeros.forEach((n, idx) => {
-                const div = document.createElement('div'); div.className = `number-item ${r.formato}`;
-                aplicarCoresNumero(div, n, r); 
-                if (r.concluida && r.ganhador && r.ganhador.numero === n.numero) {
-                    div.innerHTML = `<span class="crown-icon">👑</span>${n.numero}`;
-                    div.style.boxShadow = "0 0 12px rgba(255,215,0,1)"; div.style.transform = "scale(1.15)"; div.style.zIndex = "5"; div.style.border = "2px solid #ffd700";
-                } else { div.innerText = n.numero; }
-                div.onclick = () => abrirModalAdminNumero(idx, r);
-                grid.appendChild(div);
+                const div = document.createElement('div'); div.className = `number-item ${r.formato}`; aplicarCoresNumero(div, n, r); 
+                if (r.concluida && r.ganhador && r.ganhador.numero === n.numero) { div.innerHTML = `<span class="crown-icon">👑</span>${n.numero}`; div.style.boxShadow = "0 0 12px rgba(255,215,0,1)"; div.style.transform = "scale(1.15)"; div.style.zIndex = "5"; div.style.border = "2px solid #ffd700"; } else { div.innerText = n.numero; }
+                div.onclick = () => abrirModalAdminNumero(idx, r); grid.appendChild(div);
             });
         }
 
         function abrirModalAdminNumero(idx, r) {
             const n = r.numeros[idx]; if (n.status === 'available') return;
-            adminIndexSelecionado = idx;
-            document.getElementById('mod-adm-num').innerText = n.numero; document.getElementById('mod-adm-nome').innerText = n.comprador;
-            document.getElementById('mod-adm-tel').innerText = n.telefone;
-            let d = n.dataPromessa; if(d && d.includes('-')) { const p = d.split('-'); d = `${p[2]}/${p[1]}/${p[0]}`; }
-            document.getElementById('mod-adm-data').innerText = d;
-            let st = "Reservado"; if(n.status === 'paid') st = "Pago (Garantido)"; if(n.status === 'late') st = "Atrasado";
-            document.getElementById('mod-adm-status').innerText = st;
-            
-            if(r.concluida) { document.getElementById('btn-adm-pagou').style.display = 'none'; document.getElementById('btn-adm-apagar').style.display = 'none'; } 
-            else { document.getElementById('btn-adm-pagou').style.display = n.status === 'paid' ? 'none' : 'block'; document.getElementById('btn-adm-apagar').style.display = 'block'; }
+            adminIndexSelecionado = idx; document.getElementById('mod-adm-num').innerText = n.numero; document.getElementById('mod-adm-nome').innerText = n.comprador; document.getElementById('mod-adm-tel').innerText = n.telefone; let d = n.dataPromessa; if(d && d.includes('-')) { const p = d.split('-'); d = `${p[2]}/${p[1]}/${p[0]}`; } document.getElementById('mod-adm-data').innerText = d; let st = "Reservado"; if(n.status === 'paid') st = "Pago (Garantido)"; if(n.status === 'late') st = "Atrasado"; document.getElementById('mod-adm-status').innerText = st;
+            if(r.concluida) { document.getElementById('btn-adm-pagou').style.display = 'none'; document.getElementById('btn-adm-apagar').style.display = 'none'; } else { document.getElementById('btn-adm-pagou').style.display = n.status === 'paid' ? 'none' : 'block'; document.getElementById('btn-adm-apagar').style.display = 'block'; }
             abrirModal('modal-admin-numero');
         }
 
         function adminAcao(acao) {
-            const r = rifas.find(x => x.id === currentRaffleId); const n = r.numeros[adminIndexSelecionado];
-            if(r.concluida) return;
-
-            if (acao === 'pagou') { n.status = 'paid'; database.ref('rifas').set(rifas); fecharModal('modal-admin-numero'); } 
-            else if (acao === 'apagar') {
-                if (n.status === 'late') {
-                    let tpl = obterMsgTemplate('cobranca'); let msg = tpl.replace(/{nome}/g, n.comprador).replace(/{numero}/g, n.numero).replace(/{rifa}/g, r.nome);
-                    if (confirm("Deseja mandar mensagem cobrando antes de excluir?\n\n[OK] = Sim\n[Cancelar] = Excluir Direto")) {
-                        const t = n.telefone.replace(/\D/g,''); window.open(`https://wa.me/55${t}?text=${encodeURIComponent(msg)}`, '_blank');
-                        fecharModal('modal-admin-numero'); return; 
-                    }
-                }
+            const r = rifas.find(x => x.id === currentRaffleId); const n = r.numeros[adminIndexSelecionado]; if(r.concluida) return;
+            if (acao === 'pagou') { n.status = 'paid'; database.ref('rifas').set(rifas); fecharModal('modal-admin-numero'); } else if (acao === 'apagar') {
+                if (n.status === 'late') { let tpl = obterMsgTemplate('cobranca'); let msg = tpl.replace(/{nome}/g, n.comprador).replace(/{numero}/g, n.numero).replace(/{rifa}/g, r.nome); if (confirm("Deseja mandar mensagem cobrando antes de excluir?\n\n[OK] = Sim\n[Cancelar] = Excluir Direto")) { const t = n.telefone.replace(/\D/g,''); window.open(`https://wa.me/55${t}?text=${encodeURIComponent(msg)}`, '_blank'); fecharModal('modal-admin-numero'); return; } }
                 if(confirm("Confirmar exclusão e liberar número?")) { n.status = 'available'; n.comprador = ''; n.telefone = ''; n.dataPromessa = ''; database.ref('rifas').set(rifas); fecharModal('modal-admin-numero'); }
             }
         }
 
         function encaminharComprovanteAdmin() {
-            const r = rifas.find(x => x.id === currentRaffleId); const n = r.numeros[adminIndexSelecionado];
-            const tc = r.numeros.filter(x => x.telefone === n.telefone);
-            let p=[], rs=[], a=[];
-            tc.forEach(x => { if(x.status === 'paid') p.push(x.numero); if(x.status === 'reserved') rs.push(x.numero); if(x.status === 'late') a.push(x.numero); });
-
-            const l = window.location.href.split('?')[0] + `?rifa=${r.id}&consulta=${n.telefone}`;
-            let det = '';
-            if(p.length > 0) det += `\n✅ *Garantidos:* ${p.join(', ')}`; if(rs.length > 0) det += `\n⏳ *Reservados:* ${rs.join(', ')}`; if(a.length > 0) det += `\n⚠️ *Atrasados:* ${a.join(', ')}`;
-            
-            let tpl = obterMsgTemplate('comprovante');
-            let msg = tpl.replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio).replace(/{detalhes}/g, det).replace(/{qtd_total}/g, tc.length).replace(/{valor_total}/g, (tc.length * r.valor).toFixed(2)).replace(/{link}/g, l).replace(/{nome}/g, n.comprador);
-            window.open(`https://wa.me/55${n.telefone.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`, '_blank');
+            const r = rifas.find(x => x.id === currentRaffleId); const n = r.numeros[adminIndexSelecionado]; const tc = r.numeros.filter(x => x.telefone === n.telefone); let p=[], rs=[], a=[]; tc.forEach(x => { if(x.status === 'paid') p.push(x.numero); if(x.status === 'reserved') rs.push(x.numero); if(x.status === 'late') a.push(x.numero); });
+            const l = window.location.href.split('?')[0] + `?rifa=${r.id}&consulta=${n.telefone}`; let det = ''; if(p.length > 0) det += `\n✅ *Garantidos:* ${p.join(', ')}`; if(rs.length > 0) det += `\n⏳ *Reservados:* ${rs.join(', ')}`; if(a.length > 0) det += `\n⚠️ *Atrasados:* ${a.join(', ')}`;
+            let tpl = obterMsgTemplate('comprovante'); let msg = tpl.replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio).replace(/{detalhes}/g, det).replace(/{qtd_total}/g, tc.length).replace(/{valor_total}/g, (tc.length * r.valor).toFixed(2)).replace(/{link}/g, l).replace(/{nome}/g, n.comprador); window.open(`https://wa.me/55${n.telefone.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
         function simularLinkComprador() {
             const r = rifas.find(x => x.id === currentRaffleId);
-            document.getElementById('buyer-title').innerHTML = `<span class="font-rifa" style="color: ${r.cor}; font-size: 32px;">${r.nome}</span>` + (r.concluida ? ' <span style="font-size:14px; background:var(--success); padding:3px 8px; border-radius:12px; color:white; vertical-align: middle; margin-left: 10px;">Concluída</span>' : '');
-            document.getElementById('buyer-desc').innerText = r.desc;
-            document.getElementById('buyer-premio').innerText = "Prêmio: " + r.premio; document.getElementById('buyer-valor').innerText = r.valor.toFixed(2);
-            const img = document.getElementById('buyer-img'); if (r.imagem) { img.src = r.imagem; img.style.display = 'block'; } else { img.style.display = 'none'; }
-
-            if(r.concluida) { document.getElementById('buyer-instrucoes').innerHTML = `<b>RIFA ENCERRADA.</b><br> O Ganhador foi: Número ${r.ganhador.numero} (${r.ganhador.comprador})`; } 
-            else { document.getElementById('buyer-instrucoes').innerHTML = `Selecione os números desejados:`; }
-
-            document.getElementById('btn-prosseguir').style.display = selectedNumbers.length > 0 ? 'block' : 'none';
-            aplicarFundoContainer('buyer-grid-container', r); renderizarGridComprador(r); navigate('screen-buyer');
+            document.getElementById('buyer-title').innerHTML = `<span class="font-rifa" style="color: ${r.cor}; font-size: 32px;">${r.nome}</span>` + (r.concluida ? ' <span style="font-size:14px; background:var(--success); padding:3px 8px; border-radius:12px; color:white; vertical-align: middle; margin-left: 10px;">Concluída</span>' : ''); document.getElementById('buyer-desc').innerText = r.desc; document.getElementById('buyer-premio').innerText = "Prêmio: " + r.premio; document.getElementById('buyer-valor').innerText = r.valor.toFixed(2); const img = document.getElementById('buyer-img'); if (r.imagem) { img.src = r.imagem; img.style.display = 'block'; } else { img.style.display = 'none'; }
+            if(r.concluida) { document.getElementById('buyer-instrucoes').innerHTML = `<b>RIFA ENCERRADA.</b><br> O Ganhador foi: Número ${r.ganhador.numero} (${r.ganhador.comprador})`; } else { document.getElementById('buyer-instrucoes').innerHTML = `Selecione os números desejados:`; }
+            document.getElementById('btn-prosseguir').style.display = selectedNumbers.length > 0 ? 'block' : 'none'; aplicarFundoContainer('buyer-grid-container', r); renderizarGridComprador(r); navigate('screen-buyer');
         }
 
         function renderizarGridComprador(r) {
             const grid = document.getElementById('buyer-numbers-grid'); grid.innerHTML = "";
             r.numeros.forEach((n, index) => {
                 const div = document.createElement('div'); div.className = `number-item ${r.formato}`; 
-                if (r.concluida && r.ganhador && r.ganhador.numero === n.numero) {
-                    div.innerHTML = `<span class="crown-icon">👑</span>${n.numero}`;
-                    div.style.boxShadow = "0 0 10px rgba(255,215,0,1)"; div.style.border = "2px solid #ffd700"; div.style.zIndex = "5";
-                } else { div.innerText = n.numero; }
-                
-                if (n.status === 'available' || selectedNumbers.includes(index)) {
-                    aplicarCoresNumero(div, n, r);
-                    if(selectedNumbers.includes(index)) div.classList.add('selected');
-                    div.onclick = () => {
-                        if(r.concluida) return; 
-                        if(r.numeros[index].status !== 'available' && !selectedNumbers.includes(index)) { alert('Número já reservado.'); return; }
-                        div.classList.toggle('selected');
-                        if (div.classList.contains('selected')) { selectedNumbers.push(index); } else { selectedNumbers = selectedNumbers.filter(id => id !== index); }
-                        document.getElementById('btn-prosseguir').style.display = selectedNumbers.length > 0 ? 'block' : 'none';
-                    };
-                } else {
-                    div.style.opacity = '0.5'; div.style.cursor = 'not-allowed';
-                    div.style.backgroundColor = '#9e9e9e'; div.style.borderColor = '#ccc'; div.style.color = '#fff'; div.className = `number-item ${r.formato} status-${n.status}`;
-                }
-                grid.appendChild(div);
+                if (r.concluida && r.ganhador && r.ganhador.numero === n.numero) { div.innerHTML = `<span class="crown-icon">👑</span>${n.numero}`; div.style.boxShadow = "0 0 10px rgba(255,215,0,1)"; div.style.border = "2px solid #ffd700"; div.style.zIndex = "5"; } else { div.innerText = n.numero; }
+                if (n.status === 'available' || selectedNumbers.includes(index)) { aplicarCoresNumero(div, n, r); if(selectedNumbers.includes(index)) div.classList.add('selected'); div.onclick = () => { if(r.concluida) return; if(r.numeros[index].status !== 'available' && !selectedNumbers.includes(index)) { alert('Número já reservado.'); return; } div.classList.toggle('selected'); if (div.classList.contains('selected')) { selectedNumbers.push(index); } else { selectedNumbers = selectedNumbers.filter(id => id !== index); } document.getElementById('btn-prosseguir').style.display = selectedNumbers.length > 0 ? 'block' : 'none'; }; } else { div.style.opacity = '0.5'; div.style.cursor = 'not-allowed'; div.style.backgroundColor = '#9e9e9e'; div.style.borderColor = '#ccc'; div.style.color = '#fff'; div.className = `number-item ${r.formato} status-${n.status}`; } grid.appendChild(div);
             });
         }
 
-        function abrirModalDados() {
-            document.getElementById('mod-comp-nome').value = ''; document.getElementById('mod-comp-tel').value = '';
-            document.getElementById('mod-comp-data').value = new Date().toISOString().split('T')[0]; document.getElementById('mod-comp-termos').checked = false; 
-            abrirModal('modal-dados-comprador');
-        }
+        function abrirModalDados() { document.getElementById('mod-comp-nome').value = ''; document.getElementById('mod-comp-tel').value = ''; document.getElementById('mod-comp-data').value = new Date().toISOString().split('T')[0]; document.getElementById('mod-comp-termos').checked = false; abrirModal('modal-dados-comprador'); }
 
         function confirmarReserva() {
-            const aceitouTermos = document.getElementById('mod-comp-termos').checked;
-            if(!aceitouTermos) { alert("Você precisa ler e aceitar os Termos e Regulamento para reservar seu número."); return; }
-            const n = document.getElementById('mod-comp-nome').value; const t = document.getElementById('mod-comp-tel').value; const d = document.getElementById('mod-comp-data').value;
-            if(!n || !t || !d) { alert("Preencha todos os campos!"); return; }
-            
-            const r = rifas.find(x => x.id === currentRaffleId); ultimaCompraIds = [...selectedNumbers];
-            selectedNumbers.forEach(idx => { r.numeros[idx].status = 'reserved'; r.numeros[idx].comprador = n; r.numeros[idx].telefone = t; r.numeros[idx].dataPromessa = d; });
-            database.ref('rifas').set(rifas).then(() => {
-                selectedNumbers = []; fecharModal('modal-dados-comprador');
-                document.getElementById('mod-pix-chave').innerText = r.pixChave; document.getElementById('mod-pix-nome').innerText = r.pixNome;
-                abrirModal('modal-pagamento');
-            });
+            const aceitouTermos = document.getElementById('mod-comp-termos').checked; if(!aceitouTermos) { alert("Você precisa ler e aceitar os Termos e Regulamento para reservar seu número."); return; } const n = document.getElementById('mod-comp-nome').value; const t = document.getElementById('mod-comp-tel').value; const d = document.getElementById('mod-comp-data').value; if(!n || !t || !d) { alert("Preencha todos os campos!"); return; }
+            const r = rifas.find(x => x.id === currentRaffleId); ultimaCompraIds = [...selectedNumbers]; selectedNumbers.forEach(idx => { r.numeros[idx].status = 'reserved'; r.numeros[idx].comprador = n; r.numeros[idx].telefone = t; r.numeros[idx].dataPromessa = d; });
+            database.ref('rifas').set(rifas).then(() => { selectedNumbers = []; fecharModal('modal-dados-comprador'); document.getElementById('mod-pix-chave').innerText = r.pixChave; document.getElementById('mod-pix-nome').innerText = r.pixNome; abrirModal('modal-pagamento'); });
         }
 
         function abrirComprovanteCompraImediata() {
-            fecharModal('modal-pagamento'); const r = rifas.find(x => x.id === currentRaffleId); const nComprados = ultimaCompraIds.map(idx => r.numeros[idx]);
-            if(nComprados.length === 0) return;
-            const l = `${window.location.href.split('?')[0]}?rifa=${r.id}&consulta=${nComprados[0].telefone}`;
-            document.getElementById('rec-nome-rifa').innerText = r.nome; document.getElementById('rec-premio').innerText = r.premio;
-            document.getElementById('rec-comprador').innerText = nComprados[0].comprador; document.getElementById('rec-tel').innerText = nComprados[0].telefone; document.getElementById('rec-link').innerText = l;
-            document.getElementById('rec-conteudo-dinamico').innerHTML = ` <div class="recibo-row"><span>Números (Nesta Reserva):</span> <strong>${nComprados.map(x => x.numero).join(', ')}</strong></div> <div class="recibo-row"><span>Valor Unitário:</span> <strong>R$ ${r.valor.toFixed(2)}</strong></div> <div class="recibo-row"><span>Total desta compra:</span> <strong style="color:var(--danger)">R$ ${(nComprados.length * r.valor).toFixed(2)}</strong></div> <div class="recibo-row"><span>Status:</span> <strong>Reservado ⏳</strong></div> `;
-            abrirModal('modal-comprovante');
+            fecharModal('modal-pagamento'); const r = rifas.find(x => x.id === currentRaffleId); const nComprados = ultimaCompraIds.map(idx => r.numeros[idx]); if(nComprados.length === 0) return; const l = `${window.location.href.split('?')[0]}?rifa=${r.id}&consulta=${nComprados[0].telefone}`; document.getElementById('rec-nome-rifa').innerText = r.nome; document.getElementById('rec-premio').innerText = r.premio; document.getElementById('rec-comprador').innerText = nComprados[0].comprador; document.getElementById('rec-tel').innerText = nComprados[0].telefone; document.getElementById('rec-link').innerText = l; document.getElementById('rec-conteudo-dinamico').innerHTML = ` <div class="recibo-row"><span>Números (Nesta Reserva):</span> <strong>${nComprados.map(x => x.numero).join(', ')}</strong></div> <div class="recibo-row"><span>Valor Unitário:</span> <strong>R$ ${r.valor.toFixed(2)}</strong></div> <div class="recibo-row"><span>Total desta compra:</span> <strong style="color:var(--danger)">R$ ${(nComprados.length * r.valor).toFixed(2)}</strong></div> <div class="recibo-row"><span>Status:</span> <strong>Reservado ⏳</strong></div> `; abrirModal('modal-comprovante');
         }
 
         function realizarConsultaPublica(rId, tel) {
-            const r = rifas.find(x => x.id === rId); const dr = document.getElementById('area-consulta-resultado');
-            if(!r) { dr.innerHTML = "<p>Não encontrada.</p>"; navigate('screen-consulta'); return; }
-            const m = r.numeros.filter(n => n.telefone === tel);
-            if(m.length === 0) { dr.innerHTML = `<p>Sem reservas.</p>`; } else {
-                let pg=[], rs=[], at=[];
-                m.forEach(n => { if(n.status === 'paid') pg.push(n.numero); if(n.status === 'reserved') rs.push(n.numero); if(n.status === 'late') at.push(n.numero); });
-                let b = '';
-                if(pg.length>0) b+=`<div class="recibo-block"><span style="color:var(--success);">✅ Pagos:</span><br>Números: ${pg.join(', ')}<br>Valor: R$ ${(pg.length * r.valor).toFixed(2)}</div>`;
-                if(rs.length>0) b+=`<div class="recibo-block"><span style="color:var(--warning);">⏳ Reservados:</span><br>Números: ${rs.join(', ')}<br>Valor: R$ ${(rs.length * r.valor).toFixed(2)}</div>`;
-                if(at.length>0) b+=`<div class="recibo-block"><span style="color:var(--danger);">⚠️ Pendentes:</span><br>Números: ${at.join(', ')}<br>Valor: R$ ${(at.length * r.valor).toFixed(2)}</div>`;
-                dr.innerHTML = `<div style="background:var(--card-bg); padding:15px; border-radius:8px; border:1px solid #ccc; font-size: 14px;"><p><strong>Comprador:</strong> ${m[0].comprador}</p><p><strong>Telefone:</strong> ${m[0].telefone}</p><p><strong>Rifa:</strong> <span class="font-rifa" style="color:${r.cor}; font-size:18px;">${r.nome}</span></p><hr>${b}<hr><p style="text-align:right;"><strong>Total Geral: R$ ${(m.length * r.valor).toFixed(2)}</strong></p><button class="btn btn-success" onclick="window.print()" style="margin-top:15px;">Salvar PDF</button></div>`;
-            }
-            navigate('screen-consulta');
+            const r = rifas.find(x => x.id === rId); const dr = document.getElementById('area-consulta-resultado'); if(!r) { dr.innerHTML = "<p>Não encontrada.</p>"; navigate('screen-consulta'); return; } const m = r.numeros.filter(n => n.telefone === tel); if(m.length === 0) { dr.innerHTML = `<p>Sem reservas.</p>`; } else { let pg=[], rs=[], at=[]; m.forEach(n => { if(n.status === 'paid') pg.push(n.numero); if(n.status === 'reserved') rs.push(n.numero); if(n.status === 'late') at.push(n.numero); }); let b = ''; if(pg.length>0) b+=`<div class="recibo-block"><span style="color:var(--success);">✅ Pagos:</span><br>Números: ${pg.join(', ')}<br>Valor: R$ ${(pg.length * r.valor).toFixed(2)}</div>`; if(rs.length>0) b+=`<div class="recibo-block"><span style="color:var(--warning);">⏳ Reservados:</span><br>Números: ${rs.join(', ')}<br>Valor: R$ ${(rs.length * r.valor).toFixed(2)}</div>`; if(at.length>0) b+=`<div class="recibo-block"><span style="color:var(--danger);">⚠️ Pendentes:</span><br>Números: ${at.join(', ')}<br>Valor: R$ ${(at.length * r.valor).toFixed(2)}</div>`; dr.innerHTML = `<div style="background:var(--card-bg); padding:15px; border-radius:8px; border:1px solid #ccc; font-size: 14px;"><p><strong>Comprador:</strong> ${m[0].comprador}</p><p><strong>Telefone:</strong> ${m[0].telefone}</p><p><strong>Rifa:</strong> <span class="font-rifa" style="color:${r.cor}; font-size:18px;">${r.nome}</span></p><hr>${b}<hr><p style="text-align:right;"><strong>Total Geral: R$ ${(m.length * r.valor).toFixed(2)}</strong></p><button class="btn btn-success" onclick="window.print()" style="margin-top:15px;">Salvar PDF</button></div>`; } navigate('screen-consulta');
         }
 
         function copiarLink() { const i = document.getElementById("admin-link-input"); i.select(); document.execCommand("copy"); alert("Copiado!"); }
@@ -2108,29 +1913,19 @@
         function chamarExclusaoAtual() { if (confirm("Excluir Rifa?")) { rifas = rifas.filter(x => x.id !== currentRaffleId); database.ref('rifas').set(rifas); atualizarDashboard(); navigate('screen-dashboard'); } }
 
         function realizarSorteio() {
-            const r = rifas.find(x => x.id === currentRaffleId); const todosPagos = r.numeros.every(n => n.status === 'paid');
-            if(!todosPagos) { alert("Atenção: Todos os números precisam estar PAGOS para sortear!"); return; }
+            const r = rifas.find(x => x.id === currentRaffleId); const todosPagos = r.numeros.every(n => n.status === 'paid'); if(!todosPagos) { alert("Atenção: Todos os números precisam estar PAGOS para sortear!"); return; }
             if(confirm("Deseja realmente sortear? A rifa será finalizada e não poderá ser desfeita.")) {
                 const ganhador = r.numeros[Math.floor(Math.random() * r.qtd)]; r.concluida = true; r.ganhador = ganhador;
-                database.ref('rifas').set(rifas).then(() => {
-                    alert(`🎉 BINGO! SORTEIO REALIZADO!\n\nNúmero Sorteado: ${ganhador.numero}\nGanhador(a): ${ganhador.comprador}`);
-                    let tpl = obterMsgTemplate('ganhador'); let msg = tpl.replace(/{nome}/g, ganhador.comprador).replace(/{numero}/g, ganhador.numero).replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio);
-                    window.open(`https://wa.me/55${ganhador.telefone.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
-                    abrirAdminRifa(currentRaffleId); 
-                });
+                database.ref('rifas').set(rifas).then(() => { alert(`🎉 BINGO! SORTEIO REALIZADO!\n\nNúmero Sorteado: ${ganhador.numero}\nGanhador(a): ${ganhador.comprador}`); let tpl = obterMsgTemplate('ganhador'); let msg = tpl.replace(/{nome}/g, ganhador.comprador).replace(/{numero}/g, ganhador.numero).replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio); window.open(`https://wa.me/55${ganhador.telefone.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`, '_blank'); abrirAdminRifa(currentRaffleId); });
             }
         }
 
         function abrirListaCompradores() { document.getElementById('filtro-nome').value = ''; document.getElementById('filtro-status').value = ''; renderizarListaCompradores(); abrirModal('modal-lista-compradores'); }
         function filtrarLista() { renderizarListaCompradores(); }
         function renderizarListaCompradores() {
-            const r = rifas.find(x => x.id === currentRaffleId); const tbody = document.getElementById('corpo-tabela-compradores');
-            const fNome = document.getElementById('filtro-nome').value.toLowerCase(); const fStatus = document.getElementById('filtro-status').value;
-            tbody.innerHTML = '';
+            const r = rifas.find(x => x.id === currentRaffleId); const tbody = document.getElementById('corpo-tabela-compradores'); const fNome = document.getElementById('filtro-nome').value.toLowerCase(); const fStatus = document.getElementById('filtro-status').value; tbody.innerHTML = '';
             r.numeros.forEach(n => {
-                const nomeStr = (n.comprador || '').toLowerCase();
-                if (fNome && !nomeStr.includes(fNome)) return; if (fStatus && n.status !== fStatus) return;
-                let st = ''; if(n.status === 'available') st = '<span class="badge-st" style="background:#999;">Livre</span>'; if(n.status === 'paid') st = '<span class="badge-st" style="background:var(--success);">Pago</span>'; if(n.status === 'reserved') st = '<span class="badge-st" style="background:var(--warning);">Reserv.</span>'; if(n.status === 'late') st = '<span class="badge-st" style="background:var(--danger);">Atraso</span>';
+                const nomeStr = (n.comprador || '').toLowerCase(); if (fNome && !nomeStr.includes(fNome)) return; if (fStatus && n.status !== fStatus) return; let st = ''; if(n.status === 'available') st = '<span class="badge-st" style="background:#999;">Livre</span>'; if(n.status === 'paid') st = '<span class="badge-st" style="background:var(--success);">Pago</span>'; if(n.status === 'reserved') st = '<span class="badge-st" style="background:var(--warning);">Reserv.</span>'; if(n.status === 'late') st = '<span class="badge-st" style="background:var(--danger);">Atraso</span>';
                 tbody.innerHTML += `<tr><td><b>${n.numero}</b></td><td>${n.comprador || '-'}</td><td>${n.telefone || '-'}</td><td>${st}</td></tr>`;
             });
         }
