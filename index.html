@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -89,7 +90,10 @@
         }
         .logo-rifa { color: #538cb3; }
         .logo-on { color: #d34c31; }
-        .logo-clover { color: var(--gold); font-size: 0.4em; position: absolute; top: 0.1em; right: -0.45em; text-shadow: 0 0 5px rgba(255,215,0,0.8); }
+        .logo-clover { 
+            color: var(--gold); font-size: 0.4em; position: absolute; 
+            top: 0.1em; right: -0.45em; text-shadow: 0 0 5px rgba(255,215,0,0.8);
+        }
         .logo-subtitle { 
             font-size: clamp(16px, 1.8vw, 24px); color: #555; margin-top: 15px; 
             line-height: 1.5; padding: 0 10px; font-weight: 500; display: block; 
@@ -130,7 +134,12 @@
         .btn-icon.btn-danger { background: var(--danger); color: white; border: none; }
         .btn-icon.btn-warning { background: var(--warning); color: white; border: none; }
         .btn-icon.btn-success { background: var(--success); color: white; border: none; }
-        .badge-notif { position: absolute; top: -5px; right: -5px; background: red; color: white; font-size: 10px; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
+        
+        .badge-notif { 
+            position: absolute; top: -5px; right: -5px; background: red; color: white; 
+            font-size: 10px; font-weight: bold; width: 18px; height: 18px; 
+            border-radius: 50%; display: flex; justify-content: center; align-items: center; 
+        }
 
         .form-group { margin-bottom: 15px; width: 100%; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px; }
@@ -161,6 +170,7 @@
         .numbers-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;}
         .number-item { position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: #eee; border: 2px solid #ccc; color: #333; cursor: pointer; font-weight: bold; transition: 0.2s; font-size: 14px; box-sizing: border-box; }
         .crown-icon { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: 22px; z-index: 5; text-shadow: 0 0 5px rgba(255,215,0,0.8); }
+
         body.dark-mode .number-item { background: #333; border-color: #555; color: #fff;}
 
         .mini-numbers-grid { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; width: 100%; max-height: 200px; overflow-y: auto; padding: 5px; }
@@ -225,6 +235,7 @@
         .footer a:hover { color: var(--primary-blue); }
         .footer-copy { margin-top: 15px; font-size: 12px; border-top: 1px solid #374151; padding-top: 15px; opacity: 0.7;}
         
+        /* Botão de Ajuda no Rodapé */
         .btn-help-footer {
             position: absolute; right: 20px; bottom: 20px; width: 36px; height: 36px; border-radius: 50%;
             border: 2px solid white; color: white; background: transparent; display: flex; justify-content: center; align-items: center;
@@ -262,7 +273,9 @@
       function instalarApp() {
           if (deferredPrompt) {
               deferredPrompt.prompt();
-              deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+              deferredPrompt.userChoice.then(() => { 
+                  deferredPrompt = null; 
+              });
           } else {
               if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
                   alert("Você já instalou o aplicativo! Ele está rodando na sua tela inicial.");
@@ -520,7 +533,7 @@
                 </div>
 
                 <div class="action-buttons" style="margin-bottom: 20px;">
-                    <button id="btn-editar-rifa" class="btn btn-small btn-warning" onclick="navigate('screen-edit-raffle')">✏️ Editar</button>
+                    <button id="btn-editar-rifa" class="btn btn-small btn-warning" onclick="abrirEditarRifa(currentRaffleId)">✏️ Editar</button>
                     <button id="btn-excluir-rifa" class="btn btn-small btn-danger" onclick="chamarExclusaoAtual()">Excluir</button>
                     <button id="btn-sortear" class="btn btn-small btn-success" style="display:none;" onclick="realizarSorteio()">🎉 Sortear!</button>
                     <button class="btn btn-small" style="background:#4A148C;" onclick="abrirListaCompradores()">📋 Ver Compradores</button>
@@ -639,6 +652,7 @@
                     <input type="text" id="chat-input" style="flex:1; padding:10px; border-radius:8px; border:1px solid #ccc; font-family:inherit;" placeholder="Digite sua mensagem...">
                     <button class="btn btn-success" style="width: auto; padding: 0 20px;" onclick="enviarMensagemChat()">Enviar</button>
                 </div>
+                
                 <div id="chat-closed-msg" style="display: none; text-align: center; color: var(--danger); font-weight: bold; padding: 15px; background: rgba(255,0,0,0.05); border-radius: 8px;">
                     🔒 Chamado Encerrado
                 </div>
@@ -680,10 +694,8 @@
                 <div style="font-size: 14px; line-height: 1.6;">
                     <p><b>P: Posso editar a rifa depois de criada?</b><br>
                     R: Sim! Você pode alterar nome, imagens e cores a qualquer momento. Porém, a <i>quantidade de números</i> é bloqueada para não desconfigurar as reservas já feitas.</p>
-
                     <p><b>P: E se o cliente reservar e não pagar?</b><br>
                     R: Se passar da data de promessa estipulada, o número fica vermelho (Atrasado) e um aviso vai pro seu 🔔. Você pode clicar no número, enviar uma mensagem de cobrança automática ou clicar em "🗑️ Liberar" para voltar a ficar disponível.</p>
-
                     <p><b>P: As pessoas precisam ter conta ou baixar o App para comprar minha rifa?</b><br>
                     R: Não! O link da sua rifa é público e seguro. O cliente só preenche os dados de contato rapidamente no momento de reservar o número. O sistema de login é exclusivo para você (vendedor).</p>
                 </div>
@@ -751,7 +763,6 @@
                 <div class="form-group"><label>Seu Nome</label><input type="text" id="sup-nome"></div>
                 <div class="form-group"><label>Seu E-mail</label><input type="email" id="sup-email"></div>
                 <div class="form-group"><label>Sua Mensagem</label><textarea id="sup-msg" rows="4" placeholder="Descreva aqui..."></textarea></div>
-                
                 <div class="action-buttons">
                     <button class="btn btn-outline" onclick="fecharModal('modal-suporte-publico')">Cancelar</button>
                     <button class="btn btn-success" onclick="enviarTicketSuportePublico()">Enviar Mensagem</button>
@@ -765,12 +776,10 @@
                 <div class="form-group"><label>Seu Nome Completo</label><input type="text" id="mod-comp-nome"></div>
                 <div class="form-group"><label>Seu Celular (com DDD)</label><input type="number" id="mod-comp-tel"></div>
                 <div class="form-group"><label>Data de Pagamento</label><input type="date" id="mod-comp-data"></div>
-                
                 <div class="form-group" style="display:flex; align-items:flex-start; gap:8px; font-size:13px; text-align:left;">
                     <input type="checkbox" id="mod-comp-termos" style="width:18px; height:18px; margin-top:2px;">
                     <label for="mod-comp-termos" style="font-weight:normal; margin:0;">Li e aceito os <a href="javascript:void(0)" style="color:var(--primary-blue);" onclick="abrirModal('modal-termos')">Termos e Regulamento</a> da rifa.</label>
                 </div>
-
                 <div class="action-buttons">
                     <button class="btn btn-outline" onclick="fecharModal('modal-dados-comprador')">Cancelar</button>
                     <button class="btn" onclick="confirmarReserva()">Reservar</button>
@@ -804,7 +813,6 @@
                     <hr style="border-top:1px dashed #ccc;">
                     <div class="recibo-row"><span>Comprador:</span> <strong id="rec-comprador"></strong></div>
                     <div class="recibo-row"><span>Telefone:</span> <strong id="rec-tel"></strong></div>
-                    
                     <div style="text-align:center; font-size:10px; margin-top:15px; word-break:break-all;">
                         Acompanhe em:<br><span id="rec-link" style="color:var(--primary-blue);"></span>
                     </div>
@@ -824,7 +832,50 @@
             </div>
         </div>
 
-    </div> <footer class="footer no-print">
+        <div id="modal-admin-numero" class="modal-overlay">
+            <div class="modal-content" style="padding: 20px;">
+                <h3 style="margin-top:0;">Número <span id="mod-adm-num"></span></h3>
+                <p style="margin: 5px 0;"><strong>Comprador:</strong> <span id="mod-adm-nome"></span></p>
+                <p style="margin: 5px 0;"><strong>WhatsApp:</strong> <span id="mod-adm-tel"></span></p>
+                <p style="margin: 5px 0;"><strong>Promessa:</strong> <span id="mod-adm-data"></span></p>
+                <p style="margin: 5px 0 15px 0;"><strong>Status:</strong> <span id="mod-adm-status"></span></p>
+                <div class="action-buttons" style="gap: 5px; margin-bottom: 10px;">
+                    <button class="btn btn-success btn-small" style="flex:1;" id="btn-adm-pagou" onclick="adminAcao('pagou')">✅ Confirmar</button>
+                    <button class="btn btn-outline btn-small" style="flex:1;" onclick="encaminharComprovanteAdmin()">📲 Enviar</button>
+                    <button class="btn btn-danger btn-small" style="flex:1;" id="btn-adm-apagar" onclick="adminAcao('apagar')">🗑️ Liberar</button>
+                </div>
+                <button class="btn" style="background:#999; margin: 0;" onclick="fecharModal('modal-admin-numero')">Fechar Janela</button>
+            </div>
+        </div>
+
+        <div id="modal-lista-compradores" class="modal-overlay">
+            <div class="modal-content" style="max-width: 600px;">
+                <h3>Lista de Compradores</h3>
+                <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                    <input type="text" id="filtro-nome" placeholder="Buscar por nome..." oninput="filtrarLista()" style="flex:1; padding:8px; border-radius:4px; border:1px solid #ccc;">
+                    <select id="filtro-status" onchange="filtrarLista()" style="padding:8px; border-radius:4px; border:1px solid #ccc;">
+                        <option value="">Todos os Status</option>
+                        <option value="paid">Pagos (Garantidos)</option>
+                        <option value="reserved">Reservados</option>
+                        <option value="late">Atrasados</option>
+                        <option value="available">Livres</option>
+                    </select>
+                </div>
+                <div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; border-radius: 6px;">
+                    <table class="table-compradores">
+                        <thead><tr><th>Nº</th><th>Nome</th><th>Celular</th><th>Status</th></tr></thead>
+                        <tbody id="corpo-tabela-compradores"></tbody>
+                    </table>
+                </div>
+                <div class="action-buttons" style="margin-top: 15px;">
+                    <button class="btn btn-outline" onclick="fecharModal('modal-lista-compradores')">Fechar</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="footer no-print">
         <div class="footer-links">
             <a href="javascript:void(0)" onclick="abrirModal('modal-privacidade')">Política de Privacidade</a>
             <a href="javascript:void(0)" onclick="abrirModal('modal-termos')">Termos de Uso</a>
@@ -833,7 +884,6 @@
         <div class="footer-copy">
             © 2026 RifaOn🍀. Todos os direitos reservados | Desenvolvido por L.H.A.R.
         </div>
-        <button class="btn-help-footer no-print" onclick="abrirModal('modal-ajuda')" title="Central de Ajuda">?</button>
     </footer>
 
     <script>
@@ -851,7 +901,7 @@
         try {
             if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         } catch (e) {
-            console.error(e);
+            console.error("Erro Firebase", e);
         }
         
         const auth = firebase.auth(); 
@@ -880,6 +930,19 @@
         let globalNotifs = [];
         let lastNotifsHash = ""; 
 
+        // CONFIGURAÇÕES VISUAIS GERAIS
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            document.getElementById('theme-toggle-btn').innerText = isDark ? '☀️' : '🌙';
+        }
+        
+        if(localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('theme-toggle-btn').innerText = '☀️';
+        }
+
         function parseFirebaseArray(data) {
             if (!data) return [];
             if (Array.isArray(data)) return data.filter(item => item !== null);
@@ -894,7 +957,27 @@
         function hideLoader() { document.getElementById('loading-overlay').style.display = 'none'; }
         function showLoader() { document.getElementById('loading-overlay').style.display = 'flex'; }
 
-        // --- NAVEGAÇÃO SEGURA (SESSÃO) ---
+        function abrirModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        // NAVEGAÇÃO E SEGURANÇA
+        function deslogarComprador() {
+            currentRaffleId = null;
+            selectedNumbers = [];
+            document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none');
+            
+            const urlBase = window.location.href.split('?')[0];
+            window.history.replaceState({}, document.title, urlBase);
+            
+            auth.signOut().then(() => {
+                currentUserEmail = "";
+                sessionStorage.clear(); 
+                navigate('screen-welcome');
+            }).catch(() => {
+                navigate('screen-welcome');
+            });
+        }
+
         function navigate(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active'); 
@@ -911,6 +994,7 @@
             }
         }
 
+        // CARREGAMENTO INICIAL
         window.addEventListener('load', () => {
             setTimeout(hideLoader, 8000); 
 
@@ -964,7 +1048,7 @@
                     hideLoader();
                     ativarAtualizacoesEmTempoReal(); 
 
-                    // REGRA 1: LINK COMPARTILHADO (COMPRADOR)
+                    // Verifica se acessou via link do comprador
                     if (rifaUrlId && consultaTel) {
                         currentRaffleId = rifaUrlId;
                         realizarConsultaPublica(rifaUrlId, consultaTel);
@@ -981,7 +1065,7 @@
                         return; 
                     }
 
-                    // REGRA 2: ADMIN LOGADO (MEMORIA DE ABA)
+                    // Se não for link, entra nas regras de sessão logada
                     if (user) {
                         const sessionData = sessionStorage.getItem('rifa_logged_user');
                         if(sessionData) {
@@ -1008,14 +1092,12 @@
                     }
                 }).catch(e => {
                     hideLoader();
-                    console.log("Erro de conexão com o banco. Recarregando interface...");
-                    if (!currentUserEmail) navigate('screen-welcome');
-                    else navigate('screen-dashboard');
+                    console.log("Erro de conexão: " + e.message);
                 });
             });
         });
 
-        // --- SISTEMA DE NOTIFICAÇÕES E SLA ---
+        // REGRAS DE NOTIFICAÇÕES
         function recalcularNotificacoesSLA() {
             if(!currentUserEmail) return;
             globalNotifs = [];
@@ -1136,68 +1218,1234 @@
             return mudou;
         }
 
-        function abrirModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
+        // SISTEMA DE USUARIOS
+        function loginComGoogle() {
+            showLoader();
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).then((result) => {
+                const user = result.user;
+                database.ref('usuarios/' + user.uid).once('value').then(snap => {
+                    if(!snap.exists()) {
+                        database.ref('usuarios/' + user.uid).set({ nome: user.displayName || "Usuário", email: user.email, telefone: '' });
+                    }
+                });
+            }).catch(error => {
+                hideLoader(); alert("Erro no login com Google: " + error.message);
+            });
+        }
 
-        // Restante do código sem alteração...
-        function salvarCadastroUsuario() { const nome = document.getElementById('reg-nome').value; const tel = document.getElementById('reg-tel').value; const email = document.getElementById('reg-email').value; const pass = document.getElementById('reg-pass').value; const passConf = document.getElementById('reg-pass-conf').value; if(!nome || !tel || !email || !pass || !passConf) { alert("Preencha todos os campos!"); return; } if(pass !== passConf) { alert("As senhas não conferem!"); return; } if(pass.length < 6) { alert("A senha deve ter no mínimo 6 caracteres."); return; } showLoader(); auth.createUserWithEmailAndPassword(email, pass).then((userCredential) => { const uid = userCredential.user.uid; return database.ref('usuarios/' + uid).set({ nome, telefone: tel, email }); }).then(() => { hideLoader(); alert("Cadastro realizado com sucesso!"); }).catch(error => { hideLoader(); if(error.code === 'auth/email-already-in-use') alert("Este e-mail já está cadastrado no sistema."); else alert("Erro ao cadastrar: " + error.message); }); }
-        function fazerLogin() { const email = document.getElementById('login-user').value; const pass = document.getElementById('login-pass').value; if(!email || !pass) { alert("Preencha o e-mail e a senha!"); return; } showLoader(); auth.signInWithEmailAndPassword(email, pass).then(userCredential => { sessionStorage.setItem('rifa_logged_user', JSON.stringify({user: email, nome: "Usuário"})); setTimeout(hideLoader, 3000); }).catch(error => { hideLoader(); if(error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') { alert("E-mail ou senha incorretos."); } else { alert("Erro ao entrar. Verifique seu e-mail e senha."); } }); }
-        function fazerLogout() { auth.signOut().then(() => { currentUserEmail = ""; sessionStorage.clear(); localStorage.removeItem('rifa_logged_user'); navigate('screen-welcome'); }); }
-        function recuperarSenha() { const email = document.getElementById('forgot-email').value; if(!email) { alert("Digite seu e-mail cadastrado."); return; } showLoader(); auth.sendPasswordResetEmail(email).then(() => { hideLoader(); alert("Um link oficial para criar uma nova senha foi enviado para o seu e-mail! Verifique sua caixa de entrada e pasta de Spam."); navigate('screen-login'); }).catch(error => { hideLoader(); if(error.code === 'auth/user-not-found') alert("E-mail não encontrado no sistema."); else alert("Erro ao enviar redefinição: " + error.message); }); }
+        function salvarCadastroUsuario() {
+            const nome = document.getElementById('reg-nome').value; 
+            const tel = document.getElementById('reg-tel').value; 
+            const email = document.getElementById('reg-email').value;
+            const pass = document.getElementById('reg-pass').value; 
+            const passConf = document.getElementById('reg-pass-conf').value;
+            
+            if(!nome || !tel || !email || !pass || !passConf) { alert("Preencha todos os campos!"); return; }
+            if(pass !== passConf) { alert("As senhas não conferem!"); return; }
+            if(pass.length < 6) { alert("A senha deve ter no mínimo 6 caracteres."); return; }
 
-        function abrirRotaSuporte() { if (!currentUserEmail) { abrirModal('modal-suporte-publico'); } else if (currentUserEmail.toLowerCase() === EMAIL_MESTRE.toLowerCase()) { abrirPainelMestre(); } else { carregarMeusChamados(); } }
-        function enviarTicketSuportePublico() { const n = document.getElementById('sup-nome').value; const e = document.getElementById('sup-email').value; const m = document.getElementById('sup-msg').value; if(!n || !e || !m) return alert("Preencha todos os campos do suporte."); showLoader(); const ticketId = Date.now().toString(); database.ref('suporte/' + ticketId).set({ nome: n, email: e, criadoEm: Date.now(), atualizadoEm: Date.now(), status: 'aberto', masterPodeFechar: true, mensagens: [{ remetente: 'user', texto: m, data: new Date().toLocaleString('pt-BR') }] }).then(() => { hideLoader(); alert("Suporte cadastrado com sucesso, aguarde até 7 dias para ter retorno."); fecharModal('modal-suporte-publico'); const linkApp = window.location.href.split('?')[0]; const msgApp = `🛑 *NOVO TICKET DE SUPORTE*\n\n*Nome:* ${n}\n*E-mail:* ${e}\n*Mensagem:* ${m}\n\nAcesse o Painel Mestre no App para gerenciar: ${linkApp}`; window.open(`https://wa.me/5512991643067?text=${encodeURIComponent(msgApp)}`, '_blank'); }).catch(e => { hideLoader(); alert("Erro ao enviar: " + e.message); }); }
-        function carregarMeusChamados() { showLoader(); database.ref('suporte').orderByChild('email').equalTo(currentUserEmail).once('value').then(snap => { const data = snap.val() || {}; let meusTickets = Object.keys(data).map(k => ({...data[k], id: k})).reverse(); const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000; meusTickets = meusTickets.filter(t => { if(t.status === 'fechado' && t.fechadoEm) { return (Date.now() - t.fechadoEm) <= SEVEN_DAYS; } return true; }); const lista = document.getElementById('user-tickets-list'); lista.innerHTML = ''; if(meusTickets.length === 0) { lista.innerHTML = '<p style="text-align:center; color:#888;">Nenhum chamado aberto nos últimos dias.</p>'; } else { meusTickets.forEach(t => { const cor = t.status === 'respondido' ? 'var(--success)' : (t.status === 'fechado' ? '#888' : 'var(--warning)'); const prev = t.mensagens && t.mensagens.length > 0 ? t.mensagens[t.mensagens.length-1].texto.substring(0, 40) : ''; let dtFormatada = new Date(t.criadoEm).toLocaleDateString('pt-BR'); lista.innerHTML += ` <div style="background:var(--card-bg); padding:15px; border-radius:8px; border-left:4px solid ${cor}; margin-bottom:10px; cursor:pointer; box-shadow:0 2px 5px rgba(0,0,0,0.1);" onclick="abrirChat('${t.id}')"> <div style="display:flex; justify-content:space-between; font-size:12px; color:#888;"> <b>${dtFormatada}</b> <span style="color:${cor}; font-weight:bold; text-transform:uppercase;">${t.status}</span> </div> <p style="font-size:14px; margin:5px 0 0 0; color:var(--text-dark);"><b>Última msg:</b> ${prev}...</p> </div> `; }); } hideLoader(); navigate('screen-support-user'); }); }
-        function criarTicketLogado() { const m = prompt("Descreva sua dúvida, problema ou feedback:"); if(!m || m.trim() === '') return; showLoader(); const ticketId = Date.now().toString(); const nomeUser = document.getElementById('lbl-username').innerText || "Vendedor"; database.ref('suporte/' + ticketId).set({ nome: nomeUser, email: currentUserEmail, criadoEm: Date.now(), atualizadoEm: Date.now(), status: 'aberto', masterPodeFechar: true, mensagens: [{ remetente: 'user', texto: m, data: new Date().toLocaleString('pt-BR') }] }).then(() => { carregarMeusChamados(); }).catch(e => { hideLoader(); alert("Erro: " + e.message); }); }
-        function abrirPainelMestre() { showLoader(); database.ref('suporte').once('value').then(snap => { const data = snap.val() || {}; const tickets = Object.keys(data).map(k => ({...data[k], id: k})).reverse(); const lista = document.getElementById('master-tickets-list'); lista.innerHTML = ''; if(tickets.length === 0) { lista.innerHTML = '<p style="text-align:center;">Nenhum chamado de suporte.</p>'; } else { tickets.forEach(t => { const cor = t.status === 'aberto' || t.status === 'reaberto' ? 'var(--danger)' : (t.status === 'fechado' ? '#888' : 'var(--success)'); const msgs = t.mensagens || []; const unread = msgs.length > 0 && msgs[msgs.length-1].remetente === 'user' && t.status !== 'fechado' ? '⚠️ Nova' : ''; let dtFormatada = new Date(t.criadoEm).toLocaleDateString('pt-BR'); let slaAlerta = ''; if (t.status === 'aberto' || t.status === 'reaberto') { const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000; if (Date.now() - (t.atualizadoEm || t.criadoEm) > SEVEN_DAYS) { slaAlerta = ' <span style="background:var(--danger); color:white; padding:2px 5px; border-radius:4px; font-size:10px;">🚨 SLA ESTOURADO</span>'; } } let fbHtml = ''; if(t.status === 'fechado' && t.feedback) { const fColor = t.feedback.resolvido ? 'green' : 'red'; fbHtml = `<div style="margin-top:10px; font-size:12px; background:rgba(0,0,0,0.05); padding:5px; border-radius:4px;"> <b style="color:${fColor}">Resolvido: ${t.feedback.resolvido ? 'Sim' : 'Não'}</b> | Nota: ⭐ ${t.feedback.nota}<br> ${t.feedback.motivo ? '<i>Motivo: '+t.feedback.motivo+'</i>' : ''} </div>`; } lista.innerHTML += ` <div style="background:var(--card-bg); padding:15px; border-radius:8px; border-left:4px solid ${cor}; margin-bottom:10px; cursor:pointer;" onclick="abrirChat('${t.id}')"> <div style="display:flex; justify-content:space-between; font-size:12px; color:#666;"> <b>${dtFormatada}</b> <span style="color:${cor}; text-transform:uppercase; font-weight:bold;">${t.status} ${unread} ${slaAlerta}</span> </div> <h4 style="margin:5px 0;">${t.nome}</h4> <p style="font-size:12px; margin:0;">${t.email}</p> ${fbHtml} </div> `; }); } hideLoader(); navigate('screen-master-support'); }); }
-        function abrirChat(ticketId) { currentSupportTicketId = ticketId; showLoader(); database.ref('suporte/' + ticketId).on('value', snap => { const t = snap.val(); if(!t) return; document.getElementById('chat-title').innerText = "Chamado: " + t.nome; const container = document.getElementById('chat-history'); container.innerHTML = ''; if(t.mensagens) { t.mensagens.forEach(msg => { const isUser = msg.remetente === 'user'; const isSistema = msg.remetente === 'sistema'; const isMeAdmin = currentUserEmail.toLowerCase() === EMAIL_MESTRE.toLowerCase(); let alignClass = ''; if(isSistema) { alignClass = 'msg-sistema'; } else if (!isMeAdmin) { alignClass = isUser ? 'msg-user' : 'msg-admin'; } else { alignClass = isUser ? 'msg-admin' : 'msg-user'; } let anexoHtml = msg.anexo ? `<br><img src="${msg.anexo}" style="max-width:200px; border-radius:8px; margin-top:5px;">` : ''; container.innerHTML += ` <div class="msg-bubble ${alignClass}"> ${msg.texto} ${anexoHtml} <span class="msg-time">${msg.data}</span> </div> `; }); } const btnEncerrar = document.getElementById('btn-encerrar-chamado'); const ctrls = document.getElementById('chat-controls'); const closedMsg = document.getElementById('chat-closed-msg'); const waitMsg = document.getElementById('chat-waiting-msg'); const btnAvaliar = document.getElementById('chat-btn-avaliar'); ctrls.style.display = 'none'; closedMsg.style.display = 'none'; waitMsg.style.display = 'none'; btnAvaliar.style.display = 'none'; btnEncerrar.style.display = 'none'; if (t.status === 'fechado') { closedMsg.style.display = 'block'; } else if (t.status === 'aguardando_feedback') { if(currentUserEmail.toLowerCase() === EMAIL_MESTRE.toLowerCase()) { waitMsg.style.display = 'block'; } else { btnAvaliar.style.display = 'block'; } } else { ctrls.style.display = 'flex'; btnEncerrar.style.display = 'block'; } hideLoader(); navigate('screen-support-chat'); setTimeout(() => { container.scrollTop = container.scrollHeight; }, 100); }); }
-        function processarAnexoChat(input) { if (input.files[0]) { const r = new FileReader(); r.onload = function(e) { const img = new Image(); img.onload = function() { const canvas = document.createElement('canvas'); const w = 400; const sc = w / img.width; canvas.width = w; canvas.height = img.height * sc; canvas.getContext('2d').drawImage(img, 0, 0, w, canvas.height); chatAnexoBase64 = canvas.toDataURL('image/jpeg', 0.6); document.getElementById('chat-preview-img').src = chatAnexoBase64; document.getElementById('chat-anexo-preview').style.display = 'block'; } ; img.src = e.target.result; } ; r.readAsDataURL(input.files[0]); } }
-        function removerAnexoChat() { chatAnexoBase64 = ""; document.getElementById('chat-anexo').value = ''; document.getElementById('chat-anexo-preview').style.display = 'none'; }
-        function enviarMensagemChat() { const input = document.getElementById('chat-input'); const texto = input.value; if((!texto || texto.trim() === '') && chatAnexoBase64 === '') return; if(!currentSupportTicketId) return; const isMeAdmin = currentUserEmail.toLowerCase() === EMAIL_MESTRE.toLowerCase(); const novoRemetente = isMeAdmin ? 'admin' : 'user'; const novoStatus = isMeAdmin ? 'respondido' : 'aberto'; database.ref('suporte/' + currentSupportTicketId).once('value').then(snap => { const t = snap.val(); let msgs = t.mensagens || []; msgs.push({ remetente: novoRemetente, texto: texto, data: new Date().toLocaleString('pt-BR'), timestamp: Date.now(), anexo: chatAnexoBase64 }); database.ref('suporte/' + currentSupportTicketId).update({ mensagens: msgs, status: novoStatus, atualizadoEm: Date.now() }).then(() => { input.value = ''; removerAnexoChat(); }); }); }
-        function iniciarEncerramentoChamado() { database.ref('suporte/' + currentSupportTicketId).once('value').then(snap => { const t = snap.val(); if(currentUserEmail.toLowerCase() === EMAIL_MESTRE.toLowerCase()) { if(t.masterPodeFechar === false) { alert("O cliente informou que não foi resolvido. Apenas o cliente pode encerrar este chamado definitivamente agora."); return; } if(confirm("Deseja pedir para o cliente avaliar e encerrar este chamado?")) { database.ref('suporte/' + currentSupportTicketId).update({ status: 'aguardando_feedback', atualizadoEm: Date.now() }); alert("Aguardando feedback do cliente."); } } else { feedbackTicketId = currentSupportTicketId; document.getElementById('feed-step-1').style.display = 'block'; document.getElementById('feed-step-2').style.display = 'none'; document.getElementById('feed-motivo-box').style.display = 'none'; abrirModal('modal-feedback'); } }); }
-        function setFeedbackResolvido(valor) { isResolvidoFeedback = valor; document.getElementById('feed-step-1').style.display = 'none'; document.getElementById('feed-step-2').style.display = 'block'; document.getElementById('feed-motivo-box').style.display = valor ? 'none' : 'block'; setEstrela(0); }
-        function setEstrela(nota) { document.getElementById('feed-nota').value = nota; const spans = document.getElementById('feed-estrelas').getElementsByTagName('span'); for(let i=0; i<5; i++) { if(i < nota) spans[i].classList.add('ativa'); else spans[i].classList.remove('ativa'); } }
-        function enviarFeedback() { const nota = parseInt(document.getElementById('feed-nota').value); const motivo = document.getElementById('feed-motivo').value; if(nota === 0) return alert("Por favor, avalie com uma nota de 1 a 5 estrelas."); if(!isResolvidoFeedback && motivo.trim() === '') return alert("Por favor, diga o motivo da insatisfação para que possamos melhorar."); showLoader(); if (isResolvidoFeedback) { database.ref('suporte/' + feedbackTicketId).update({ status: 'fechado', fechadoEm: Date.now(), feedback: { resolvido: true, nota: nota, motivo: '' } }).then(() => { finishFeedback(); }); } else { database.ref('suporte/' + feedbackTicketId).update({ status: 'reaberto', masterPodeFechar: false, atualizadoEm: Date.now(), feedback: { resolvido: false, nota: nota, motivo: motivo } }).then(() => { finishFeedback(); }); } }
-        function finishFeedback() { hideLoader(); fecharModal('modal-feedback'); alert(isResolvidoFeedback ? "Obrigado pelo seu feedback! Chamado encerrado." : "Chamado reaberto! Nossa equipe vai analisar o motivo."); fecharChat(); }
-        function fecharChat() { if(currentSupportTicketId) database.ref('suporte/' + currentSupportTicketId).off(); currentSupportTicketId = null; if (currentUserEmail.toLowerCase() === EMAIL_MESTRE.toLowerCase()) { abrirPainelMestre(); } else { carregarMeusChamados(); } }
+            showLoader();
 
-        function abrirRelatoriosMaster() { showLoader(); database.ref('suporte').once('value').then(snap => { const data = snap.val() || {}; const tickets = Object.keys(data).map(k => data[k]); let mesesData = {}; let feedbackHtml = ''; tickets.forEach(t => { if(!t.criadoEm) return; let dt = new Date(t.criadoEm); let mesAno = ("0" + (dt.getMonth() + 1)).slice(-2) + "/" + dt.getFullYear(); if(!mesesData[mesAno]) mesesData[mesAno] = { chamados: 0, somaNotas: 0, qtdNotas: 0 }; mesesData[mesAno].chamados += 1; if(t.feedback && t.feedback.nota) { mesesData[mesAno].somaNotas += t.feedback.nota; mesesData[mesAno].qtdNotas += 1; const corF = t.feedback.resolvido ? 'green' : 'red'; feedbackHtml += `<div style="background:rgba(0,0,0,0.05); padding:10px; border-radius:6px; margin-bottom:8px; font-size:12px;"> <b>Data:</b> ${new Date(t.fechadoEm || t.atualizadoEm).toLocaleDateString('pt-BR')} | <b style="color:${corF}">Resolvido: ${t.feedback.resolvido ? 'Sim' : 'Não'}</b> | ⭐ ${t.feedback.nota} <br><b>Mensagem:</b> ${t.feedback.motivo || '<i>Sem comentários extras</i>'} </div>`; } }); const labels = Object.keys(mesesData).sort((a,b) => { let partsA = a.split('/'); let partsB = b.split('/'); return new Date(partsA[1], partsA[0]-1) - new Date(partsB[1], partsB[0]-1); }); const dataChamados = []; const dataMedia = []; labels.forEach(l => { dataChamados.push(mesesData[l].chamados); let media = mesesData[l].qtdNotas > 0 ? (mesesData[l].somaNotas / mesesData[l].qtdNotas).toFixed(1) : 0; dataMedia.push(media); }); document.getElementById('analytics-feedbacks').innerHTML = feedbackHtml || '<p>Nenhum feedback recebido ainda.</p>'; hideLoader(); navigate('screen-master-analytics'); renderizarGrafico(labels, dataChamados, dataMedia); }); }
-        let myChart = null; function renderizarGrafico(labels, dataChamados, dataMedia) { const ctx = document.getElementById('paretoChart').getContext('2d'); if(myChart) myChart.destroy(); myChart = new Chart(ctx, { type: 'bar', data: { labels: labels, datasets: [{ label: 'Qtd de Chamados', data: dataChamados, backgroundColor: 'rgba(2, 136, 209, 0.7)', yAxisID: 'y' }, { label: 'Média ⭐', data: dataMedia, type: 'line', borderColor: '#FFD700', backgroundColor: '#FFD700', borderWidth: 3, yAxisID: 'y1' }] }, options: { responsive: true, scales: { y: { beginAtZero: true, type: 'linear', position: 'left', title: { display: true, text: 'Chamados' } }, y1: { beginAtZero: true, max: 5, type: 'linear', position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'Nota' } } } } }); }
+            auth.createUserWithEmailAndPassword(email, pass).then((userCredential) => {
+                const uid = userCredential.user.uid;
+                return database.ref('usuarios/' + uid).set({ nome, telefone: tel, email });
+            }).then(() => {
+                hideLoader(); alert("Cadastro realizado com sucesso!");
+            }).catch(error => {
+                hideLoader();
+                if(error.code === 'auth/email-already-in-use') alert("Este e-mail já está cadastrado no sistema.");
+                else alert("Erro ao cadastrar: " + error.message);
+            });
+        }
 
-        function obterMsgTemplate(tipo) { const defaults = { link: "Compre números na minha rifa e concorra a: {premio}!\n\nAcesse o link e garanta o seu: {link}", comprovante: "🧾 *COMPROVANTE DE RIFA* 🧾\n\n*Rifa:* {rifa}\n*Prêmio:* {premio}\n{detalhes}\n*Total de Números:* {qtd_total}\n*Valor Total:* R$ {valor_total}\n\nAcompanhe aqui: {link}", cobranca: "Olá {nome}, o pagamento do número {numero} na rifa \"{rifa}\" está pendente. Ainda tem interesse?", ganhador: "Parabéns {nome}! 🎉 Você foi o grande ganhador do número {numero} na minha rifa \"{rifa}\"! O prêmio é seu!" }; if(userConfig && userConfig[tipo]) return userConfig[tipo]; return defaults[tipo]; }
-        function abrirConfiguracoes() { document.getElementById('cfg-msg-link').value = obterMsgTemplate('link'); document.getElementById('cfg-msg-comp').value = obterMsgTemplate('comprovante'); document.getElementById('cfg-msg-cob').value = obterMsgTemplate('cobranca'); document.getElementById('cfg-msg-ganhador').value = obterMsgTemplate('ganhador'); navigate('screen-settings'); }
-        function salvarConfiguracoes() { const user = auth.currentUser; if(!user) return; userConfig = { link: document.getElementById('cfg-msg-link').value, comprovante: document.getElementById('cfg-msg-comp').value, cobranca: document.getElementById('cfg-msg-cob').value, ganhador: document.getElementById('cfg-msg-ganhador').value }; database.ref('usuarios/' + user.uid + '/config').set(userConfig).then(() => { alert("Configurações salvas!"); atualizarDashboard(); navigate('screen-dashboard'); }); }
+        function fazerLogin() {
+            const email = document.getElementById('login-user').value; 
+            const pass = document.getElementById('login-pass').value;
+            if(!email || !pass) { alert("Preencha o e-mail e a senha!"); return; }
+            
+            showLoader();
+            auth.signInWithEmailAndPassword(email, pass).then(userCredential => {
+                sessionStorage.setItem('rifa_logged_user', JSON.stringify({user: email, nome: "Usuário"}));
+                setTimeout(hideLoader, 3000); 
+            }).catch(error => {
+                hideLoader();
+                if(error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+                    alert("E-mail ou senha incorretos.");
+                } else { alert("Erro ao entrar. Verifique seu e-mail e senha."); }
+            });
+        }
 
-        function processarImagem(input, previewId, tipo) { if (input.files[0]) { const r = new FileReader(); r.onload = function(e) { const img = new Image(); img.onload = function() { const canvas = document.createElement('canvas'); const w = 600; const sc = w / img.width; canvas.width = w; canvas.height = img.height * sc; canvas.getContext('2d').drawImage(img, 0, 0, w, canvas.height); if(tipo === 'produto') { imageBase64Temp = canvas.toDataURL('image/jpeg', 0.7); document.getElementById(previewId).src = imageBase64Temp; document.getElementById(previewId).style.display = 'block'; } else if(tipo === 'fundo') { bgImageBase64Temp = canvas.toDataURL('image/jpeg', 0.5); document.getElementById(previewId).src = bgImageBase64Temp; document.getElementById(previewId).style.display = 'block'; updatePreview('editar'); } }; img.src = e.target.result; }; r.readAsDataURL(input.files[0]); } }
-        function removerImagem(tipo, tela) { if (tipo === 'produto') { removerImgProduto = true; imageBase64Temp = ""; let inputId = tela === 'cadastro' ? 'rf-img' : 'rf-edit-img'; let previewId = tela === 'cadastro' ? 'preview-img-cadastro' : 'preview-img-edicao'; document.getElementById(inputId).value = ''; document.getElementById(previewId).style.display = 'none'; document.getElementById(previewId).src = ''; } else if (tipo === 'fundo') { removerImgFundo = true; bgImageBase64Temp = ""; let inputId = tela === 'cadastro' ? 'rf-bg-img' : 'rf-edit-bg-img'; let previewId = tela === 'cadastro' ? 'preview-img-bg-cad' : 'preview-img-bg-edit'; document.getElementById(inputId).value = ''; document.getElementById(previewId).style.display = 'none'; document.getElementById(previewId).src = ''; updatePreview(tela === 'cadastro' ? 'criar' : 'editar'); } }
-        function abrirPreVisualizacao(origem) { updatePreview(origem); abrirModal('modal-preview-rifa'); }
-        function updatePreview(origem) { if(!origem) origem = document.getElementById('screen-new-raffle').classList.contains('active') ? 'criar' : 'editar'; let prefixo = origem === 'editar' ? 'rf-edit-' : 'rf-'; const formato = document.getElementById(prefixo + 'formato').value; const colorStyle = document.getElementById(prefixo + 'color-style').value; const cor = document.getElementById(prefixo + 'cor').value; const bgStyle = document.getElementById(prefixo + 'bg-style').value; const bgColor = document.getElementById(prefixo + 'bg-color').value; let imgBgAtual = ""; if (origem === 'editar') { if (removerImgFundo) { imgBgAtual = ""; } else if (bgImageBase64Temp !== "") { imgBgAtual = bgImageBase64Temp; } else { const r = rifas.find(x => x.id === currentRaffleId); imgBgAtual = r ? r.bgImagem : ""; } } else { imgBgAtual = bgImageBase64Temp; } const gridContainer = document.getElementById('preview-modal-container'); const grid = document.getElementById('preview-modal-grid'); grid.innerHTML = ""; gridContainer.className = "grid-container-custom"; if (bgStyle === 'bg-flat') { gridContainer.style.background = bgColor; } else if (bgStyle === 'bg-gradient') { gridContainer.style.background = `linear-gradient(135deg, ${bgColor} 0%, rgba(0,0,0,0.8) 100%)`; } else { gridContainer.style.background = "transparent"; } if (imgBgAtual) { gridContainer.style.backgroundImage = `url(${imgBgAtual})`; } for (let i = 1; i <= 20; i++) { const div = document.createElement('div'); div.className = `number-item ${formato} ${colorStyle}`; if (colorStyle === 'color-translucent') div.style.opacity = '0.6'; if (colorStyle === 'color-matte') div.style.filter = 'grayscale(30%) contrast(80%)'; if (colorStyle === 'color-gradient') { div.style.background = `linear-gradient(135deg, ${cor}, #222)`; div.style.border = 'none'; } else if (colorStyle === 'color-flat') { div.style.backgroundColor = cor; div.style.border = 'none'; } else { div.style.backgroundColor = cor; div.style.borderColor = cor; } div.style.color = '#fff'; div.innerText = i; grid.appendChild(div); } }
-        function salvarRifa() { const qtd = parseInt(document.getElementById('rf-qtd').value); const numeros = []; for (let i=1; i<=qtd; i++) { numeros.push({ numero: i, status: 'available', comprador: '', telefone: '', dataPromessa: '' }); } const novaRifa = { id: Date.now().toString(), donoDaRifa: currentUserEmail, nome: document.getElementById('rf-nome').value, desc: document.getElementById('rf-desc').value, premio: document.getElementById('rf-premio').value, valor: parseFloat(document.getElementById('rf-valor').value), qtd: qtd, imagem: imageBase64Temp, formato: document.getElementById('rf-formato').value, colorStyle: document.getElementById('rf-color-style').value, cor: document.getElementById('rf-cor').value, pixNome: document.getElementById('rf-pix-nome').value, pixChave: document.getElementById('rf-pix-chave').value, bgStyle: document.getElementById('rf-bg-style').value, bgColor: document.getElementById('rf-bg-color').value, bgImagem: bgImageBase64Temp, numeros: numeros }; rifas.push(novaRifa); database.ref('rifas').set(rifas).then(() => { imageBase64Temp = ""; bgImageBase64Temp = ""; removerImgProduto = false; removerImgFundo = false; alert("Rifa criada com sucesso!"); atualizarDashboard(); navigate('screen-dashboard'); }); }
-        function abrirEditarRifa(id) { currentRaffleId = id; const r = rifas.find(x => x.id === id); if(!r) return; removerImgProduto = false; removerImgFundo = false; document.getElementById('rf-edit-nome').value = r.nome; document.getElementById('rf-edit-desc').value = r.desc; document.getElementById('rf-edit-premio').value = r.premio; document.getElementById('rf-edit-valor').value = r.valor; document.getElementById('rf-edit-qtd').value = r.qtd; document.getElementById('rf-edit-formato').value = r.formato || 'shape-square'; document.getElementById('rf-edit-color-style').value = r.colorStyle || ''; document.getElementById('rf-edit-cor').value = r.cor || '#0288d1'; document.getElementById('rf-edit-bg-style').value = r.bgStyle || ''; document.getElementById('rf-edit-bg-color').value = r.bgColor || '#ffffff'; document.getElementById('rf-edit-pix-nome').value = r.pixNome; document.getElementById('rf-edit-pix-chave').value = r.pixChave; imageBase64Temp = ""; bgImageBase64Temp = ""; const p1 = document.getElementById('preview-img-edicao'); if (r.imagem) { p1.src = r.imagem; p1.style.display = 'block'; } else { p1.style.display = 'none'; } const p2 = document.getElementById('preview-img-bg-edit'); if (r.bgImagem) { p2.src = r.bgImagem; p2.style.display = 'block'; } else { p2.style.display = 'none'; } navigate('screen-edit-raffle'); }
-        function salvarEdicaoRifa() { const i = rifas.findIndex(x => x.id === currentRaffleId); if(i !== -1) { rifas[i].nome = document.getElementById('rf-edit-nome').value; rifas[i].desc = document.getElementById('rf-edit-desc').value; rifas[i].premio = document.getElementById('rf-edit-premio').value; rifas[i].valor = parseFloat(document.getElementById('rf-edit-valor').value); rifas[i].formato = document.getElementById('rf-edit-formato').value; rifas[i].colorStyle = document.getElementById('rf-edit-color-style').value; rifas[i].cor = document.getElementById('rf-edit-cor').value; rifas[i].bgStyle = document.getElementById('rf-edit-bg-style').value; rifas[i].bgColor = document.getElementById('rf-edit-bg-color').value; rifas[i].pixNome = document.getElementById('rf-edit-pix-nome').value; rifas[i].pixChave = document.getElementById('rf-edit-pix-chave').value; if (removerImgProduto) { rifas[i].imagem = ""; } else if (imageBase64Temp !== "") { rifas[i].imagem = imageBase64Temp; } if (removerImgFundo) { rifas[i].bgImagem = ""; } else if (bgImageBase64Temp !== "") { rifas[i].bgImagem = bgImageBase64Temp; } database.ref('rifas').set(rifas).then(() => { alert("Rifa editada com sucesso!"); abrirAdminRifa(currentRaffleId); }); } }
-        function aplicarCoresNumero(div, num, rifa) { if (num.status === 'available') { const cStyle = rifa.colorStyle || ''; if (cStyle === 'color-translucent') div.style.opacity = '0.6'; if (cStyle === 'color-matte') div.style.filter = 'grayscale(30%) contrast(80%)'; if (cStyle === 'color-gradient') { div.style.background = `linear-gradient(135deg, ${rifa.cor}, #222)`; div.style.border = 'none'; } else if (cStyle === 'color-flat') { div.style.backgroundColor = rifa.cor; div.style.border = 'none'; } else { div.style.backgroundColor = rifa.cor; div.style.borderColor = rifa.cor; } div.style.color = '#fff'; } else { div.className = `number-item ${rifa.formato} status-${num.status}`; } }
-        function aplicarFundoContainer(containerId, rifa) { const container = document.getElementById(containerId); if(!container) return; const bgS = rifa.bgStyle || ''; const bgC = rifa.bgColor || '#ffffff'; const bgI = rifa.bgImagem || ''; if (bgS === 'bg-flat') { container.style.background = bgC; } else if (bgS === 'bg-gradient') { container.style.background = `linear-gradient(135deg, ${bgC} 0%, rgba(0,0,0,0.8) 100%)`; } else { container.style.background = "transparent"; } if (bgI) { container.style.backgroundImage = `url(${bgI})`; } }
-        function atualizarDashboard() { const lista = document.getElementById('raffle-list'); lista.innerHTML = ""; const mr = rifas.filter(r => r.donoDaRifa === currentUserEmail); if (mr.length === 0) { lista.innerHTML = "<p style='text-align:center; color:var(--footer-text);'>Nenhuma rifa cadastrada.</p>"; return; } mr.forEach(r => { const div = document.createElement('div'); div.className = "raffle-card-dash"; div.onclick = () => abrirAdminRifa(r.id); const bg = r.imagem ? `background-image: url('${r.imagem}');` : ''; const htmlConcluido = r.concluida ? `<div class="badge-concluido">Concluído</div>` : ''; let grid = ''; r.numeros.forEach(n => { let st = ''; let cCls = ''; if (n.status === 'available') st = `background-color: ${r.cor}; border-color: ${r.cor}; color: #fff;`; else cCls = `status-${n.status}`; grid += `<div class="number-item ${r.formato || 'shape-square'} ${cCls}" style="${st}">${n.numero}</div>`; }); let titleHtml = `<div class="raffle-card-title font-rifa" style="color: ${r.cor};">${r.nome}</div>`; if (r.concluida && r.ganhador) { titleHtml += `<p style="margin:0 0 10px 0; color:var(--text-dark); font-weight:bold;">🏆 Ganhador: Nº ${r.ganhador.numero}</p>`; } div.innerHTML = `${htmlConcluido}<div class="raffle-card-bg" style="${bg}"></div><div class="raffle-card-overlay"></div><div class="raffle-card-content">${titleHtml}<div class="mini-numbers-grid">${grid}</div></div>`; lista.appendChild(div); }); }
-        function abrirAdminRifa(id) { currentRaffleId = id; const r = rifas.find(x => x.id === id); if(!r) { navigate('screen-dashboard'); return; } if(checarAtrasosLocal(r)) database.ref('rifas').set(rifas); document.getElementById('admin-raffle-title').innerHTML = `<span class="font-rifa" style="color: ${r.cor}; font-size: 28px;">${r.nome}</span>` + (r.concluida ? ' <span style="font-size:14px; background:var(--success); padding:3px 8px; border-radius:12px; color:white; vertical-align: middle; margin-left: 10px;">Concluída</span>' : ''); document.getElementById('admin-link-input').value = `${window.location.href.split('?')[0]}?rifa=${id}`; if(r.concluida) { document.getElementById('btn-editar-rifa').style.display = 'none'; document.getElementById('btn-sortear').style.display = 'none'; } else { document.getElementById('btn-editar-rifa').style.display = 'block'; } atualizarEstatisticas(r); aplicarFundoContainer('admin-grid-container', r); renderizarGridAdmin(r); navigate('screen-admin-raffle'); }
-        function atualizarEstatisticas(r) { let d = 0, res = 0, v = 0, a = 0; r.numeros.forEach(n => { if (n.status === 'available') d++; if (n.status === 'reserved') res++; if (n.status === 'late') a++; if (n.status === 'paid') v++; }); const tArrec = v * r.valor; const tPend = (res + a) * r.valor; const tEsp = r.qtd * r.valor; const prog = r.qtd > 0 ? ((v / r.qtd) * 100).toFixed(1) : 0; document.getElementById('stat-disp').innerText = d; document.getElementById('stat-res').innerText = res; document.getElementById('stat-vend').innerText = v; document.getElementById('stat-val-total').innerText = `R$ ${tEsp.toFixed(2)}`; document.getElementById('stat-val-rec').innerText = `R$ ${tArrec.toFixed(2)}`; document.getElementById('stat-val-pend').innerText = `R$ ${tPend.toFixed(2)}`; document.getElementById('admin-progress').style.width = prog + '%'; document.getElementById('admin-progress').innerText = prog + '% Vendido'; if(!r.concluida) { document.getElementById('btn-sortear').style.display = (v === r.qtd && r.qtd > 0) ? 'block' : 'none'; } }
-        function renderizarGridAdmin(r) { const grid = document.getElementById('admin-numbers-grid'); grid.innerHTML = ""; r.numeros.forEach((n, idx) => { const div = document.createElement('div'); div.className = `number-item ${r.formato}`; aplicarCoresNumero(div, n, r); if (r.concluida && r.ganhador && r.ganhador.numero === n.numero) { div.innerHTML = `<span class="crown-icon">👑</span>${n.numero}`; div.style.boxShadow = "0 0 12px rgba(255,215,0,1)"; div.style.transform = "scale(1.15)"; div.style.zIndex = "5"; div.style.border = "2px solid #ffd700"; } else { div.innerText = n.numero; } div.onclick = () => abrirModalAdminNumero(idx, r); grid.appendChild(div); }); }
-        function abrirModalAdminNumero(idx, r) { const n = r.numeros[idx]; if (n.status === 'available') return; adminIndexSelecionado = idx; document.getElementById('mod-adm-num').innerText = n.numero; document.getElementById('mod-adm-nome').innerText = n.comprador; document.getElementById('mod-adm-tel').innerText = n.telefone; let d = n.dataPromessa; if(d && d.includes('-')) { const p = d.split('-'); d = `${p[2]}/${p[1]}/${p[0]}`; } document.getElementById('mod-adm-data').innerText = d; let st = "Reservado"; if(n.status === 'paid') st = "Pago (Garantido)"; if(n.status === 'late') st = "Atrasado"; document.getElementById('mod-adm-status').innerText = st; if(r.concluida) { document.getElementById('btn-adm-pagou').style.display = 'none'; document.getElementById('btn-adm-apagar').style.display = 'none'; } else { document.getElementById('btn-adm-pagou').style.display = n.status === 'paid' ? 'none' : 'block'; document.getElementById('btn-adm-apagar').style.display = 'block'; } abrirModal('modal-admin-numero'); }
-        function adminAcao(acao) { const r = rifas.find(x => x.id === currentRaffleId); const n = r.numeros[adminIndexSelecionado]; if(r.concluida) return; if (acao === 'pagou') { n.status = 'paid'; database.ref('rifas').set(rifas); fecharModal('modal-admin-numero'); } else if (acao === 'apagar') { if (n.status === 'late') { let tpl = obterMsgTemplate('cobranca'); let msg = tpl.replace(/{nome}/g, n.comprador).replace(/{numero}/g, n.numero).replace(/{rifa}/g, r.nome); if (confirm("Deseja mandar mensagem cobrando antes de excluir?\n\n[OK] = Sim\n[Cancelar] = Excluir Direto")) { const t = n.telefone.replace(/\D/g,''); window.open(`https://wa.me/55${t}?text=${encodeURIComponent(msg)}`, '_blank'); fecharModal('modal-admin-numero'); return; } } if(confirm("Confirmar exclusão e liberar número?")) { n.status = 'available'; n.comprador = ''; n.telefone = ''; n.dataPromessa = ''; database.ref('rifas').set(rifas); fecharModal('modal-admin-numero'); } } }
-        function encaminharComprovanteAdmin() { const r = rifas.find(x => x.id === currentRaffleId); const n = r.numeros[adminIndexSelecionado]; const tc = r.numeros.filter(x => x.telefone === n.telefone); let p=[], rs=[], a=[]; tc.forEach(x => { if(x.status === 'paid') p.push(x.numero); if(x.status === 'reserved') rs.push(x.numero); if(x.status === 'late') a.push(x.numero); }); const l = window.location.href.split('?')[0] + `?rifa=${r.id}&consulta=${n.telefone}`; let det = ''; if(p.length > 0) det += `\n✅ *Garantidos:* ${p.join(', ')}`; if(rs.length > 0) det += `\n⏳ *Reservados:* ${rs.join(', ')}`; if(a.length > 0) det += `\n⚠️ *Atrasados:* ${a.join(', ')}`; let tpl = obterMsgTemplate('comprovante'); let msg = tpl.replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio).replace(/{detalhes}/g, det).replace(/{qtd_total}/g, tc.length).replace(/{valor_total}/g, (tc.length * r.valor).toFixed(2)).replace(/{link}/g, l).replace(/{nome}/g, n.comprador); window.open(`https://wa.me/55${n.telefone.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`, '_blank'); }
-        function simularLinkComprador() { const r = rifas.find(x => x.id === currentRaffleId); document.getElementById('buyer-title').innerHTML = `<span class="font-rifa" style="color: ${r.cor}; font-size: 32px;">${r.nome}</span>` + (r.concluida ? ' <span style="font-size:14px; background:var(--success); padding:3px 8px; border-radius:12px; color:white; vertical-align: middle; margin-left: 10px;">Concluída</span>' : ''); document.getElementById('buyer-desc').innerText = r.desc; document.getElementById('buyer-premio').innerText = "Prêmio: " + r.premio; document.getElementById('buyer-valor').innerText = r.valor.toFixed(2); const img = document.getElementById('buyer-img'); if (r.imagem) { img.src = r.imagem; img.style.display = 'block'; } else { img.style.display = 'none'; } if(r.concluida) { document.getElementById('buyer-instrucoes').innerHTML = `<b>RIFA ENCERRADA.</b><br> O Ganhador foi: Número ${r.ganhador.numero} (${r.ganhador.comprador})`; } else { document.getElementById('buyer-instrucoes').innerHTML = `Selecione os números desejados:`; } document.getElementById('btn-prosseguir').style.display = selectedNumbers.length > 0 ? 'block' : 'none'; aplicarFundoContainer('buyer-grid-container', r); renderizarGridComprador(r); navigate('screen-buyer'); }
-        function renderizarGridComprador(r) { const grid = document.getElementById('buyer-numbers-grid'); grid.innerHTML = ""; r.numeros.forEach((n, index) => { const div = document.createElement('div'); div.className = `number-item ${r.formato}`; if (r.concluida && r.ganhador && r.ganhador.numero === n.numero) { div.innerHTML = `<span class="crown-icon">👑</span>${n.numero}`; div.style.boxShadow = "0 0 10px rgba(255,215,0,1)"; div.style.border = "2px solid #ffd700"; div.style.zIndex = "5"; } else { div.innerText = n.numero; } if (n.status === 'available' || selectedNumbers.includes(index)) { aplicarCoresNumero(div, n, r); if(selectedNumbers.includes(index)) div.classList.add('selected'); div.onclick = () => { if(r.concluida) return; if(r.numeros[index].status !== 'available' && !selectedNumbers.includes(index)) { alert('Número já reservado.'); return; } div.classList.toggle('selected'); if (div.classList.contains('selected')) { selectedNumbers.push(index); } else { selectedNumbers = selectedNumbers.filter(id => id !== index); } document.getElementById('btn-prosseguir').style.display = selectedNumbers.length > 0 ? 'block' : 'none'; }; } else { div.style.opacity = '0.5'; div.style.cursor = 'not-allowed'; div.style.backgroundColor = '#9e9e9e'; div.style.borderColor = '#ccc'; div.style.color = '#fff'; div.className = `number-item ${r.formato} status-${n.status}`; } grid.appendChild(div); }); }
-        function abrirModalDados() { document.getElementById('mod-comp-nome').value = ''; document.getElementById('mod-comp-tel').value = ''; document.getElementById('mod-comp-data').value = new Date().toISOString().split('T')[0]; document.getElementById('mod-comp-termos').checked = false; abrirModal('modal-dados-comprador'); }
-        function confirmarReserva() { const aceitouTermos = document.getElementById('mod-comp-termos').checked; if(!aceitouTermos) { alert("Você precisa ler e aceitar os Termos e Regulamento para reservar seu número."); return; } const n = document.getElementById('mod-comp-nome').value; const t = document.getElementById('mod-comp-tel').value; const d = document.getElementById('mod-comp-data').value; if(!n || !t || !d) { alert("Preencha todos os campos!"); return; } const r = rifas.find(x => x.id === currentRaffleId); ultimaCompraIds = [...selectedNumbers]; selectedNumbers.forEach(idx => { r.numeros[idx].status = 'reserved'; r.numeros[idx].comprador = n; r.numeros[idx].telefone = t; r.numeros[idx].dataPromessa = d; }); database.ref('rifas').set(rifas).then(() => { selectedNumbers = []; fecharModal('modal-dados-comprador'); document.getElementById('mod-pix-chave').innerText = r.pixChave; document.getElementById('mod-pix-nome').innerText = r.pixNome; abrirModal('modal-pagamento'); }); }
-        function abrirComprovanteCompraImediata() { fecharModal('modal-pagamento'); const r = rifas.find(x => x.id === currentRaffleId); const nComprados = ultimaCompraIds.map(idx => r.numeros[idx]); if(nComprados.length === 0) return; const l = `${window.location.href.split('?')[0]}?rifa=${r.id}&consulta=${nComprados[0].telefone}`; document.getElementById('rec-nome-rifa').innerText = r.nome; document.getElementById('rec-premio').innerText = r.premio; document.getElementById('rec-comprador').innerText = nComprados[0].comprador; document.getElementById('rec-tel').innerText = nComprados[0].telefone; document.getElementById('rec-link').innerText = l; document.getElementById('rec-conteudo-dinamico').innerHTML = ` <div class="recibo-row"><span>Números (Nesta Reserva):</span> <strong>${nComprados.map(x => x.numero).join(', ')}</strong></div> <div class="recibo-row"><span>Valor Unitário:</span> <strong>R$ ${r.valor.toFixed(2)}</strong></div> <div class="recibo-row"><span>Total desta compra:</span> <strong style="color:var(--danger)">R$ ${(nComprados.length * r.valor).toFixed(2)}</strong></div> <div class="recibo-row"><span>Status:</span> <strong>Reservado ⏳</strong></div> `; abrirModal('modal-comprovante'); }
-        function realizarConsultaPublica(rId, tel) { const r = rifas.find(x => x.id === rId); const dr = document.getElementById('area-consulta-resultado'); if(!r) { dr.innerHTML = "<p>Não encontrada.</p>"; navigate('screen-consulta'); return; } const m = r.numeros.filter(n => n.telefone === tel); if(m.length === 0) { dr.innerHTML = `<p>Sem reservas.</p>`; } else { let pg=[], rs=[], at=[]; m.forEach(n => { if(n.status === 'paid') pg.push(n.numero); if(n.status === 'reserved') rs.push(n.numero); if(n.status === 'late') at.push(n.numero); }); let b = ''; if(pg.length>0) b+=`<div class="recibo-block"><span style="color:var(--success);">✅ Pagos:</span><br>Números: ${pg.join(', ')}<br>Valor: R$ ${(pg.length * r.valor).toFixed(2)}</div>`; if(rs.length>0) b+=`<div class="recibo-block"><span style="color:var(--warning);">⏳ Reservados:</span><br>Números: ${rs.join(', ')}<br>Valor: R$ ${(rs.length * r.valor).toFixed(2)}</div>`; if(at.length>0) b+=`<div class="recibo-block"><span style="color:var(--danger);">⚠️ Pendentes:</span><br>Números: ${at.join(', ')}<br>Valor: R$ ${(at.length * r.valor).toFixed(2)}</div>`; dr.innerHTML = `<div style="background:var(--card-bg); padding:15px; border-radius:8px; border:1px solid #ccc; font-size: 14px;"><p><strong>Comprador:</strong> ${m[0].comprador}</p><p><strong>Telefone:</strong> ${m[0].telefone}</p><p><strong>Rifa:</strong> <span class="font-rifa" style="color:${r.cor}; font-size:18px;">${r.nome}</span></p><hr>${b}<hr><p style="text-align:right;"><strong>Total Geral: R$ ${(m.length * r.valor).toFixed(2)}</strong></p><button class="btn btn-success" onclick="window.print()" style="margin-top:15px;">Salvar PDF</button></div>`; } navigate('screen-consulta'); }
-        function copiarLink() { const i = document.getElementById("admin-link-input"); i.select(); document.execCommand("copy"); alert("Copiado!"); }
-        function compartilharLinkWhatsApp() { const r = rifas.find(x => x.id === currentRaffleId); const link = document.getElementById("admin-link-input").value; let tpl = obterMsgTemplate('link'); let msg = tpl.replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio).replace(/{link}/g, link); window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank'); }
-        function chamarEdicaoAtual() { abrirEditarRifa(currentRaffleId); }
-        function chamarExclusaoAtual() { if (confirm("Excluir Rifa?")) { rifas = rifas.filter(x => x.id !== currentRaffleId); database.ref('rifas').set(rifas); atualizarDashboard(); navigate('screen-dashboard'); } }
-        function realizarSorteio() { const r = rifas.find(x => x.id === currentRaffleId); const todosPagos = r.numeros.every(n => n.status === 'paid'); if(!todosPagos) { alert("Atenção: Todos os números precisam estar PAGOS para sortear!"); return; } if(confirm("Deseja realmente sortear? A rifa será finalizada e não poderá ser desfeita.")) { const ganhador = r.numeros[Math.floor(Math.random() * r.qtd)]; r.concluida = true; r.ganhador = ganhador; database.ref('rifas').set(rifas).then(() => { alert(`🎉 BINGO! SORTEIO REALIZADO!\n\nNúmero Sorteado: ${ganhador.numero}\nGanhador(a): ${ganhador.comprador}`); let tpl = obterMsgTemplate('ganhador'); let msg = tpl.replace(/{nome}/g, ganhador.comprador).replace(/{numero}/g, ganhador.numero).replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio); window.open(`https://wa.me/55${ganhador.telefone.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`, '_blank'); abrirAdminRifa(currentRaffleId); }); } }
-        function abrirListaCompradores() { document.getElementById('filtro-nome').value = ''; document.getElementById('filtro-status').value = ''; renderizarListaCompradores(); abrirModal('modal-lista-compradores'); }
-        function filtrarLista() { renderizarListaCompradores(); }
-        function renderizarListaCompradores() { const r = rifas.find(x => x.id === currentRaffleId); const tbody = document.getElementById('corpo-tabela-compradores'); const fNome = document.getElementById('filtro-nome').value.toLowerCase(); const fStatus = document.getElementById('filtro-status').value; tbody.innerHTML = ''; r.numeros.forEach(n => { const nomeStr = (n.comprador || '').toLowerCase(); if (fNome && !nomeStr.includes(fNome)) return; if (fStatus && n.status !== fStatus) return; let st = ''; if(n.status === 'available') st = '<span class="badge-st" style="background:#999;">Livre</span>'; if(n.status === 'paid') st = '<span class="badge-st" style="background:var(--success);">Pago</span>'; if(n.status === 'reserved') st = '<span class="badge-st" style="background:var(--warning);">Reserv.</span>'; if(n.status === 'late') st = '<span class="badge-st" style="background:var(--danger);">Atraso</span>'; tbody.innerHTML += `<tr><td><b>${n.numero}</b></td><td>${n.comprador || '-'}</td><td>${n.telefone || '-'}</td><td>${st}</td></tr>`; }); }
+        function recuperarSenha() {
+            const email = document.getElementById('forgot-email').value;
+            if(!email) { alert("Digite seu e-mail cadastrado."); return; }
+            
+            showLoader();
+            auth.sendPasswordResetEmail(email).then(() => {
+                hideLoader(); alert("Um link oficial para criar uma nova senha foi enviado para o seu e-mail! Verifique sua caixa de entrada e pasta de Spam.");
+                navigate('screen-login');
+            }).catch(error => {
+                hideLoader();
+                if(error.code === 'auth/user-not-found') alert("E-mail não encontrado no sistema.");
+                else alert("Erro ao enviar redefinição: " + error.message);
+            });
+        }
+
+        // SUPORTE E CHAT
+        function abrirRotaSuporte() {
+            if (!currentUserEmail) {
+                abrirModal('modal-suporte-publico');
+            } else if (currentUserEmail.toLowerCase() === EMAIL_MESTRE.toLowerCase()) {
+                abrirPainelMestre();
+            } else {
+                carregarMeusChamados();
+            }
+        }
+
+        function enviarTicketSuportePublico() {
+            const n = document.getElementById('sup-nome').value;
+            const e = document.getElementById('sup-email').value;
+            const m = document.getElementById('sup-msg').value;
+            if(!n || !e || !m) return alert("Preencha todos os campos do suporte.");
+            
+            showLoader();
+            const ticketId = Date.now().toString();
+            database.ref('suporte/' + ticketId).set({
+                nome: n, email: e, criadoEm: Date.now(), atualizadoEm: Date.now(), status: 'aberto', masterPodeFechar: true,
+                mensagens: [{ remetente: 'user', texto: m, data: new Date().toLocaleString('pt-BR') }]
+            }).then(() => {
+                hideLoader();
+                alert("Suporte cadastrado com sucesso, aguarde até 7 dias para ter retorno.");
+                fecharModal('modal-suporte-publico');
+            }).catch(e => { hideLoader(); alert("Erro ao enviar: " + e.message); });
+        }
+
+        function carregarMeusChamados() {
+            showLoader();
+            database.ref('suporte').orderByChild('email').equalTo(currentUserEmail).once('value').then(snap => {
+                const data = snap.val() || {};
+                let meusTickets = Object.keys(data).map(k => ({...data[k], id: k})).reverse();
+                
+                const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
+                meusTickets = meusTickets.filter(t => {
+                    if(t.status === 'fechado' && t.fechadoEm) {
+                        return (Date.now() - t.fechadoEm) <= SEVEN_DAYS;
+                    }
+                    return true;
+                });
+
+                const lista = document.getElementById('user-tickets-list');
+                lista.innerHTML = '';
+                if(meusTickets.length === 0) {
+                    lista.innerHTML = '<p style="text-align:center; color:#888;">Nenhum chamado aberto nos últimos dias.</p>';
+                } else {
+                    meusTickets.forEach(t => {
+                        const cor = t.status === 'respondido' ? 'var(--success)' : (t.status === 'fechado' ? '#888' : 'var(--warning)');
+                        const prev = t.mensagens && t.mensagens.length > 0 ? t.mensagens[t.mensagens.length-1].texto.substring(0, 40) : '';
+                        let dtFormatada = new Date(t.criadoEm).toLocaleDateString('pt-BR');
+                        
+                        lista.innerHTML += `
+                            <div style="background:var(--card-bg); padding:15px; border-radius:8px; border-left:4px solid ${cor}; margin-bottom:10px; cursor:pointer; box-shadow:0 2px 5px rgba(0,0,0,0.1);" onclick="abrirChat('${t.id}')">
+                                <div style="display:flex; justify-content:space-between; font-size:12px; color:#888;">
+                                    <b>${dtFormatada}</b> <span style="color:${cor}; font-weight:bold; text-transform:uppercase;">${t.status}</span>
+                                </div>
+                                <p style="font-size:14px; margin:5px 0 0 0; color:var(--text-dark);"><b>Última msg:</b> ${prev}...</p>
+                            </div>
+                        `;
+                    });
+                }
+                hideLoader();
+                navigate('screen-support-user');
+            });
+        }
+
+        function criarTicketLogado() {
+            const m = prompt("Descreva sua dúvida, problema ou feedback:");
+            if(!m || m.trim() === '') return;
+            showLoader();
+            
+            const ticketId = Date.now().toString();
+            const nomeUser = document.getElementById('lbl-username').innerText || "Vendedor";
+            
+            database.ref('suporte/' + ticketId).set({
+                nome: nomeUser, email: currentUserEmail, criadoEm: Date.now(), atualizadoEm: Date.now(), status: 'aberto', masterPodeFechar: true,
+                mensagens: [{ remetente: 'user', texto: m, data: new Date().toLocaleString('pt-BR') }]
+            }).then(() => {
+                carregarMeusChamados();
+            }).catch(e => { hideLoader(); alert("Erro: " + e.message); });
+        }
+
+        function abrirPainelMestre() {
+            showLoader();
+            database.ref('suporte').once('value').then(snap => {
+                const data = snap.val() || {};
+                const tickets = Object.keys(data).map(k => ({...data[k], id: k})).reverse(); 
+                const lista = document.getElementById('master-tickets-list');
+                lista.innerHTML = '';
+                
+                if(tickets.length === 0) {
+                    lista.innerHTML = '<p style="text-align:center;">Nenhum chamado de suporte.</p>';
+                } else {
+                    tickets.forEach(t => {
+                        const cor = t.status === 'aberto' || t.status === 'reaberto' ? 'var(--danger)' : (t.status === 'fechado' ? '#888' : 'var(--success)');
+                        const msgs = t.mensagens || [];
+                        const unread = msgs.length > 0 && msgs[msgs.length-1].remetente === 'user' && t.status !== 'fechado' ? '⚠️ Nova' : '';
+                        let dtFormatada = new Date(t.criadoEm).toLocaleDateString('pt-BR');
+
+                        let slaAlerta = '';
+                        if (t.status === 'aberto' || t.status === 'reaberto') {
+                            const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
+                            if (Date.now() - (t.atualizadoEm || t.criadoEm) > SEVEN_DAYS) {
+                                slaAlerta = ' <span style="background:var(--danger); color:white; padding:2px 5px; border-radius:4px; font-size:10px;">🚨 SLA ESTOURADO</span>';
+                            }
+                        }
+                        
+                        let fbHtml = '';
+                        if(t.status === 'fechado' && t.feedback) {
+                            const fColor = t.feedback.resolvido ? 'green' : 'red';
+                            fbHtml = `<div style="margin-top:10px; font-size:12px; background:rgba(0,0,0,0.05); padding:5px; border-radius:4px;">
+                                <b style="color:${fColor}">Resolvido: ${t.feedback.resolvido ? 'Sim' : 'Não'}</b> | Nota: ⭐ ${t.feedback.nota}<br>
+                                ${t.feedback.motivo ? '<i>Motivo: '+t.feedback.motivo+'</i>' : ''}
+                            </div>`;
+                        }
+
+                        lista.innerHTML += `
+                            <div style="background:var(--card-bg); padding:15px; border-radius:8px; border-left:4px solid ${cor}; margin-bottom:10px; cursor:pointer;" onclick="abrirChat('${t.id}')">
+                                <div style="display:flex; justify-content:space-between; font-size:12px; color:#666;">
+                                    <b>${dtFormatada}</b> 
+                                    <span style="color:${cor}; text-transform:uppercase; font-weight:bold;">${t.status} ${unread} ${slaAlerta}</span>
+                                </div>
+                                <h4 style="margin:5px 0;">${t.nome}</h4>
+                                <p style="font-size:12px; margin:0;">${t.email}</p>
+                                ${fbHtml}
+                            </div>
+                        `;
+                    });
+                }
+                hideLoader();
+                navigate('screen-master-support');
+            });
+        }
+
+        function abrirChat(ticketId) {
+            currentSupportTicketId = ticketId;
+            showLoader();
+            
+            database.ref('suporte/' + ticketId).on('value', snap => {
+                const t = snap.val();
+                if(!t) return;
+                
+                document.getElementById('chat-title').innerText = "Chamado: " + t.nome;
+                const container = document.getElementById('chat-history');
+                container.innerHTML = '';
+                
+                if(t.mensagens) {
+                    t.mensagens.forEach(msg => {
+                        const isUser = msg.remetente === 'user';
+                        const isSistema = msg.remetente === 'sistema';
+                        const isMeAdmin = currentUserEmail.toLowerCase() === EMAIL_MESTRE.toLowerCase();
+                        
+                        let alignClass = '';
+                        if(isSistema) { alignClass = 'msg-sistema'; } 
+                        else if (!isMeAdmin) { alignClass = isUser ? 'msg-user' : 'msg-admin'; } 
+                        else { alignClass = isUser ? 'msg-admin' : 'msg-user'; }
+
+                        let anexoHtml = msg.anexo ? `<br><img src="${msg.anexo}" style="max-width:200px; border-radius:8px; margin-top:5px;">` : '';
+
+                        container.innerHTML += `
+                            <div class="msg-bubble ${alignClass}">
+                                ${msg.texto}
+                                ${anexoHtml}
+                                <span class="msg-time">${msg.data}</span>
+                            </div>
+                        `;
+                    });
+                }
+
+                const btnEncerrar = document.getElementById('btn-encerrar-chamado');
+                const ctrls = document.getElementById('chat-controls');
+                const closedMsg = document.getElementById('chat-closed-msg');
+                const waitMsg = document.getElementById('chat-waiting-msg');
+                const btnAvaliar = document.getElementById('chat-btn-avaliar');
+                
+                ctrls.style.display = 'none'; closedMsg.style.display = 'none';
+                waitMsg.style.display = 'none'; btnAvaliar.style.display = 'none';
+                btnEncerrar.style.display = 'none';
+
+                if (t.status === 'fechado') {
+                    closedMsg.style.display = 'block';
+                } else if (t.status === 'aguardando_feedback') {
+                    if(currentUserEmail.toLowerCase() === EMAIL_MESTRE.toLowerCase()) {
+                        waitMsg.style.display = 'block';
+                    } else {
+                        btnAvaliar.style.display = 'block';
+                    }
+                } else {
+                    ctrls.style.display = 'flex';
+                    btnEncerrar.style.display = 'block';
+                }
+                
+                hideLoader();
+                navigate('screen-support-chat');
+                setTimeout(() => { container.scrollTop = container.scrollHeight; }, 100);
+            });
+        }
+
+        function processarAnexoChat(input) {
+            if (input.files[0]) {
+                const r = new FileReader();
+                r.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas'); const w = 400; const sc = w / img.width;
+                        canvas.width = w; canvas.height = img.height * sc; canvas.getContext('2d').drawImage(img, 0, 0, w, canvas.height);
+                        chatAnexoBase64 = canvas.toDataURL('image/jpeg', 0.6);
+                        document.getElementById('chat-preview-img').src = chatAnexoBase64;
+                        document.getElementById('chat-anexo-preview').style.display = 'block';
+                    }
+                    img.src = e.target.result;
+                }
+                r.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function removerAnexoChat() {
+            chatAnexoBase64 = "";
+            document.getElementById('chat-anexo').value = '';
+            document.getElementById('chat-anexo-preview').style.display = 'none';
+        }
+
+        function enviarMensagemChat() {
+            const input = document.getElementById('chat-input');
+            const texto = input.value;
+            if((!texto || texto.trim() === '') && chatAnexoBase64 === '') return;
+            if(!currentSupportTicketId) return;
+            
+            const isMeAdmin = currentUserEmail.toLowerCase() === EMAIL_MESTRE.toLowerCase();
+            const novoRemetente = isMeAdmin ? 'admin' : 'user';
+            const novoStatus = isMeAdmin ? 'respondido' : 'aberto';
+            
+            database.ref('suporte/' + currentSupportTicketId).once('value').then(snap => {
+                const t = snap.val();
+                let msgs = t.mensagens || [];
+                msgs.push({ remetente: novoRemetente, texto: texto, data: new Date().toLocaleString('pt-BR'), timestamp: Date.now(), anexo: chatAnexoBase64 });
+                
+                database.ref('suporte/' + currentSupportTicketId).update({
+                    mensagens: msgs,
+                    status: novoStatus,
+                    atualizadoEm: Date.now()
+                }).then(() => {
+                    input.value = '';
+                    removerAnexoChat();
+                });
+            });
+        }
+
+        function iniciarEncerramentoChamado() {
+            database.ref('suporte/' + currentSupportTicketId).once('value').then(snap => {
+                const t = snap.val();
+                if(currentUserEmail.toLowerCase() === EMAIL_MESTRE.toLowerCase()) {
+                    if(t.masterPodeFechar === false) {
+                        alert("O cliente informou que não foi resolvido. Apenas o cliente pode encerrar este chamado definitivamente agora.");
+                        return;
+                    }
+                    if(confirm("Deseja pedir para o cliente avaliar e encerrar este chamado?")) {
+                        database.ref('suporte/' + currentSupportTicketId).update({ status: 'aguardando_feedback', atualizadoEm: Date.now() });
+                        alert("Aguardando feedback do cliente.");
+                    }
+                } else {
+                    feedbackTicketId = currentSupportTicketId;
+                    document.getElementById('feed-step-1').style.display = 'block';
+                    document.getElementById('feed-step-2').style.display = 'none';
+                    document.getElementById('feed-motivo-box').style.display = 'none';
+                    abrirModal('modal-feedback');
+                }
+            });
+        }
+
+        function setFeedbackResolvido(valor) {
+            isResolvidoFeedback = valor;
+            document.getElementById('feed-step-1').style.display = 'none';
+            document.getElementById('feed-step-2').style.display = 'block';
+            document.getElementById('feed-motivo-box').style.display = valor ? 'none' : 'block';
+            setEstrela(0); 
+        }
+
+        function setEstrela(nota) {
+            document.getElementById('feed-nota').value = nota;
+            const spans = document.getElementById('feed-estrelas').getElementsByTagName('span');
+            for(let i=0; i<5; i++) {
+                if(i < nota) spans[i].classList.add('ativa');
+                else spans[i].classList.remove('ativa');
+            }
+        }
+
+        function enviarFeedback() {
+            const nota = parseInt(document.getElementById('feed-nota').value);
+            const motivo = document.getElementById('feed-motivo').value;
+            if(nota === 0) return alert("Por favor, avalie com uma nota de 1 a 5 estrelas.");
+            if(!isResolvidoFeedback && motivo.trim() === '') return alert("Por favor, diga o motivo da insatisfação para que possamos melhorar.");
+
+            showLoader();
+            
+            if (isResolvidoFeedback) {
+                database.ref('suporte/' + feedbackTicketId).update({
+                    status: 'fechado', fechadoEm: Date.now(), feedback: { resolvido: true, nota: nota, motivo: '' }
+                }).then(() => { finishFeedback(); });
+            } else {
+                database.ref('suporte/' + feedbackTicketId).update({
+                    status: 'reaberto', masterPodeFechar: false, atualizadoEm: Date.now(), feedback: { resolvido: false, nota: nota, motivo: motivo }
+                }).then(() => { finishFeedback(); });
+            }
+        }
+
+        function finishFeedback() {
+            hideLoader();
+            fecharModal('modal-feedback');
+            alert(isResolvidoFeedback ? "Obrigado pelo seu feedback! Chamado encerrado." : "Chamado reaberto! Nossa equipe vai analisar o motivo.");
+            fecharChat();
+        }
+
+        function fecharChat() {
+            if(currentSupportTicketId) database.ref('suporte/' + currentSupportTicketId).off();
+            currentSupportTicketId = null;
+            if (currentUserEmail.toLowerCase() === EMAIL_MESTRE.toLowerCase()) {
+                abrirPainelMestre();
+            } else {
+                carregarMeusChamados();
+            }
+        }
+
+        function abrirRelatoriosMaster() {
+            showLoader();
+            database.ref('suporte').once('value').then(snap => {
+                const data = snap.val() || {};
+                const tickets = Object.keys(data).map(k => data[k]);
+                
+                let mesesData = {};
+                let feedbackHtml = '';
+
+                tickets.forEach(t => {
+                    if(!t.criadoEm) return;
+                    let dt = new Date(t.criadoEm);
+                    let mesAno = ("0" + (dt.getMonth() + 1)).slice(-2) + "/" + dt.getFullYear();
+                    
+                    if(!mesesData[mesAno]) mesesData[mesAno] = { chamados: 0, somaNotas: 0, qtdNotas: 0 };
+                    mesesData[mesAno].chamados += 1;
+                    
+                    if(t.feedback && t.feedback.nota) {
+                        mesesData[mesAno].somaNotas += t.feedback.nota;
+                        mesesData[mesAno].qtdNotas += 1;
+
+                        const corF = t.feedback.resolvido ? 'green' : 'red';
+                        feedbackHtml += `<div style="background:rgba(0,0,0,0.05); padding:10px; border-radius:6px; margin-bottom:8px; font-size:12px;">
+                            <b>Data:</b> ${new Date(t.fechadoEm || t.atualizadoEm).toLocaleDateString('pt-BR')} | 
+                            <b style="color:${corF}">Resolvido: ${t.feedback.resolvido ? 'Sim' : 'Não'}</b> | ⭐ ${t.feedback.nota}
+                            <br><b>Mensagem:</b> ${t.feedback.motivo || '<i>Sem comentários extras</i>'}
+                        </div>`;
+                    }
+                });
+
+                const labels = Object.keys(mesesData).sort((a,b) => {
+                    let partsA = a.split('/'); let partsB = b.split('/');
+                    return new Date(partsA[1], partsA[0]-1) - new Date(partsB[1], partsB[0]-1);
+                });
+
+                const dataChamados = [];
+                const dataMedia = [];
+
+                labels.forEach(l => {
+                    dataChamados.push(mesesData[l].chamados);
+                    let media = mesesData[l].qtdNotas > 0 ? (mesesData[l].somaNotas / mesesData[l].qtdNotas).toFixed(1) : 0;
+                    dataMedia.push(media);
+                });
+
+                document.getElementById('analytics-feedbacks').innerHTML = feedbackHtml || '<p>Nenhum feedback recebido ainda.</p>';
+                
+                hideLoader();
+                navigate('screen-master-analytics');
+                
+                renderizarGrafico(labels, dataChamados, dataMedia);
+            });
+        }
+
+        let myChart = null;
+        function renderizarGrafico(labels, dataChamados, dataMedia) {
+            const ctx = document.getElementById('paretoChart').getContext('2d');
+            if(myChart) myChart.destroy();
+            
+            myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Qtd de Chamados',
+                        data: dataChamados,
+                        backgroundColor: 'rgba(2, 136, 209, 0.7)',
+                        yAxisID: 'y'
+                    }, {
+                        label: 'Média ⭐',
+                        data: dataMedia,
+                        type: 'line',
+                        borderColor: '#FFD700',
+                        backgroundColor: '#FFD700',
+                        borderWidth: 3,
+                        yAxisID: 'y1'
+                    }]
+                },
+                options: { responsive: true, scales: { y: { beginAtZero: true, type: 'linear', position: 'left', title: { display: true, text: 'Chamados' } }, y1: { beginAtZero: true, max: 5, type: 'linear', position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'Nota' } } } }
+            });
+        }
+
+        // FUNCIONALIDADES GERAIS
+        function obterMsgTemplate(tipo) {
+            const defaults = {
+                link: "Compre números na minha rifa e concorra a: {premio}!\n\nAcesse o link e garanta o seu: {link}",
+                comprovante: "🧾 *COMPROVANTE DE RIFA* 🧾\n\n*Rifa:* {rifa}\n*Prêmio:* {premio}\n{detalhes}\n*Total de Números:* {qtd_total}\n*Valor Total:* R$ {valor_total}\n\nAcompanhe aqui: {link}",
+                cobranca: "Olá {nome}, o pagamento do número {numero} na rifa \"{rifa}\" está pendente. Ainda tem interesse?",
+                ganhador: "Parabéns {nome}! 🎉 Você foi o grande ganhador do número {numero} na minha rifa \"{rifa}\"! O prêmio é seu!"
+            };
+            if(userConfig && userConfig[tipo]) return userConfig[tipo];
+            return defaults[tipo];
+        }
+
+        function abrirConfiguracoes() {
+            document.getElementById('cfg-msg-link').value = obterMsgTemplate('link');
+            document.getElementById('cfg-msg-comp').value = obterMsgTemplate('comprovante');
+            document.getElementById('cfg-msg-cob').value = obterMsgTemplate('cobranca');
+            document.getElementById('cfg-msg-ganhador').value = obterMsgTemplate('ganhador');
+            navigate('screen-settings');
+        }
+
+        function salvarConfiguracoes() {
+            const user = auth.currentUser;
+            if(!user) return;
+            
+            userConfig = {
+                link: document.getElementById('cfg-msg-link').value,
+                comprovante: document.getElementById('cfg-msg-comp').value,
+                cobranca: document.getElementById('cfg-msg-cob').value,
+                ganhador: document.getElementById('cfg-msg-ganhador').value
+            };
+            database.ref('usuarios/' + user.uid + '/config').set(userConfig).then(() => {
+                alert("Configurações salvas!");
+                atualizarDashboard();
+                navigate('screen-dashboard');
+            });
+        }
+
+        function processarImagem(input, previewId, tipo) {
+            if (input.files[0]) {
+                const r = new FileReader();
+                r.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas'); const w = 600; const sc = w / img.width;
+                        canvas.width = w; canvas.height = img.height * sc; canvas.getContext('2d').drawImage(img, 0, 0, w, canvas.height);
+                        
+                        if(tipo === 'produto') {
+                            imageBase64Temp = canvas.toDataURL('image/jpeg', 0.7);
+                            document.getElementById(previewId).src = imageBase64Temp; 
+                            document.getElementById(previewId).style.display = 'block';
+                        } else if(tipo === 'fundo') {
+                            bgImageBase64Temp = canvas.toDataURL('image/jpeg', 0.5);
+                            document.getElementById(previewId).src = bgImageBase64Temp; 
+                            document.getElementById(previewId).style.display = 'block';
+                            updatePreview('editar');
+                        }
+                    }
+                    img.src = e.target.result;
+                }
+                r.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function removerImagem(tipo, tela) {
+            if (tipo === 'produto') {
+                removerImgProduto = true;
+                imageBase64Temp = "";
+                let inputId = tela === 'cadastro' ? 'rf-img' : 'rf-edit-img';
+                let previewId = tela === 'cadastro' ? 'preview-img-cadastro' : 'preview-img-edicao';
+                document.getElementById(inputId).value = '';
+                document.getElementById(previewId).style.display = 'none';
+                document.getElementById(previewId).src = '';
+            } else if (tipo === 'fundo') {
+                removerImgFundo = true;
+                bgImageBase64Temp = "";
+                let inputId = tela === 'cadastro' ? 'rf-bg-img' : 'rf-edit-bg-img';
+                let previewId = tela === 'cadastro' ? 'preview-img-bg-cad' : 'preview-img-bg-edit';
+                document.getElementById(inputId).value = '';
+                document.getElementById(previewId).style.display = 'none';
+                document.getElementById(previewId).src = '';
+                updatePreview(tela === 'cadastro' ? 'criar' : 'editar');
+            }
+        }
+
+        function abrirPreVisualizacao(origem) {
+            updatePreview(origem);
+            abrirModal('modal-preview-rifa');
+        }
+
+        function updatePreview(origem) {
+            if(!origem) origem = document.getElementById('screen-new-raffle').classList.contains('active') ? 'criar' : 'editar';
+            
+            let prefixo = origem === 'editar' ? 'rf-edit-' : 'rf-';
+            
+            const formato = document.getElementById(prefixo + 'formato').value;
+            const colorStyle = document.getElementById(prefixo + 'color-style').value;
+            const cor = document.getElementById(prefixo + 'cor').value;
+            const bgStyle = document.getElementById(prefixo + 'bg-style').value;
+            const bgColor = document.getElementById(prefixo + 'bg-color').value;
+            
+            let imgBgAtual = "";
+            if (origem === 'editar') {
+                if (removerImgFundo) {
+                    imgBgAtual = "";
+                } else if (bgImageBase64Temp !== "") {
+                    imgBgAtual = bgImageBase64Temp;
+                } else {
+                    const r = rifas.find(x => x.id === currentRaffleId);
+                    imgBgAtual = r ? r.bgImagem : "";
+                }
+            } else {
+                imgBgAtual = bgImageBase64Temp;
+            }
+
+            const gridContainer = document.getElementById('preview-modal-container');
+            const grid = document.getElementById('preview-modal-grid');
+            
+            grid.innerHTML = "";
+            gridContainer.className = "grid-container-custom";
+            
+            if (bgStyle === 'bg-flat') {
+                gridContainer.style.background = bgColor;
+            } else if (bgStyle === 'bg-gradient') {
+                gridContainer.style.background = `linear-gradient(135deg, ${bgColor} 0%, rgba(0,0,0,0.8) 100%)`;
+            } else {
+                gridContainer.style.background = "transparent";
+            }
+
+            if (imgBgAtual) {
+                gridContainer.style.backgroundImage = `url(${imgBgAtual})`;
+            }
+
+            for (let i = 1; i <= 20; i++) {
+                const div = document.createElement('div');
+                div.className = `number-item ${formato} ${colorStyle}`; 
+                
+                if (colorStyle === 'color-translucent') div.style.opacity = '0.6';
+                if (colorStyle === 'color-matte') div.style.filter = 'grayscale(30%) contrast(80%)';
+                
+                if (colorStyle === 'color-gradient') {
+                    div.style.background = `linear-gradient(135deg, ${cor}, #222)`;
+                    div.style.border = 'none';
+                } else if (colorStyle === 'color-flat') {
+                    div.style.backgroundColor = cor;
+                    div.style.border = 'none';
+                } else {
+                    div.style.backgroundColor = cor;
+                    div.style.borderColor = cor;
+                }
+                
+                div.style.color = '#fff';
+                div.innerText = i;
+                grid.appendChild(div);
+            }
+        }
+
+        function salvarRifa() {
+            const qtd = parseInt(document.getElementById('rf-qtd').value); 
+            const numeros = [];
+            for (let i=1; i<=qtd; i++) { 
+                numeros.push({ numero: i, status: 'available', comprador: '', telefone: '', dataPromessa: '' }); 
+            }
+            
+            const novaRifa = { 
+                id: Date.now().toString(), donoDaRifa: currentUserEmail, nome: document.getElementById('rf-nome').value, 
+                desc: document.getElementById('rf-desc').value, premio: document.getElementById('rf-premio').value, 
+                valor: parseFloat(document.getElementById('rf-valor').value), qtd: qtd, imagem: imageBase64Temp, 
+                formato: document.getElementById('rf-formato').value, colorStyle: document.getElementById('rf-color-style').value, cor: document.getElementById('rf-cor').value, 
+                pixNome: document.getElementById('rf-pix-nome').value, pixChave: document.getElementById('rf-pix-chave').value, 
+                bgStyle: document.getElementById('rf-bg-style').value, bgColor: document.getElementById('rf-bg-color').value, bgImagem: bgImageBase64Temp,
+                numeros: numeros 
+            };
+            
+            rifas.push(novaRifa);
+            database.ref('rifas').set(rifas).then(() => { 
+                imageBase64Temp = ""; bgImageBase64Temp = ""; 
+                removerImgProduto = false; removerImgFundo = false;
+                alert("Rifa criada com sucesso!"); atualizarDashboard(); navigate('screen-dashboard'); 
+            });
+        }
+
+        function abrirEditarRifa(id) {
+            currentRaffleId = id; 
+            const r = rifas.find(x => x.id === id);
+            if(!r) return;
+            
+            removerImgProduto = false;
+            removerImgFundo = false;
+
+            document.getElementById('rf-edit-nome').value = r.nome || '';
+            document.getElementById('rf-edit-desc').value = r.desc || '';
+            document.getElementById('rf-edit-premio').value = r.premio || '';
+            document.getElementById('rf-edit-valor').value = r.valor || 0;
+            document.getElementById('rf-edit-qtd').value = r.qtd || 100;
+            
+            document.getElementById('rf-edit-formato').value = r.formato || 'shape-square';
+            document.getElementById('rf-edit-color-style').value = r.colorStyle || '';
+            document.getElementById('rf-edit-cor').value = r.cor || '#0288d1';
+            document.getElementById('rf-edit-bg-style').value = r.bgStyle || '';
+            document.getElementById('rf-edit-bg-color').value = r.bgColor || '#ffffff';
+            
+            document.getElementById('rf-edit-pix-nome').value = r.pixNome || '';
+            document.getElementById('rf-edit-pix-chave').value = r.pixChave || '';
+            
+            imageBase64Temp = ""; 
+            bgImageBase64Temp = ""; 
+
+            const p1 = document.getElementById('preview-img-edicao');
+            if (r.imagem) { p1.src = r.imagem; p1.style.display = 'block'; } else { p1.style.display = 'none'; }
+            
+            const p2 = document.getElementById('preview-img-bg-edit');
+            if (r.bgImagem) { p2.src = r.bgImagem; p2.style.display = 'block'; } else { p2.style.display = 'none'; }
+
+            navigate('screen-edit-raffle');
+        }
+
+        function salvarEdicaoRifa() {
+            const i = rifas.findIndex(x => x.id === currentRaffleId);
+            if(i !== -1) {
+                rifas[i].nome = document.getElementById('rf-edit-nome').value; 
+                rifas[i].desc = document.getElementById('rf-edit-desc').value;
+                rifas[i].premio = document.getElementById('rf-edit-premio').value; 
+                rifas[i].valor = parseFloat(document.getElementById('rf-edit-valor').value);
+                rifas[i].formato = document.getElementById('rf-edit-formato').value; 
+                rifas[i].colorStyle = document.getElementById('rf-edit-color-style').value;
+                rifas[i].cor = document.getElementById('rf-edit-cor').value;
+                rifas[i].bgStyle = document.getElementById('rf-edit-bg-style').value; 
+                rifas[i].bgColor = document.getElementById('rf-edit-bg-color').value;
+                rifas[i].pixNome = document.getElementById('rf-edit-pix-nome').value; 
+                rifas[i].pixChave = document.getElementById('rf-edit-pix-chave').value;
+                
+                if (removerImgProduto) {
+                    rifas[i].imagem = ""; 
+                } else if (imageBase64Temp !== "") {
+                    rifas[i].imagem = imageBase64Temp; 
+                }
+                
+                if (removerImgFundo) {
+                    rifas[i].bgImagem = ""; 
+                } else if (bgImageBase64Temp !== "") {
+                    rifas[i].bgImagem = bgImageBase64Temp; 
+                }
+
+                database.ref('rifas').set(rifas).then(() => { 
+                    alert("Rifa editada com sucesso!"); 
+                    abrirAdminRifa(currentRaffleId); 
+                });
+            }
+        }
+
+        function aplicarCoresNumero(div, num, rifa) {
+            if (num.status === 'available') { 
+                const cStyle = rifa.colorStyle || '';
+                if (cStyle === 'color-translucent') div.style.opacity = '0.6';
+                if (cStyle === 'color-matte') div.style.filter = 'grayscale(30%) contrast(80%)';
+                
+                if (cStyle === 'color-gradient') {
+                    div.style.background = `linear-gradient(135deg, ${rifa.cor}, #222)`;
+                    div.style.border = 'none';
+                } else if (cStyle === 'color-flat') {
+                    div.style.backgroundColor = rifa.cor;
+                    div.style.border = 'none';
+                } else {
+                    div.style.backgroundColor = rifa.cor;
+                    div.style.borderColor = rifa.cor;
+                }
+                div.style.color = '#fff';
+            } 
+            else { 
+                div.className = `number-item ${rifa.formato} status-${num.status}`; 
+            }
+        }
+
+        function aplicarFundoContainer(containerId, rifa) {
+            const container = document.getElementById(containerId);
+            if(!container) return;
+            
+            const bgS = rifa.bgStyle || '';
+            const bgC = rifa.bgColor || '#ffffff';
+            const bgI = rifa.bgImagem || '';
+
+            if (bgS === 'bg-flat') {
+                container.style.background = bgC;
+            } else if (bgS === 'bg-gradient') {
+                container.style.background = `linear-gradient(135deg, ${bgC} 0%, rgba(0,0,0,0.8) 100%)`;
+            } else {
+                container.style.background = "transparent";
+            }
+
+            if (bgI) {
+                container.style.backgroundImage = `url(${bgI})`;
+            }
+        }
+
+        function atualizarDashboard() {
+            const lista = document.getElementById('raffle-list');
+            lista.innerHTML = "";
+            const mr = rifas.filter(r => r.donoDaRifa === currentUserEmail);
+            
+            if (mr.length === 0) { 
+                lista.innerHTML = "<p style='text-align:center; color:var(--footer-text);'>Nenhuma rifa cadastrada.</p>"; 
+                return; 
+            }
+
+            mr.forEach(r => {
+                const div = document.createElement('div');
+                div.className = "raffle-card-dash";
+                div.onclick = () => abrirAdminRifa(r.id);
+                
+                const bg = r.imagem ? `background-image: url('${r.imagem}');` : '';
+                const htmlConcluido = r.concluida ? `<div class="badge-concluido">Concluído</div>` : '';
+
+                let grid = '';
+                r.numeros.forEach(n => {
+                    let st = '';
+                    let cCls = '';
+                    if (n.status === 'available') {
+                        st = `background-color: ${r.cor}; border-color: ${r.cor}; color: #fff;`;
+                    } else {
+                        cCls = `status-${n.status}`;
+                    }
+                    grid += `<div class="number-item ${r.formato || 'shape-square'} ${cCls}" style="${st}">${n.numero}</div>`;
+                });
+                
+                let titleHtml = `<div class="raffle-card-title font-rifa" style="color: ${r.cor};">${r.nome}</div>`;
+                if (r.concluida && r.ganhador) {
+                    titleHtml += `<p style="margin:0 0 10px 0; color:var(--text-dark); font-weight:bold;">🏆 Ganhador: Nº ${r.ganhador.numero}</p>`;
+                }
+
+                div.innerHTML = `${htmlConcluido}<div class="raffle-card-bg" style="${bg}"></div><div class="raffle-card-overlay"></div><div class="raffle-card-content">${titleHtml}<div class="mini-numbers-grid">${grid}</div></div>`;
+                lista.appendChild(div);
+            });
+        }
+
+        function abrirAdminRifa(id) {
+            currentRaffleId = id; 
+            const r = rifas.find(x => x.id === id);
+            
+            if(!r) { navigate('screen-dashboard'); return; }
+
+            if(checarAtrasosLocal(r)) database.ref('rifas').set(rifas);
+
+            document.getElementById('admin-raffle-title').innerHTML = `<span class="font-rifa" style="color: ${r.cor}; font-size: 28px;">${r.nome}</span>` + (r.concluida ? ' <span style="font-size:14px; background:var(--success); padding:3px 8px; border-radius:12px; color:white; vertical-align: middle; margin-left: 10px;">Concluída</span>' : '');
+            document.getElementById('admin-link-input').value = `${window.location.href.split('?')[0]}?rifa=${id}`;
+            
+            if(r.concluida) {
+                document.getElementById('btn-editar-rifa').style.display = 'none';
+                document.getElementById('btn-sortear').style.display = 'none';
+            } else {
+                document.getElementById('btn-editar-rifa').style.display = 'block';
+            }
+
+            atualizarEstatisticas(r); 
+            aplicarFundoContainer('admin-grid-container', r);
+            renderizarGridAdmin(r); 
+            navigate('screen-admin-raffle');
+        }
+
+        function atualizarEstatisticas(r) {
+            let d = 0, res = 0, v = 0, a = 0;
+            
+            r.numeros.forEach(n => {
+                if (n.status === 'available') d++;
+                if (n.status === 'reserved') res++;
+                if (n.status === 'late') a++;
+                if (n.status === 'paid') v++;
+            });
+            
+            const tArrec = v * r.valor;
+            const tPend = (res + a) * r.valor;
+            const tEsp = r.qtd * r.valor;
+            const prog = r.qtd > 0 ? ((v / r.qtd) * 100).toFixed(1) : 0;
+            
+            document.getElementById('stat-disp').innerText = d;
+            document.getElementById('stat-res').innerText = res;
+            document.getElementById('stat-vend').innerText = v;
+            document.getElementById('stat-val-total').innerText = `R$ ${tEsp.toFixed(2)}`;
+            document.getElementById('stat-val-rec').innerText = `R$ ${tArrec.toFixed(2)}`;
+            document.getElementById('stat-val-pend').innerText = `R$ ${tPend.toFixed(2)}`;
+            document.getElementById('admin-progress').style.width = prog + '%';
+            document.getElementById('admin-progress').innerText = prog + '% Vendido';
+            
+            if(!r.concluida) {
+                document.getElementById('btn-sortear').style.display = (v === r.qtd && r.qtd > 0) ? 'block' : 'none';
+            }
+        }
+
+        function renderizarGridAdmin(r) {
+            const grid = document.getElementById('admin-numbers-grid');
+            grid.innerHTML = "";
+            
+            r.numeros.forEach((n, idx) => {
+                const div = document.createElement('div');
+                div.className = `number-item ${r.formato}`;
+                aplicarCoresNumero(div, n, r); 
+                
+                if (r.concluida && r.ganhador && r.ganhador.numero === n.numero) {
+                    div.innerHTML = `<span class="crown-icon">👑</span>${n.numero}`;
+                    div.style.boxShadow = "0 0 12px rgba(255,215,0,1)";
+                    div.style.transform = "scale(1.15)";
+                    div.style.zIndex = "5";
+                    div.style.border = "2px solid #ffd700";
+                } else {
+                    div.innerText = n.numero;
+                }
+
+                div.onclick = () => abrirModalAdminNumero(idx, r);
+                grid.appendChild(div);
+            });
+        }
+
+        function abrirModalAdminNumero(idx, r) {
+            const n = r.numeros[idx];
+            if (n.status === 'available') return;
+            
+            adminIndexSelecionado = idx;
+            document.getElementById('mod-adm-num').innerText = n.numero;
+            document.getElementById('mod-adm-nome').innerText = n.comprador;
+            document.getElementById('mod-adm-tel').innerText = n.telefone;
+            
+            let d = n.dataPromessa;
+            if(d && d.includes('-')) {
+                const p = d.split('-');
+                d = `${p[2]}/${p[1]}/${p[0]}`;
+            }
+            document.getElementById('mod-adm-data').innerText = d;
+            
+            let st = "Reservado";
+            if(n.status === 'paid') st = "Pago (Garantido)";
+            if(n.status === 'late') st = "Atrasado";
+            document.getElementById('mod-adm-status').innerText = st;
+            
+            if(r.concluida) {
+                document.getElementById('btn-adm-pagou').style.display = 'none';
+                document.getElementById('btn-adm-apagar').style.display = 'none';
+            } else {
+                document.getElementById('btn-adm-pagou').style.display = n.status === 'paid' ? 'none' : 'block';
+                document.getElementById('btn-adm-apagar').style.display = 'block';
+            }
+            abrirModal('modal-admin-numero');
+        }
+
+        function adminAcao(acao) {
+            const r = rifas.find(x => x.id === currentRaffleId);
+            const n = r.numeros[adminIndexSelecionado];
+            
+            if(r.concluida) return;
+
+            if (acao === 'pagou') {
+                n.status = 'paid';
+                database.ref('rifas').set(rifas);
+                fecharModal('modal-admin-numero');
+            } 
+            else if (acao === 'apagar') {
+                if (n.status === 'late') {
+                    let tpl = obterMsgTemplate('cobranca');
+                    let msg = tpl.replace(/{nome}/g, n.comprador).replace(/{numero}/g, n.numero).replace(/{rifa}/g, r.nome);
+                    if (confirm("Deseja mandar mensagem cobrando antes de excluir?\n\n[OK] = Sim\n[Cancelar] = Excluir Direto")) {
+                        const t = n.telefone.replace(/\D/g,'');
+                        window.open(`https://wa.me/55${t}?text=${encodeURIComponent(msg)}`, '_blank');
+                        fecharModal('modal-admin-numero');
+                        return; 
+                    }
+                }
+                if(confirm("Confirmar exclusão e liberar número?")) {
+                    n.status = 'available';
+                    n.comprador = '';
+                    n.telefone = '';
+                    n.dataPromessa = '';
+                    database.ref('rifas').set(rifas);
+                    fecharModal('modal-admin-numero');
+                }
+            }
+        }
+
+        function encaminharComprovanteAdmin() {
+            const r = rifas.find(x => x.id === currentRaffleId);
+            const n = r.numeros[adminIndexSelecionado];
+            const tc = r.numeros.filter(x => x.telefone === n.telefone);
+            
+            let p=[], rs=[], a=[];
+            tc.forEach(x => {
+                if(x.status === 'paid') p.push(x.numero);
+                if(x.status === 'reserved') rs.push(x.numero);
+                if(x.status === 'late') a.push(x.numero);
+            });
+
+            const l = window.location.href.split('?')[0] + `?rifa=${r.id}&consulta=${n.telefone}`;
+            
+            let det = '';
+            if(p.length > 0) det += `\n✅ *Garantidos:* ${p.join(', ')}`;
+            if(rs.length > 0) det += `\n⏳ *Reservados:* ${rs.join(', ')}`;
+            if(a.length > 0) det += `\n⚠️ *Atrasados:* ${a.join(', ')}`;
+            
+            let tpl = obterMsgTemplate('comprovante');
+            let msg = tpl.replace(/{rifa}/g, r.nome)
+                         .replace(/{premio}/g, r.premio)
+                         .replace(/{detalhes}/g, det)
+                         .replace(/{qtd_total}/g, tc.length)
+                         .replace(/{valor_total}/g, (tc.length * r.valor).toFixed(2))
+                         .replace(/{link}/g, l)
+                         .replace(/{nome}/g, n.comprador);
+
+            window.open(`https://wa.me/55${n.telefone.replace(/\D/g,'')}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function simularLinkComprador() {
+            const r = rifas.find(x => x.id === currentRaffleId);
+            
+            document.getElementById('buyer-title').innerHTML = `<span class="font-rifa" style="color: ${r.cor}; font-size: 32px;">${r.nome}</span>` + (r.concluida ? ' <span style="font-size:14px; background:var(--success); padding:3px 8px; border-radius:12px; color:white; vertical-align: middle; margin-left: 10px;">Concluída</span>' : '');
+            document.getElementById('buyer-desc').innerText = r.desc;
+            document.getElementById('buyer-premio').innerText = "Prêmio: " + r.premio;
+            document.getElementById('buyer-valor').innerText = r.valor.toFixed(2);
+            
+            const img = document.getElementById('buyer-img');
+            if (r.imagem) { img.src = r.imagem; img.style.display = 'block'; } else { img.style.display = 'none'; }
+
+            if(r.concluida) {
+                document.getElementById('buyer-instrucoes').innerHTML = `<b>RIFA ENCERRADA.</b><br> O Ganhador foi: Número ${r.ganhador.numero} (${r.ganhador.comprador})`;
+            } else {
+                document.getElementById('buyer-instrucoes').innerHTML = `Selecione os números desejados:`;
+            }
+
+            document.getElementById('btn-prosseguir').style.display = selectedNumbers.length > 0 ? 'block' : 'none';
+            
+            aplicarFundoContainer('buyer-grid-container', r);
+            renderizarGridComprador(r); 
+            navigate('screen-buyer');
+        }
+
+        function renderizarGridComprador(r) {
+            const grid = document.getElementById('buyer-numbers-grid');
+            grid.innerHTML = "";
+            
+            r.numeros.forEach((n, index) => {
+                const div = document.createElement('div');
+                div.className = `number-item ${r.formato}`; 
+
+                if (r.concluida && r.ganhador && r.ganhador.numero === n.numero) {
+                    div.innerHTML = `<span class="crown-icon">👑</span>${n.numero}`;
+                    div.style.boxShadow = "0 0 10px rgba(255,215,0,1)";
+                    div.style.border = "2px solid #ffd700";
+                    div.style.zIndex = "5";
+                } else {
+                    div.innerText = n.numero;
+                }
+                
+                if (n.status === 'available' || selectedNumbers.includes(index)) {
+                    aplicarCoresNumero(div, n, r);
+                    
+                    if(selectedNumbers.includes(index)) {
+                        div.classList.add('selected');
+                    }
+
+                    div.onclick = () => {
+                        if(r.concluida) return; 
+                        
+                        if(r.numeros[index].status !== 'available' && !selectedNumbers.includes(index)) {
+                            alert('Número já reservado.'); return;
+                        }
+                        
+                        div.classList.toggle('selected');
+                        if (div.classList.contains('selected')) {
+                            selectedNumbers.push(index);
+                        } else {
+                            selectedNumbers = selectedNumbers.filter(id => id !== index);
+                        }
+                        
+                        document.getElementById('btn-prosseguir').style.display = selectedNumbers.length > 0 ? 'block' : 'none';
+                    };
+                } else {
+                    div.style.opacity = '0.5';
+                    div.style.cursor = 'not-allowed';
+                    div.style.backgroundColor = '#9e9e9e';
+                    div.style.borderColor = '#ccc';
+                    div.style.color = '#fff';
+                    div.className = `number-item ${r.formato} status-${n.status}`;
+                }
+                grid.appendChild(div);
+            });
+        }
+
+        function abrirModalDados() {
+            document.getElementById('mod-comp-nome').value = '';
+            document.getElementById('mod-comp-tel').value = '';
+            document.getElementById('mod-comp-data').value = new Date().toISOString().split('T')[0];
+            document.getElementById('mod-comp-termos').checked = false; 
+            abrirModal('modal-dados-comprador');
+        }
+
+        function confirmarReserva() {
+            const aceitouTermos = document.getElementById('mod-comp-termos').checked;
+            if(!aceitouTermos) { alert("Você precisa ler e aceitar os Termos e Regulamento para reservar seu número."); return; }
+
+            const n = document.getElementById('mod-comp-nome').value;
+            const t = document.getElementById('mod-comp-tel').value;
+            const d = document.getElementById('mod-comp-data').value;
+            
+            if(!n || !t || !d) { alert("Preencha todos os campos!"); return; }
+            
+            const r = rifas.find(x => x.id === currentRaffleId);
+            ultimaCompraIds = [...selectedNumbers];
+            
+            selectedNumbers.forEach(idx => {
+                r.numeros[idx].status = 'reserved';
+                r.numeros[idx].comprador = n;
+                r.numeros[idx].telefone = t;
+                r.numeros[idx].dataPromessa = d;
+            });
+            
+            database.ref('rifas').set(rifas).then(() => {
+                selectedNumbers = [];
+                fecharModal('modal-dados-comprador');
+                document.getElementById('mod-pix-chave').innerText = r.pixChave;
+                document.getElementById('mod-pix-nome').innerText = r.pixNome;
+                abrirModal('modal-pagamento');
+            });
+        }
+
+        function abrirComprovanteCompraImediata() {
+            fecharModal('modal-pagamento');
+            const r = rifas.find(x => x.id === currentRaffleId);
+            const nComprados = ultimaCompraIds.map(idx => r.numeros[idx]);
+            
+            if(nComprados.length === 0) return;
+            
+            const l = `${window.location.href.split('?')[0]}?rifa=${r.id}&consulta=${nComprados[0].telefone}`;
+            document.getElementById('rec-nome-rifa').innerText = r.nome;
+            document.getElementById('rec-premio').innerText = r.premio;
+            document.getElementById('rec-comprador').innerText = nComprados[0].comprador;
+            document.getElementById('rec-tel').innerText = nComprados[0].telefone;
+            document.getElementById('rec-link').innerText = l;
+            
+            document.getElementById('rec-conteudo-dinamico').innerHTML = `
+                <div class="recibo-row"><span>Números (Nesta Reserva):</span> <strong>${nComprados.map(x => x.numero).join(', ')}</strong></div>
+                <div class="recibo-row"><span>Valor Unitário:</span> <strong>R$ ${r.valor.toFixed(2)}</strong></div>
+                <div class="recibo-row"><span>Total desta compra:</span> <strong style="color:var(--danger)">R$ ${(nComprados.length * r.valor).toFixed(2)}</strong></div>
+                <div class="recibo-row"><span>Status:</span> <strong>Reservado ⏳</strong></div>
+            `;
+            abrirModal('modal-comprovante');
+        }
+
+        function realizarConsultaPublica(rId, tel) {
+            const r = rifas.find(x => x.id === rId);
+            const dr = document.getElementById('area-consulta-resultado');
+            
+            if(!r) { dr.innerHTML = "<p>Não encontrada.</p>"; navigate('screen-consulta'); return; }
+            
+            const m = r.numeros.filter(n => n.telefone === tel);
+            if(m.length === 0) {
+                dr.innerHTML = `<p>Sem reservas.</p>`;
+            } else {
+                let pg=[], rs=[], at=[];
+                m.forEach(n => {
+                    if(n.status === 'paid') pg.push(n.numero);
+                    if(n.status === 'reserved') rs.push(n.numero);
+                    if(n.status === 'late') at.push(n.numero);
+                });
+                
+                let b = '';
+                if(pg.length>0) b+=`<div class="recibo-block"><span style="color:var(--success);">✅ Pagos:</span><br>Números: ${pg.join(', ')}<br>Valor: R$ ${(pg.length * r.valor).toFixed(2)}</div>`;
+                if(rs.length>0) b+=`<div class="recibo-block"><span style="color:var(--warning);">⏳ Reservados:</span><br>Números: ${rs.join(', ')}<br>Valor: R$ ${(rs.length * r.valor).toFixed(2)}</div>`;
+                if(at.length>0) b+=`<div class="recibo-block"><span style="color:var(--danger);">⚠️ Pendentes:</span><br>Números: ${at.join(', ')}<br>Valor: R$ ${(at.length * r.valor).toFixed(2)}</div>`;
+                
+                dr.innerHTML = `<div style="background:var(--card-bg); padding:15px; border-radius:8px; border:1px solid #ccc; font-size: 14px;"><p><strong>Comprador:</strong> ${m[0].comprador}</p><p><strong>Telefone:</strong> ${m[0].telefone}</p><p><strong>Rifa:</strong> <span class="font-rifa" style="color:${r.cor}; font-size:18px;">${r.nome}</span></p><hr>${b}<hr><p style="text-align:right;"><strong>Total Geral: R$ ${(m.length * r.valor).toFixed(2)}</strong></p><button class="btn btn-success" onclick="window.print()" style="margin-top:15px;">Salvar PDF</button></div>`;
+            }
+            navigate('screen-consulta');
+        }
+
+        function copiarLink() {
+            const i = document.getElementById("admin-link-input");
+            i.select(); document.execCommand("copy"); alert("Copiado!");
+        }
+
+        function compartilharLinkWhatsApp() {
+            const r = rifas.find(x => x.id === currentRaffleId);
+            const link = document.getElementById("admin-link-input").value;
+            let tpl = obterMsgTemplate('link');
+            let msg = tpl.replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio).replace(/{link}/g, link);
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function chamarEdicaoAtual() {
+            abrirEditarRifa(currentRaffleId);
+        }
+
+        function chamarExclusaoAtual() {
+            if (confirm("Excluir Rifa?")) {
+                rifas = rifas.filter(x => x.id !== currentRaffleId);
+                database.ref('rifas').set(rifas);
+                atualizarDashboard();
+                navigate('screen-dashboard');
+            }
+        }
+
+        function realizarSorteio() {
+            const r = rifas.find(x => x.id === currentRaffleId);
+            const todosPagos = r.numeros.every(n => n.status === 'paid');
+            
+            if(!todosPagos) { alert("Atenção: Todos os números precisam estar PAGOS para sortear!"); return; }
+            
+            if(confirm("Deseja realmente sortear? A rifa será finalizada e não poderá ser desfeita.")) {
+                const ganhador = r.numeros[Math.floor(Math.random() * r.qtd)];
+                r.concluida = true;
+                r.ganhador = ganhador;
+                
+                database.ref('rifas').set(rifas).then(() => {
+                    alert(`🎉 BINGO! SORTEIO REALIZADO!\n\nNúmero Sorteado: ${ganhador.numero}\nGanhador(a): ${ganhador.comprador}`);
+                    let tpl = obterMsgTemplate('ganhador');
+                    let msg = tpl.replace(/{nome}/g, ganhador.comprador).replace(/{numero}/g, ganhador.numero).replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio);
+                    window.open(`https://wa.me/55${ganhador.telefone.replace(/\D/g, '')}?text=${encodeURIComponent(msg)}`, '_blank');
+                    abrirAdminRifa(currentRaffleId); 
+                });
+            }
+        }
+
+        function abrirListaCompradores() {
+            document.getElementById('filtro-nome').value = '';
+            document.getElementById('filtro-status').value = '';
+            renderizarListaCompradores();
+            abrirModal('modal-lista-compradores');
+        }
+
+        function filtrarLista() {
+            renderizarListaCompradores();
+        }
+
+        function renderizarListaCompradores() {
+            const r = rifas.find(x => x.id === currentRaffleId);
+            const tbody = document.getElementById('corpo-tabela-compradores');
+            const fNome = document.getElementById('filtro-nome').value.toLowerCase();
+            const fStatus = document.getElementById('filtro-status').value;
+            
+            tbody.innerHTML = '';
+            
+            r.numeros.forEach(n => {
+                const nomeStr = (n.comprador || '').toLowerCase();
+                if (fNome && !nomeStr.includes(fNome)) return;
+                if (fStatus && n.status !== fStatus) return;
+                
+                let st = '';
+                if(n.status === 'available') st = '<span class="badge-st" style="background:#999;">Livre</span>';
+                if(n.status === 'paid') st = '<span class="badge-st" style="background:var(--success);">Pago</span>';
+                if(n.status === 'reserved') st = '<span class="badge-st" style="background:var(--warning);">Reserv.</span>';
+                if(n.status === 'late') st = '<span class="badge-st" style="background:var(--danger);">Atraso</span>';
+                
+                tbody.innerHTML += `<tr><td><b>${n.numero}</b></td><td>${n.comprador || '-'}</td><td>${n.telefone || '-'}</td><td>${st}</td></tr>`;
+            });
+        }
     </script>
 </body>
 </html>
