@@ -1,16 +1,15 @@
-nte { position: <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     
     <title>RifaOn🍀</title>
     
-    <link id="dynamic-manifest" rel="manifest" href='data:application/manifest+json,{"name":"RifaOn","short_name":"RifaOn","start_url":".","display":"standalone","background_color":"#e0f7fa","theme_color":"#0f172a","icons":[{"src":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Four_leaf_clover.png/192px-Four_leaf_clover.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},{"src":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Four_leaf_clover.png/512px-Four_leaf_clover.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]}'>
+    <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
     <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Four_leaf_clover.png/512px-Four_leaf_clover.png">
 
@@ -70,7 +69,6 @@ nte { position: <!DOCTYPE html>
 
         .main-content { flex: 1; }
 
-        /* HEADER */
         .main-navbar {
             background: var(--footer-bg); padding: 10px 20px; display: flex; justify-content: space-between;
             align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 1000;
@@ -83,7 +81,6 @@ nte { position: <!DOCTYPE html>
         }
         .btn-nav:hover { background: rgba(255,255,255,0.2); color: #fff; }
 
-        /* LOGO */
         .logo-container { text-align: center; margin-bottom: 30px; }
         .logo-title { 
             font-family: 'Tw Cen MT Condensed', 'Tw Cen MT', 'Oswald', sans-serif; 
@@ -109,7 +106,6 @@ nte { position: <!DOCTYPE html>
         
         .font-rifa { font-family: 'Tw Cen MT Condensed', 'Tw Cen MT', 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* TELAS E CARDS */
         #loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, var(--bg-baby-blue) 0%, var(--bg-bottom) 100%); z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column; transition: 0.5s; }
         .spinner { border: 5px solid rgba(0,0,0,0.1); border-top: 5px solid var(--primary-blue); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -139,9 +135,13 @@ nte { position: <!DOCTYPE html>
         .btn-icon.btn-danger { background: var(--danger); color: white; border: none; }
         .btn-icon.btn-warning { background: var(--warning); color: white; border: none; }
         .btn-icon.btn-success { background: var(--success); color: white; border: none; }
-        .badge-notif { position: absolute; top: -5px; right: -5px; background: red; color: white; font-size: 10px; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
+        
+        .badge-notif { 
+            position: absolute; top: -5px; right: -5px; background: red; color: white; 
+            font-size: 10px; font-weight: bold; width: 18px; height: 18px; 
+            border-radius: 50%; display: flex; justify-content: center; align-items: center; 
+        }
 
-        /* FORMULARIOS */
         .form-group { margin-bottom: 15px; width: 100%; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px; }
         .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; background: transparent; color: var(--text-dark); transition: 0.3s; font-family: inherit;}
@@ -154,7 +154,6 @@ nte { position: <!DOCTYPE html>
         .header { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 15px 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: 0.3s;}
         .top-bar { display: flex; flex-wrap: wrap; justify-content: space-between; margin-bottom: 15px; align-items: center; gap: 10px;}
 
-        /* RIFAS E GRID */
         .new-raffle-box { display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 30px auto; width: 100%; }
         .btn-square-add { width: 100px; height: 100px; background: transparent; border: 3px dashed var(--primary-blue); color: var(--primary-blue); font-size: 50px; border-radius: 15px; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: 0.3s; }
         .btn-square-add:hover { background: rgba(2, 136, 209, 0.1); }
@@ -217,7 +216,7 @@ nte { position: <!DOCTYPE html>
         .recibo-block { margin-bottom: 10px; padding: 5px; border: 1px solid #ddd; border-radius: 5px; background: rgba(255,255,255,0.5);}
         body.dark-mode .recibo-block { background: rgba(0,0,0,0.2); border-color: #555;}
 
-        /* CHAT E FEEDBACK ESTILOS */
+        /* CHAT E FEEDBACK */
         .chat-container { display: flex; flex-direction: column; gap: 10px; height: 350px; overflow-y: auto; background: rgba(0,0,0,0.03); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #ccc; }
         body.dark-mode .chat-container { background: rgba(0,0,0,0.3); border-color: #444;}
         .msg-bubble { padding: 10px 15px; border-radius: 15px; max-width: 85%; font-size: 14px; line-height: 1.4; position: relative;}
@@ -240,13 +239,11 @@ nte { position: <!DOCTYPE html>
         
         /* Botão de Ajuda no Rodapé */
         .btn-help-footer {
-            width: 24px; height: 24px; border-radius: 50%;
-            border: 1px solid var(--footer-text); color: var(--footer-text); background: transparent; 
-            display: flex; justify-content: center; align-items: center;
-            font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; padding: 0;
+            position: absolute; right: 20px; bottom: 20px; width: 36px; height: 36px; border-radius: 50%;
+            border: 2px solid white; color: white; background: transparent; display: flex; justify-content: center; align-items: center;
+            font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
-        .btn-help-footer:hover { background: rgba(255,255,255,0.2); color: white; border-color: white; transform: scale(1.1); }
-
+        .btn-help-footer:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
         .preview-container { margin-top: 20px; border: 2px solid #ccc; border-radius: 8px; padding: 15px; background: rgba(0,0,0,0.05); }
         
         @media print {
@@ -262,17 +259,9 @@ nte { position: <!DOCTYPE html>
 <body>
 
     <script>
-      // Força a injeção do Service Worker no sistema do celular
       if ('serviceWorker' in navigator) {
-        const swCode = `
-          self.addEventListener('install', e => self.skipWaiting());
-          self.addEventListener('activate', e => e.waitUntil(clients.claim()));
-          self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => new Response('Offline'))));
-        `;
-        const blobSW = new Blob([swCode], {type: 'application/javascript'});
-        const swUrl = URL.createObjectURL(blobSW);
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register(swUrl).catch(err => console.log('SW falhou: ', err));
+          navigator.serviceWorker.register('sw.js').catch(err => console.log('SW falhou: ', err));
         });
       }
 
@@ -287,7 +276,7 @@ nte { position: <!DOCTYPE html>
               deferredPrompt.prompt();
               deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
           } else {
-              alert("Siga o passo a passo para instalar o aplicativo:\n\n📱 No Android (Chrome):\n1. Clique nos 3 pontinhos (⋮) no canto superior da tela.\n2. Clique em 'Instalar aplicativo' ou 'Adicionar à tela inicial'.\n\n🍎 No iPhone (Safari):\n1. Toque no botão de Compartilhar (quadradinho com seta pra cima) no rodapé.\n2. Role a lista e clique em 'Adicionar à Tela de Início'.\n\nSe você já instalou, procure o ícone RifaOn🍀 no menu do seu celular!");
+              alert("Siga o passo a passo para instalar:\n\n📱 No Android (Chrome):\n1. Clique nos 3 pontinhos (⋮) no canto superior.\n2. Clique em 'Instalar aplicativo' ou 'Adicionar à tela inicial'.\n\n🍎 No iPhone (Safari):\n1. Toque no botão de Compartilhar (quadradinho com seta pra cima).\n2. Role a lista e clique em 'Adicionar à Tela de Início'.");
           }
       }
     </script>
@@ -664,7 +653,17 @@ nte { position: <!DOCTYPE html>
                 <button id="chat-btn-avaliar" class="btn btn-warning" style="display:none; width: 100%; margin-top: 10px;" onclick="iniciarEncerramentoChamado()">⭐ Avaliar e Encerrar Definitivamente</button>
             </div>
         </div>
-    </div> <div id="modal-notificacoes" class="modal-overlay" style="z-index: 10000;">
+
+        <div id="screen-consulta" class="screen">
+            <div class="card" style="margin-top: 10vh;">
+                <h2>Situação da sua Reserva</h2>
+                <div id="area-consulta-resultado"></div>
+                <button class="btn btn-danger" style="margin-top:20px; width:100%;" onclick="deslogarComprador();">Sair para o Início</button>
+            </div>
+        </div>
+    </div> 
+
+    <div id="modal-notificacoes" class="modal-overlay">
         <div class="modal-content" style="max-width: 400px; padding: 20px;">
             <h3 style="margin-top:0;">🔔 Suas Notificações</h3>
             <div id="lista-notificacoes" style="max-height:300px; overflow-y:auto; font-size:14px;"></div>
@@ -672,7 +671,7 @@ nte { position: <!DOCTYPE html>
         </div>
     </div>
 
-    <div id="modal-ajuda" class="modal-overlay" style="z-index: 10000;">
+    <div id="modal-ajuda" class="modal-overlay">
         <div class="modal-content" style="max-width: 600px; padding: 25px; max-height: 85vh; overflow-y: auto;">
             <h2 style="margin-top:0; color:var(--primary-blue); text-align:center;">📖 Central de Ajuda</h2>
             <h3 style="border-bottom: 1px solid #ccc; padding-bottom: 5px;">Manual Rápido</h3>
@@ -699,7 +698,7 @@ nte { position: <!DOCTYPE html>
         </div>
     </div>
 
-    <div id="modal-feedback" class="modal-overlay" style="z-index: 10000;">
+    <div id="modal-feedback" class="modal-overlay">
         <div class="modal-content" style="text-align:center;">
             <h3 style="margin-top:0;">Chamado Encerrado</h3>
             <div id="feed-step-1">
@@ -724,7 +723,17 @@ nte { position: <!DOCTYPE html>
         </div>
     </div>
 
-    <div id="modal-termos" class="modal-overlay" style="z-index: 10000;">
+    <div id="modal-preview-rifa" class="modal-overlay">
+        <div class="modal-content" style="max-width: 500px; padding: 15px;">
+            <h3 style="margin-top:0;">Pré-visualização da Grade</h3>
+            <div id="preview-modal-container" class="grid-container-custom">
+                <div class="numbers-grid" id="preview-modal-grid"></div>
+            </div>
+            <button class="btn btn-outline" style="margin-top:15px; width: 100%;" onclick="fecharModal('modal-preview-rifa')">Fechar Visualização</button>
+        </div>
+    </div>
+
+    <div id="modal-termos" class="modal-overlay">
         <div class="modal-content" style="max-width: 500px;">
             <h3 style="margin-top:0; color:var(--primary-blue);">📜 Termos e Regulamento</h3>
             <div style="font-size: 13px; max-height: 300px; overflow-y: auto; padding-right: 10px; text-align: justify; line-height:1.6; color: var(--text-dark);">
@@ -738,7 +747,7 @@ nte { position: <!DOCTYPE html>
         </div>
     </div>
 
-    <div id="modal-privacidade" class="modal-overlay" style="z-index: 10000;">
+    <div id="modal-privacidade" class="modal-overlay">
         <div class="modal-content" style="max-width: 500px;">
             <h3 style="margin-top:0; color:var(--primary-blue);">🛡️ Política de Privacidade</h3>
             <div style="font-size: 13px; max-height: 300px; overflow-y: auto; padding-right: 10px; text-align: justify; line-height:1.6; color: var(--text-dark);">
@@ -752,7 +761,7 @@ nte { position: <!DOCTYPE html>
         </div>
     </div>
 
-    <div id="modal-suporte-publico" class="modal-overlay" style="z-index: 10000;">
+    <div id="modal-suporte-publico" class="modal-overlay">
         <div class="modal-content">
             <h3>Fale com o Desenvolvedor</h3>
             <p style="font-size: 13px; text-align:center; margin-top:0;">Dúvidas, reclamações ou feedbacks.</p>
@@ -861,6 +870,18 @@ nte { position: <!DOCTYPE html>
         </div>
     </div>
 
+    <footer class="footer no-print">
+        <div class="footer-links">
+            <a href="javascript:void(0)" onclick="abrirModal('modal-privacidade')">Política de Privacidade</a>
+            <a href="javascript:void(0)" onclick="abrirModal('modal-termos')">Termos de Uso</a>
+            <a href="javascript:void(0)" onclick="abrirRotaSuporte()">Suporte</a>
+        </div>
+        <div class="footer-copy">
+            © 2026 RifaOn🍀. Todos os direitos reservados.
+        </div>
+        <button class="btn-help-footer no-print" onclick="abrirModal('modal-ajuda')" title="Central de Ajuda">?</button>
+    </footer>
+
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyBKGiZeQSe7CY6TgpT4SMrlJWA3DFIs8bA",
@@ -869,14 +890,13 @@ nte { position: <!DOCTYPE html>
             projectId: "rf-online-a999e",
             storageBucket: "rf-online-a999e.firebasestorage.app",
             messagingSenderId: "635444835818",
-            appId: "1:635444835818:web:657712a4dbbb351bec2e93",
-            measurementId: "G-4BBY4FNQGX"
+            appId: "1:635444835818:web:657712a4dbbb351bec2e93"
         };
         
         try {
             if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
         } catch (e) {
-            console.error("Erro Firebase", e);
+            console.error(e);
         }
         
         const auth = firebase.auth(); 
@@ -1488,7 +1508,6 @@ nte { position: <!DOCTYPE html>
                 r.readAsDataURL(input.files[0]);
             }
         }
-        
         function removerAnexoChat() {
             chatAnexoBase64 = "";
             document.getElementById('chat-anexo').value = '';
@@ -1899,10 +1918,7 @@ nte { position: <!DOCTYPE html>
             let msg = tpl.replace(/{rifa}/g, r.nome).replace(/{premio}/g, r.premio).replace(/{link}/g, link); 
             
             if (navigator.share) {
-                navigator.share({
-                    title: 'Convite RifaOn🍀',
-                    text: msg
-                }).catch(e => console.log("Compartilhamento cancelado", e));
+                navigator.share({ title: 'Convite RifaOn🍀', text: msg }).catch(e => console.log("Compartilhamento cancelado", e));
             } else {
                 window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank'); 
             }
