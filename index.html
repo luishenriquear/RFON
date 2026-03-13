@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+nte { position: <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
     
     <title>RifaOn🍀</title>
     
-    <link rel="manifest" href="manifest.json">
+    <link id="dynamic-manifest" rel="manifest" href='data:application/manifest+json,{"name":"RifaOn","short_name":"RifaOn","start_url":".","display":"standalone","background_color":"#e0f7fa","theme_color":"#0f172a","icons":[{"src":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Four_leaf_clover.png/192px-Four_leaf_clover.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},{"src":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Four_leaf_clover.png/512px-Four_leaf_clover.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]}'>
     <meta name="theme-color" content="#0f172a">
     <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Four_leaf_clover.png/512px-Four_leaf_clover.png">
 
@@ -172,6 +172,7 @@
         .numbers-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;}
         .number-item { position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: #eee; border: 2px solid #ccc; color: #333; cursor: pointer; font-weight: bold; transition: 0.2s; font-size: 14px; box-sizing: border-box; }
         .crown-icon { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: 22px; z-index: 5; text-shadow: 0 0 5px rgba(255,215,0,0.8); }
+
         body.dark-mode .number-item { background: #333; border-color: #555; color: #fff;}
 
         .mini-numbers-grid { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; width: 100%; max-height: 200px; overflow-y: auto; padding: 5px; }
@@ -201,7 +202,6 @@
         .stat-box span { display: block; font-size: 18px; font-weight: bold; color: var(--primary-blue); margin-top: 5px;}
         body.dark-mode .stat-box { background: rgba(255,255,255,0.05); }
 
-        /* MODAIS E ELEMENTOS COMUNS */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center; overflow-y: auto; padding: 20px; }
         .modal-content { background: var(--card-bg); padding: 25px; border-radius: 12px; width: 100%; max-width: 500px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); margin: auto; color: var(--text-dark);}
         
@@ -217,7 +217,7 @@
         .recibo-block { margin-bottom: 10px; padding: 5px; border: 1px solid #ddd; border-radius: 5px; background: rgba(255,255,255,0.5);}
         body.dark-mode .recibo-block { background: rgba(0,0,0,0.2); border-color: #555;}
 
-        /* CHAT E FEEDBACK */
+        /* CHAT E FEEDBACK ESTILOS */
         .chat-container { display: flex; flex-direction: column; gap: 10px; height: 350px; overflow-y: auto; background: rgba(0,0,0,0.03); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #ccc; }
         body.dark-mode .chat-container { background: rgba(0,0,0,0.3); border-color: #444;}
         .msg-bubble { padding: 10px 15px; border-radius: 15px; max-width: 85%; font-size: 14px; line-height: 1.4; position: relative;}
@@ -233,18 +233,20 @@
 
         /* RODAPÉ PROFISSIONAL */
         .footer { background: var(--footer-bg); color: var(--footer-text); text-align: center; padding: 30px 20px 20px 20px; margin-top: auto; font-size: 14px; width: 100%; position: relative; }
-        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 15px; }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 15px; margin-bottom: 15px; }
         .footer a { color: var(--footer-text); text-decoration: none; transition: 0.3s; cursor: pointer; font-weight: bold;}
         .footer a:hover { color: var(--primary-blue); }
         .footer-copy { margin-top: 15px; font-size: 12px; border-top: 1px solid #374151; padding-top: 15px; opacity: 0.7;}
         
         /* Botão de Ajuda no Rodapé */
         .btn-help-footer {
-            position: absolute; right: 20px; bottom: 20px; width: 36px; height: 36px; border-radius: 50%;
-            border: 2px solid white; color: white; background: transparent; display: flex; justify-content: center; align-items: center;
-            font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s;
+            width: 24px; height: 24px; border-radius: 50%;
+            border: 1px solid var(--footer-text); color: var(--footer-text); background: transparent; 
+            display: flex; justify-content: center; align-items: center;
+            font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; padding: 0;
         }
-        .btn-help-footer:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
+        .btn-help-footer:hover { background: rgba(255,255,255,0.2); color: white; border-color: white; transform: scale(1.1); }
+
         .preview-container { margin-top: 20px; border: 2px solid #ccc; border-radius: 8px; padding: 15px; background: rgba(0,0,0,0.05); }
         
         @media print {
@@ -260,9 +262,17 @@
 <body>
 
     <script>
+      // Força a injeção do Service Worker no sistema do celular
       if ('serviceWorker' in navigator) {
+        const swCode = `
+          self.addEventListener('install', e => self.skipWaiting());
+          self.addEventListener('activate', e => e.waitUntil(clients.claim()));
+          self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => new Response('Offline'))));
+        `;
+        const blobSW = new Blob([swCode], {type: 'application/javascript'});
+        const swUrl = URL.createObjectURL(blobSW);
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW falhou: ', err));
+          navigator.serviceWorker.register(swUrl).catch(err => console.log('SW falhou: ', err));
         });
       }
 
@@ -277,7 +287,7 @@
               deferredPrompt.prompt();
               deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
           } else {
-              alert("Siga o passo a passo para instalar o aplicativo:\n\n📱 No Android (Chrome):\n1. Clique nos 3 pontinhos no canto superior da tela.\n2. Clique em 'Instalar aplicativo' ou 'Adicionar à tela inicial'.\n\n🍎 No iPhone (Safari):\n1. Toque no botão de Compartilhar (quadradinho com seta pra cima) no rodapé.\n2. Role a lista e clique em 'Adicionar à Tela de Início'.\n\nSe você já instalou, procure o ícone RifaOn🍀 no menu do seu celular!");
+              alert("Siga o passo a passo para instalar o aplicativo:\n\n📱 No Android (Chrome):\n1. Clique nos 3 pontinhos (⋮) no canto superior da tela.\n2. Clique em 'Instalar aplicativo' ou 'Adicionar à tela inicial'.\n\n🍎 No iPhone (Safari):\n1. Toque no botão de Compartilhar (quadradinho com seta pra cima) no rodapé.\n2. Role a lista e clique em 'Adicionar à Tela de Início'.\n\nSe você já instalou, procure o ícone RifaOn🍀 no menu do seu celular!");
           }
       }
     </script>
@@ -327,11 +337,14 @@
                     <button class="btn btn-small btn-outline" onclick="navigate('screen-welcome')">Voltar</button>
                 </div>
                 <h2>Acessar Conta</h2>
+                
                 <button class="btn btn-google" onclick="loginComGoogle()" style="margin-bottom: 20px;">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
                     Entrar com o Google
                 </button>
+                
                 <div style="text-align: center; margin-bottom: 15px; color: #888;">ou use seu E-mail</div>
+
                 <div class="form-group"><label>E-mail</label><input type="email" id="login-user" placeholder="Digite seu e-mail"></div>
                 <div class="form-group"><label>Senha</label><input type="password" id="login-pass" placeholder="Digite sua senha"></div>
                 <button class="btn" onclick="fazerLogin()">Logar</button>
@@ -381,6 +394,7 @@
                     <b>{rifa}</b> = Nome da Rifa | <b>{premio}</b> = Prêmio<br>
                     <b>{link}</b> = Link de acesso
                 </p>
+
                 <div class="form-group"><label>1. Compartilhar a Rifa (Convite)</label><textarea id="cfg-msg-link" rows="3"></textarea></div>
                 <div class="form-group"><label>2. Encaminhar Comprovante (Admin)</label><textarea id="cfg-msg-comp" rows="5"></textarea><small style="color:var(--danger); font-size:11px;">Mantenha a tag <b>{detalhes}</b> para gerar a lista de números e valores.</small></div>
                 <div class="form-group"><label>3. Cobrar Número Atrasado</label><textarea id="cfg-msg-cob" rows="3"></textarea></div>
@@ -403,6 +417,7 @@
                     <button class="btn-icon btn-danger" title="Sair" onclick="fazerLogout()">🚪</button>
                 </div>
             </div>
+            
             <h3 class="font-rifa" style="font-size: 28px;">Minhas Rifas</h3>
             <div id="raffle-list"></div>
             <div class="new-raffle-box">
@@ -422,6 +437,7 @@
                 <div class="form-group"><label>Prêmio</label><input type="text" id="rf-premio"></div>
                 <div class="form-group"><label>Valor por Número (R$)</label><input type="number" id="rf-valor" step="0.01"></div>
                 <div class="form-group"><label>Quantidade de Números</label><input type="number" id="rf-qtd" value="100"></div>
+                
                 <div class="form-group">
                     <label>Imagem do Produto</label>
                     <div style="display: flex; gap: 10px; align-items: center;">
@@ -430,6 +446,7 @@
                     </div>
                     <img id="preview-img-cadastro" class="rifa-image-preview">
                 </div>
+                
                 <div class="form-group">
                     <label>Formato dos Números</label>
                     <select id="rf-formato" onchange="updatePreview('criar')"><option value="shape-square">Quadrado</option><option value="shape-circle">Círculo</option><option value="shape-ellipse">Elipse</option><option value="shape-heart">Coração</option><option value="shape-triangle">Triângulo</option><option value="shape-hexagon">Hexágono</option><option value="shape-octagon">Octógono</option></select>
@@ -440,11 +457,13 @@
                 </div>
                 <div class="form-group"><label>Cor Principal</label><input type="color" id="rf-cor" value="#0288d1" onchange="updatePreview('criar')"></div>
                 <div class="form-group"><label>Dados de Pagamento (PIX)</label><input type="text" id="rf-pix-nome" placeholder="Nome do Titular" style="margin-bottom: 5px;"><input type="text" id="rf-pix-chave" placeholder="Chave PIX"></div>
+                
                 <div class="form-group">
                     <label>Plano de Fundo da Grade</label>
                     <select id="rf-bg-style" onchange="updatePreview('criar')"><option value="">Transparente</option><option value="bg-flat">Cor Sólida</option><option value="bg-gradient">Cor Gradiente</option></select>
                 </div>
                 <div class="form-group"><label>Cor do Fundo</label><input type="color" id="rf-bg-color" value="#ffffff" onchange="updatePreview('criar')"></div>
+                
                 <div class="form-group">
                     <label>Ou Imagem de Fundo da Grade</label>
                     <div style="display: flex; gap: 10px; align-items: center;">
@@ -453,6 +472,7 @@
                     </div>
                     <img id="preview-img-bg-cad" class="rifa-image-preview">
                 </div>
+                
                 <button class="btn btn-outline" style="margin-bottom: 15px;" onclick="abrirPreVisualizacao('criar')">👀 Pré-visualizar Grade</button>
                 <button class="btn" onclick="salvarRifa()">Salvar Rifa</button>
             </div>
@@ -469,6 +489,7 @@
                 <div class="form-group"><label>Prêmio</label><input type="text" id="rf-edit-premio"></div>
                 <div class="form-group"><label>Valor por Número (R$)</label><input type="number" id="rf-edit-valor" step="0.01"></div>
                 <div class="form-group"><label>Quantidade de Números</label><input type="number" id="rf-edit-qtd" disabled></div>
+                
                 <div class="form-group">
                     <label>Nova Imagem Produto</label>
                     <div style="display: flex; gap: 10px; align-items: center;">
@@ -477,6 +498,7 @@
                     </div>
                     <img id="preview-img-edicao" class="rifa-image-preview">
                 </div>
+                
                 <div class="form-group">
                     <label>Formato dos Números</label>
                     <select id="rf-edit-formato" onchange="updatePreview('editar')"><option value="shape-square">Quadrado</option><option value="shape-circle">Círculo</option><option value="shape-ellipse">Elipse</option><option value="shape-heart">Coração</option><option value="shape-triangle">Triângulo</option><option value="shape-hexagon">Hexágono</option><option value="shape-octagon">Octógono</option></select>
@@ -487,11 +509,13 @@
                 </div>
                 <div class="form-group"><label>Cor Principal</label><input type="color" id="rf-edit-cor" onchange="updatePreview('editar')"></div>
                 <div class="form-group"><label>Dados de Pagamento (PIX)</label><input type="text" id="rf-edit-pix-nome" style="margin-bottom: 5px;"><input type="text" id="rf-edit-pix-chave"></div>
+                
                 <div class="form-group">
                     <label>Plano de Fundo da Grade</label>
                     <select id="rf-edit-bg-style" onchange="updatePreview('editar')"><option value="">Transparente</option><option value="bg-flat">Cor Sólida</option><option value="bg-gradient">Cor Gradiente</option></select>
                 </div>
                 <div class="form-group"><label>Cor do Fundo</label><input type="color" id="rf-edit-bg-color" onchange="updatePreview('editar')"></div>
+                
                 <div class="form-group">
                     <label>Nova Imagem de Fundo da Grade</label>
                     <div style="display: flex; gap: 10px; align-items: center;">
@@ -500,6 +524,7 @@
                     </div>
                     <img id="preview-img-bg-edit" class="rifa-image-preview">
                 </div>
+
                 <button class="btn btn-outline" style="margin-bottom: 15px;" onclick="abrirPreVisualizacao('editar')">👀 Pré-visualizar Grade</button>
                 <button class="btn btn-warning" onclick="salvarEdicaoRifa()">Salvar Alterações</button>
             </div>
@@ -555,14 +580,18 @@
                     <div id="buyer-title" style="margin:0; text-align:left;"></div>
                     <button class="btn btn-small btn-danger" style="width:auto;" onclick="deslogarComprador()">Sair da Rifa</button>
                 </div>
+                
                 <img id="buyer-img" class="rifa-image-preview" style="display:block; margin: 0 auto 15px auto;">
                 <p id="buyer-desc" style="text-align: center;"></p>
                 <h3 id="buyer-premio"></h3>
                 <p style="text-align: center; font-size: 18px;">Valor do número: <strong>R$ <span id="buyer-valor">0,00</span></strong></p>
+                
                 <p style="text-align: center; color: var(--danger);" id="buyer-instrucoes">Selecione os números desejados:</p>
+                
                 <div id="buyer-grid-container" class="grid-container-custom">
                     <div class="numbers-grid" id="buyer-numbers-grid"></div>
                 </div>
+
                 <button class="btn" id="btn-prosseguir" style="display: none; margin-top: 20px;" onclick="abrirModalDados()">Prosseguir</button>
             </div>
         </div>
@@ -595,9 +624,11 @@
                     <button class="btn btn-small btn-outline" onclick="navigate('screen-dashboard')">Voltar</button>
                 </div>
                 <p style="font-size: 14px; text-align: justify; color: #666;">Acompanhe o volume de chamados de suporte em comparação à avaliação média dos clientes. Menos chamados e notas altas indicam que a plataforma está operando perfeitamente.</p>
+                
                 <div class="chart-box">
                     <canvas id="paretoChart"></canvas>
                 </div>
+
                 <h3 style="margin-top: 30px; text-align: left;">Comentários e Feedbacks</h3>
                 <div id="analytics-feedbacks" style="max-height: 300px; overflow-y: auto; margin-top: 10px;"></div>
             </div>
@@ -623,6 +654,7 @@
                     <input type="text" id="chat-input" style="flex:1; padding:10px; border-radius:8px; border:1px solid #ccc; font-family:inherit;" placeholder="Digite sua mensagem...">
                     <button class="btn btn-success" style="width: auto; padding: 0 20px;" onclick="enviarMensagemChat()">Enviar</button>
                 </div>
+                
                 <div id="chat-closed-msg" style="display: none; text-align: center; color: var(--danger); font-weight: bold; padding: 15px; background: rgba(255,0,0,0.05); border-radius: 8px;">
                     🔒 Chamado Encerrado
                 </div>
@@ -630,14 +662,6 @@
                     Aguardando avaliação do cliente...
                 </div>
                 <button id="chat-btn-avaliar" class="btn btn-warning" style="display:none; width: 100%; margin-top: 10px;" onclick="iniciarEncerramentoChamado()">⭐ Avaliar e Encerrar Definitivamente</button>
-            </div>
-        </div>
-
-        <div id="screen-consulta" class="screen">
-            <div class="card" style="margin-top: 10vh;">
-                <h2>Situação da sua Reserva</h2>
-                <div id="area-consulta-resultado"></div>
-                <button class="btn btn-danger" style="margin-top:20px; width:100%;" onclick="deslogarComprador();">Sair para o Início</button>
             </div>
         </div>
     </div> <div id="modal-notificacoes" class="modal-overlay" style="z-index: 10000;">
@@ -700,20 +724,10 @@
         </div>
     </div>
 
-    <div id="modal-preview-rifa" class="modal-overlay" style="z-index: 10000;">
-        <div class="modal-content" style="max-width: 500px; padding: 15px;">
-            <h3 style="margin-top:0;">Pré-visualização da Grade</h3>
-            <div id="preview-modal-container" class="grid-container-custom">
-                <div class="numbers-grid" id="preview-modal-grid"></div>
-            </div>
-            <button class="btn btn-outline" style="margin-top:15px; width: 100%;" onclick="fecharModal('modal-preview-rifa')">Fechar Visualização</button>
-        </div>
-    </div>
-
     <div id="modal-termos" class="modal-overlay" style="z-index: 10000;">
         <div class="modal-content" style="max-width: 500px;">
             <h3 style="margin-top:0; color:var(--primary-blue);">📜 Termos e Regulamento</h3>
-            <div style="font-size: 13px; max-height: 300px; overflow-y: auto; padding-right: 10px; text-align: justify; line-height:1.6; color: #444;">
+            <div style="font-size: 13px; max-height: 300px; overflow-y: auto; padding-right: 10px; text-align: justify; line-height:1.6; color: var(--text-dark);">
                 <p><b>1. Natureza do Serviço:</b> O RifaOn🍀 é exclusivamente uma plataforma de gestão (SaaS). Não somos uma instituição financeira e não intermediamos ou arrecadamos valores. Toda a logística e arrecadação são de responsabilidade única do organizador da campanha.</p>
                 <p><b>2. Transações e Responsabilidades:</b> Todo o acerto financeiro (incluindo pagamentos via PIX) ocorre de forma direta entre o comprador e o organizador, operando fora do ambiente do aplicativo.</p>
                 <p><b>3. Sistema de Sorteio:</b> Para garantir a máxima transparência a todos os participantes, o algoritmo de sorteio da plataforma só é desbloqueado quando 100% das cotas numéricas estiverem confirmadas e marcadas como "Pagas" pelo organizador.</p>
@@ -727,7 +741,7 @@
     <div id="modal-privacidade" class="modal-overlay" style="z-index: 10000;">
         <div class="modal-content" style="max-width: 500px;">
             <h3 style="margin-top:0; color:var(--primary-blue);">🛡️ Política de Privacidade</h3>
-            <div style="font-size: 13px; max-height: 300px; overflow-y: auto; padding-right: 10px; text-align: justify; line-height:1.6; color: #444;">
+            <div style="font-size: 13px; max-height: 300px; overflow-y: auto; padding-right: 10px; text-align: justify; line-height:1.6; color: var(--text-dark);">
                 <p>Levamos a sua privacidade e segurança de dados com extrema seriedade. Esta política esclarece como tratamos as suas informações de forma ética e segura.</p>
                 <p><b>1. Coleta Mínima Necessária:</b> A plataforma requer estritamente o mínimo de dados possível (Nome e WhatsApp). A única finalidade desta coleta é identificar o dono da cota e permitir contato em caso de vitória no sorteio.</p>
                 <p><b>2. Proibição de Dados Sensíveis:</b> O RifaOn🍀 <b>jamais</b> solicitará ou armazenará dados sensíveis, senhas de bancos, cartões de crédito, CPF, RG ou históricos financeiros. Todo pagamento ocorre de forma externa via PIX.</p>
@@ -847,18 +861,6 @@
         </div>
     </div>
 
-    <footer class="footer no-print">
-        <div class="footer-links">
-            <a href="javascript:void(0)" onclick="abrirModal('modal-privacidade')">Política de Privacidade</a>
-            <a href="javascript:void(0)" onclick="abrirModal('modal-termos')">Termos de Uso</a>
-            <a href="javascript:void(0)" onclick="abrirRotaSuporte()">Suporte</a>
-        </div>
-        <div class="footer-copy">
-            © 2026 RifaOn🍀. Todos os direitos reservados.
-        </div>
-        <button class="btn-help-footer no-print" onclick="abrirModal('modal-ajuda')" title="Central de Ajuda">?</button>
-    </footer>
-
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyBKGiZeQSe7CY6TgpT4SMrlJWA3DFIs8bA",
@@ -903,10 +905,6 @@
         let globalNotifs = [];
         let lastNotifsHash = ""; 
 
-        // ==========================================
-        // UTILIDADES E NAVEGAÇÃO
-        // ==========================================
-
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
             const isDark = document.body.classList.contains('dark-mode');
@@ -930,21 +928,10 @@
             return nomeCompleto.trim().split(' ')[0];
         }
 
-        function hideLoader() { 
-            document.getElementById('loading-overlay').style.display = 'none'; 
-        }
-        
-        function showLoader() { 
-            document.getElementById('loading-overlay').style.display = 'flex'; 
-        }
-
-        function abrirModal(id) { 
-            document.getElementById(id).style.display = 'flex'; 
-        }
-        
-        function fecharModal(id) { 
-            document.getElementById(id).style.display = 'none'; 
-        }
+        function hideLoader() { document.getElementById('loading-overlay').style.display = 'none'; }
+        function showLoader() { document.getElementById('loading-overlay').style.display = 'flex'; }
+        function abrirModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
 
         function deslogarComprador() {
             currentRaffleId = null;
@@ -978,10 +965,6 @@
                 }
             }
         }
-
-        // ==========================================
-        // CARREGAMENTO INICIAL DO SISTEMA
-        // ==========================================
 
         window.addEventListener('load', () => {
             setTimeout(hideLoader, 8000); 
@@ -1082,10 +1065,6 @@
                 });
             });
         });
-
-        // ==========================================
-        // NOTIFICAÇÕES E SLA
-        // ==========================================
 
         function recalcularNotificacoesSLA() {
             if(!currentUserEmail) return;
@@ -1207,10 +1186,6 @@
             return mudou;
         }
 
-        // ==========================================
-        // SISTEMA DE USUÁRIOS
-        // ==========================================
-
         function loginComGoogle() {
             showLoader();
             const provider = new firebase.auth.GoogleAuthProvider();
@@ -1292,10 +1267,6 @@
             });
         }
 
-        // ==========================================
-        // SISTEMA DE SUPORTE CHAT INTEGRADO
-        // ==========================================
-
         function abrirRotaSuporte() {
             if (!currentUserEmail) {
                 abrirModal('modal-suporte-publico');
@@ -1321,10 +1292,6 @@
                 hideLoader();
                 alert("Suporte cadastrado com sucesso, aguarde até 7 dias para ter retorno.");
                 fecharModal('modal-suporte-publico');
-                
-                const linkApp = window.location.href.split('?')[0];
-                const msgApp = `🛑 *NOVO TICKET DE SUPORTE*\n\n*Nome:* ${n}\n*E-mail:* ${e}\n*Mensagem:* ${m}\n\nAcesse o Painel Mestre no App para gerenciar: ${linkApp}`;
-                window.open(`https://wa.me/5512991643067?text=${encodeURIComponent(msgApp)}`, '_blank');
             }).catch(e => { hideLoader(); alert("Erro ao enviar: " + e.message); });
         }
 
@@ -1521,6 +1488,7 @@
                 r.readAsDataURL(input.files[0]);
             }
         }
+        
         function removerAnexoChat() {
             chatAnexoBase64 = "";
             document.getElementById('chat-anexo').value = '';
@@ -1628,9 +1596,6 @@
             }
         }
 
-        // ==========================================
-        // GRÁFICOS DO PAINEL MASTER
-        // ==========================================
         function abrirRelatoriosMaster() {
             showLoader();
             database.ref('suporte').once('value').then(snap => {
@@ -1712,10 +1677,6 @@
             });
         }
 
-        // ==========================================
-        // SISTEMA DE CRIAÇÃO E EDIÇÃO DE RIFAS
-        // ==========================================
-
         function obterMsgTemplate(tipo) {
             const defaults = {
                 link: "Compre números na minha rifa e concorra a: {premio}!\n\nAcesse o link e garanta o seu: {link}",
@@ -1763,51 +1724,26 @@
             else if (tipo === 'fundo') { removerImgFundo = true; bgImageBase64Temp = ""; let inputId = tela === 'cadastro' ? 'rf-bg-img' : 'rf-edit-bg-img'; let previewId = tela === 'cadastro' ? 'preview-img-bg-cad' : 'preview-img-bg-edit'; document.getElementById(inputId).value = ''; document.getElementById(previewId).style.display = 'none'; document.getElementById(previewId).src = ''; updatePreview(tela === 'cadastro' ? 'criar' : 'editar'); }
         }
 
-        function abrirPreVisualizacao(origem) { 
-            try {
-                updatePreview(origem); 
-                abrirModal('modal-preview-rifa'); 
-            } catch(e) {
-                console.log(e);
-            }
-        }
+        function abrirPreVisualizacao(origem) { updatePreview(origem); abrirModal('modal-preview-rifa'); }
 
         function updatePreview(origem) {
             if(!origem) origem = document.getElementById('screen-new-raffle').classList.contains('active') ? 'criar' : 'editar';
             let prefixo = origem === 'editar' ? 'rf-edit-' : 'rf-';
-            const formato = document.getElementById(prefixo + 'formato').value; 
-            const colorStyle = document.getElementById(prefixo + 'color-style').value; 
-            const cor = document.getElementById(prefixo + 'cor').value; 
-            const bgStyle = document.getElementById(prefixo + 'bg-style').value; 
-            const bgColor = document.getElementById(prefixo + 'bg-color').value;
+            const formato = document.getElementById(prefixo + 'formato').value; const colorStyle = document.getElementById(prefixo + 'color-style').value; const cor = document.getElementById(prefixo + 'cor').value; const bgStyle = document.getElementById(prefixo + 'bg-style').value; const bgColor = document.getElementById(prefixo + 'bg-color').value;
             
             let imgBgAtual = "";
-            if (origem === 'editar') { 
-                if (removerImgFundo) { imgBgAtual = ""; } 
-                else if (bgImageBase64Temp !== "") { imgBgAtual = bgImageBase64Temp; } 
-                else { const r = rifas.find(x => x.id === currentRaffleId); imgBgAtual = r ? r.bgImagem : ""; } 
-            } 
+            if (origem === 'editar') { if (removerImgFundo) { imgBgAtual = ""; } else if (bgImageBase64Temp !== "") { imgBgAtual = bgImageBase64Temp; } else { const r = rifas.find(x => x.id === currentRaffleId); imgBgAtual = r ? r.bgImagem : ""; } } 
             else { imgBgAtual = bgImageBase64Temp; }
 
-            const gridContainer = document.getElementById('preview-modal-container'); 
-            const grid = document.getElementById('preview-modal-grid');
-            
-            grid.innerHTML = ""; 
-            gridContainer.className = "grid-container-custom";
-            
-            if (bgStyle === 'bg-flat') { gridContainer.style.background = bgColor; } 
-            else if (bgStyle === 'bg-gradient') { gridContainer.style.background = `linear-gradient(135deg, ${bgColor} 0%, rgba(0,0,0,0.8) 100%)`; } 
-            else { gridContainer.style.background = "transparent"; }
-            
+            const gridContainer = document.getElementById('preview-modal-container'); const grid = document.getElementById('preview-modal-grid');
+            grid.innerHTML = ""; gridContainer.className = "grid-container-custom";
+            if (bgStyle === 'bg-flat') { gridContainer.style.background = bgColor; } else if (bgStyle === 'bg-gradient') { gridContainer.style.background = `linear-gradient(135deg, ${bgColor} 0%, rgba(0,0,0,0.8) 100%)`; } else { gridContainer.style.background = "transparent"; }
             if (imgBgAtual) { gridContainer.style.backgroundImage = `url(${imgBgAtual})`; }
 
             for (let i = 1; i <= 20; i++) {
                 const div = document.createElement('div'); div.className = `number-item ${formato} ${colorStyle}`; 
-                if (colorStyle === 'color-translucent') div.style.opacity = '0.6'; 
-                if (colorStyle === 'color-matte') div.style.filter = 'grayscale(30%) contrast(80%)';
-                if (colorStyle === 'color-gradient') { div.style.background = `linear-gradient(135deg, ${cor}, #222)`; div.style.border = 'none'; } 
-                else if (colorStyle === 'color-flat') { div.style.backgroundColor = cor; div.style.border = 'none'; } 
-                else { div.style.backgroundColor = cor; div.style.borderColor = cor; }
+                if (colorStyle === 'color-translucent') div.style.opacity = '0.6'; if (colorStyle === 'color-matte') div.style.filter = 'grayscale(30%) contrast(80%)';
+                if (colorStyle === 'color-gradient') { div.style.background = `linear-gradient(135deg, ${cor}, #222)`; div.style.border = 'none'; } else if (colorStyle === 'color-flat') { div.style.backgroundColor = cor; div.style.border = 'none'; } else { div.style.backgroundColor = cor; div.style.borderColor = cor; }
                 div.style.color = '#fff'; div.innerText = i; grid.appendChild(div);
             }
         }
@@ -1821,21 +1757,7 @@
 
         function abrirEditarRifa(id) {
             currentRaffleId = id; const r = rifas.find(x => x.id === id); if(!r) return;
-            removerImgProduto = false; removerImgFundo = false; 
-            document.getElementById('rf-edit-nome').value = r.nome || ''; 
-            document.getElementById('rf-edit-desc').value = r.desc || ''; 
-            document.getElementById('rf-edit-premio').value = r.premio || ''; 
-            document.getElementById('rf-edit-valor').value = r.valor || 0; 
-            document.getElementById('rf-edit-qtd').value = r.qtd || 100; 
-            document.getElementById('rf-edit-formato').value = r.formato || 'shape-square'; 
-            document.getElementById('rf-edit-color-style').value = r.colorStyle || ''; 
-            document.getElementById('rf-edit-cor').value = r.cor || '#0288d1'; 
-            document.getElementById('rf-edit-bg-style').value = r.bgStyle || ''; 
-            document.getElementById('rf-edit-bg-color').value = r.bgColor || '#ffffff'; 
-            document.getElementById('rf-edit-pix-nome').value = r.pixNome || ''; 
-            document.getElementById('rf-edit-pix-chave').value = r.pixChave || ''; 
-            
-            imageBase64Temp = ""; bgImageBase64Temp = ""; 
+            removerImgProduto = false; removerImgFundo = false; document.getElementById('rf-edit-nome').value = r.nome; document.getElementById('rf-edit-desc').value = r.desc; document.getElementById('rf-edit-premio').value = r.premio; document.getElementById('rf-edit-valor').value = r.valor; document.getElementById('rf-edit-qtd').value = r.qtd; document.getElementById('rf-edit-formato').value = r.formato || 'shape-square'; document.getElementById('rf-edit-color-style').value = r.colorStyle || ''; document.getElementById('rf-edit-cor').value = r.cor || '#0288d1'; document.getElementById('rf-edit-bg-style').value = r.bgStyle || ''; document.getElementById('rf-edit-bg-color').value = r.bgColor || '#ffffff'; document.getElementById('rf-edit-pix-nome').value = r.pixNome; document.getElementById('rf-edit-pix-chave').value = r.pixChave; imageBase64Temp = ""; bgImageBase64Temp = ""; 
             const p1 = document.getElementById('preview-img-edicao'); if (r.imagem) { p1.src = r.imagem; p1.style.display = 'block'; } else { p1.style.display = 'none'; }
             const p2 = document.getElementById('preview-img-bg-edit'); if (r.bgImagem) { p2.src = r.bgImagem; p2.style.display = 'block'; } else { p2.style.display = 'none'; }
             navigate('screen-edit-raffle');
@@ -1844,37 +1766,15 @@
         function salvarEdicaoRifa() {
             const i = rifas.findIndex(x => x.id === currentRaffleId);
             if(i !== -1) {
-                rifas[i].nome = document.getElementById('rf-edit-nome').value; 
-                rifas[i].desc = document.getElementById('rf-edit-desc').value; 
-                rifas[i].premio = document.getElementById('rf-edit-premio').value; 
-                rifas[i].valor = parseFloat(document.getElementById('rf-edit-valor').value); 
-                rifas[i].formato = document.getElementById('rf-edit-formato').value; 
-                rifas[i].colorStyle = document.getElementById('rf-edit-color-style').value; 
-                rifas[i].cor = document.getElementById('rf-edit-cor').value; 
-                rifas[i].bgStyle = document.getElementById('rf-edit-bg-style').value; 
-                rifas[i].bgColor = document.getElementById('rf-edit-bg-color').value; 
-                rifas[i].pixNome = document.getElementById('rf-edit-pix-nome').value; 
-                rifas[i].pixChave = document.getElementById('rf-edit-pix-chave').value;
+                rifas[i].nome = document.getElementById('rf-edit-nome').value; rifas[i].desc = document.getElementById('rf-edit-desc').value; rifas[i].premio = document.getElementById('rf-edit-premio').value; rifas[i].valor = parseFloat(document.getElementById('rf-edit-valor').value); rifas[i].formato = document.getElementById('rf-edit-formato').value; rifas[i].colorStyle = document.getElementById('rf-edit-color-style').value; rifas[i].cor = document.getElementById('rf-edit-cor').value; rifas[i].bgStyle = document.getElementById('rf-edit-bg-style').value; rifas[i].bgColor = document.getElementById('rf-edit-bg-color').value; rifas[i].pixNome = document.getElementById('rf-edit-pix-nome').value; rifas[i].pixChave = document.getElementById('rf-edit-pix-chave').value;
                 if (removerImgProduto) { rifas[i].imagem = ""; } else if (imageBase64Temp !== "") { rifas[i].imagem = imageBase64Temp; }
                 if (removerImgFundo) { rifas[i].bgImagem = ""; } else if (bgImageBase64Temp !== "") { rifas[i].bgImagem = bgImageBase64Temp; }
                 database.ref('rifas').set(rifas).then(() => { alert("Rifa editada com sucesso!"); abrirAdminRifa(currentRaffleId); });
             }
         }
 
-        // ==========================================
-        // SISTEMA VISUAL DA GRADE E INTERAÇÃO
-        // ==========================================
-
         function aplicarCoresNumero(div, num, rifa) {
-            if (num.status === 'available') { 
-                const cStyle = rifa.colorStyle || ''; 
-                if (cStyle === 'color-translucent') div.style.opacity = '0.6'; 
-                if (cStyle === 'color-matte') div.style.filter = 'grayscale(30%) contrast(80%)'; 
-                if (cStyle === 'color-gradient') { div.style.background = `linear-gradient(135deg, ${rifa.cor}, #222)`; div.style.border = 'none'; } 
-                else if (cStyle === 'color-flat') { div.style.backgroundColor = rifa.cor; div.style.border = 'none'; } 
-                else { div.style.backgroundColor = rifa.cor; div.style.borderColor = rifa.cor; } 
-                div.style.color = '#fff'; 
-            } 
+            if (num.status === 'available') { const cStyle = rifa.colorStyle || ''; if (cStyle === 'color-translucent') div.style.opacity = '0.6'; if (cStyle === 'color-matte') div.style.filter = 'grayscale(30%) contrast(80%)'; if (cStyle === 'color-gradient') { div.style.background = `linear-gradient(135deg, ${rifa.cor}, #222)`; div.style.border = 'none'; } else if (cStyle === 'color-flat') { div.style.backgroundColor = rifa.cor; div.style.border = 'none'; } else { div.style.backgroundColor = rifa.cor; div.style.borderColor = rifa.cor; } div.style.color = '#fff'; } 
             else { div.className = `number-item ${rifa.formato} status-${num.status}`; }
         }
 
@@ -1992,7 +1892,6 @@
 
         function copiarLink() { const i = document.getElementById("admin-link-input"); i.select(); document.execCommand("copy"); alert("Copiado!"); }
         
-        // COMPARTILHAR UNIVERSAL COM WEB SHARE API
         function compartilharLinkGeral() { 
             const r = rifas.find(x => x.id === currentRaffleId); 
             const link = document.getElementById("admin-link-input").value; 
