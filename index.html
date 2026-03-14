@@ -81,37 +81,23 @@
         }
         .btn-nav:hover { background: rgba(255,255,255,0.2); color: #fff; }
 
-        /* LOGOTIPO ADAPTATIVO E TREVO GIRATÓRIO CORTADO */
+        /* LOGOTIPO ADAPTATIVO COM TREVO FIXO (TIPO ASPAS) */
         .logo-container { text-align: center; margin-bottom: 30px; }
-        .logo-wrap { position: relative; display: inline-block; }
+        
         .logo-title { 
             font-family: 'Tw Cen MT Condensed', 'Tw Cen MT', 'Oswald', sans-serif; 
             font-size: clamp(64px, 8vw, 130px); font-weight: 700; margin: 0; letter-spacing: 0px; 
-            display: inline-block; position: relative;
+            display: inline-block; position: relative; padding-right: 0.45em; /* Espaço para o trevo não cortar */
         }
         .logo-rifa { color: #538cb3; }
         .logo-on { color: #d34c31; }
         
-        .clover-container {
-            position: absolute;
-            top: 0.05em; right: -0.45em; /* Posição de apóstrofo */
-            font-size: 0.4em; /* Tamanho proporcional à letra */
-            width: 1em; height: 1em;
-            display: flex; justify-content: center; align-items: center;
-        }
-        .logo-clover-emoji { 
-            display: block;
-            /* Recorta os 25% de baixo onde fica o cabinho do trevo */
-            clip-path: polygon(0 0, 100% 0, 100% 75%, 0 75%);
-            animation: spin-clover 4s linear infinite;
-            /* Faz girar pelo centro exato das folhas, ignorando o cabo cortado */
-            transform-origin: 50% 40%; 
-            filter: drop-shadow(0 0 5px var(--gold)); /* Brilho dourado */
-        }
-
-        @keyframes spin-clover {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .logo-clover { 
+            position: absolute; 
+            top: 0.05em; 
+            right: 0; 
+            font-size: 0.45em; /* Tamanho proporcional à letra */
+            text-shadow: 0 0 5px rgba(255,215,0,0.8);
         }
 
         .logo-subtitle { 
@@ -192,6 +178,7 @@
         .numbers-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;}
         .number-item { position: relative; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: #eee; border: 2px solid #ccc; color: #333; cursor: pointer; font-weight: bold; transition: 0.2s; font-size: 14px; box-sizing: border-box; }
         .crown-icon { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); font-size: 22px; z-index: 5; text-shadow: 0 0 5px rgba(255,215,0,0.8); }
+
         body.dark-mode .number-item { background: #333; border-color: #555; color: #fff;}
 
         .mini-numbers-grid { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; width: 100%; max-height: 200px; overflow-y: auto; padding: 5px; }
@@ -236,7 +223,7 @@
         .recibo-block { margin-bottom: 10px; padding: 5px; border: 1px solid #ddd; border-radius: 5px; background: rgba(255,255,255,0.5);}
         body.dark-mode .recibo-block { background: rgba(0,0,0,0.2); border-color: #555;}
 
-        /* CHAT E FEEDBACK ESTILOS */
+        /* CHAT E FEEDBACK */
         .chat-container { display: flex; flex-direction: column; gap: 10px; height: 350px; overflow-y: auto; background: rgba(0,0,0,0.03); padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #ccc; }
         body.dark-mode .chat-container { background: rgba(0,0,0,0.3); border-color: #444;}
         .msg-bubble { padding: 10px 15px; border-radius: 15px; max-width: 85%; font-size: 14px; line-height: 1.4; position: relative;}
@@ -264,7 +251,6 @@
             font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; padding: 0;
         }
         .btn-help-footer:hover { background: rgba(255,255,255,0.2); color: white; border-color: white; transform: scale(1.1); }
-
         .preview-container { margin-top: 20px; border: 2px solid #ccc; border-radius: 8px; padding: 15px; background: rgba(0,0,0,0.05); }
         
         @media print {
@@ -297,7 +283,7 @@
               deferredPrompt.prompt();
               deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
           } else {
-              alert("⚠️ O Google Chrome ainda não liberou a instalação automática.\n\nSe você usa Android:\nVerifique se os arquivos 'manifest.json' e 'sw.js' estão salvos corretamente no seu Vercel. Caso estejam, limpe o cache do seu navegador ou instale pelo menu (3 pontinhos) > 'Instalar aplicativo'.\n\nSe você usa iPhone (Apple):\nA Apple não permite o botão automático. Toque em 'Compartilhar' (quadrado com setinha) e depois em 'Adicionar à Tela de Início'.");
+              alert("Siga o passo a passo para instalar:\n\n📱 No Android (Chrome):\n1. Clique nos 3 pontinhos (⋮) no canto superior.\n2. Clique em 'Instalar aplicativo' ou 'Adicionar à tela inicial'.\n\n🍎 No iPhone (Safari):\n1. Toque no botão de Compartilhar (quadradinho com seta pra cima).\n2. Role a lista e clique em 'Adicionar à Tela de Início'.");
           }
       }
     </script>
@@ -312,11 +298,9 @@
 
     <nav class="main-navbar no-print">
         <div class="nav-brand">
-            <span class="logo-wrap">
+            <span style="position:relative; display:inline-block; padding-right:0.45em;">
                 <span style="color:#538cb3;">Rifa</span><span style="color:#d34c31;">On</span>
-                <span class="clover-container">
-                    <span class="logo-clover-emoji">🍀</span>
-                </span>
+                <span class="logo-clover">🍀</span>
             </span>
         </div>
         <div class="nav-actions">
@@ -336,12 +320,7 @@
             <div style="margin-top: 10vh; background: transparent; padding: 25px; text-align: center;">
                 <div class="logo-container">
                     <h1 class="logo-title">
-                        <span class="logo-wrap">
-                            <span class="logo-rifa">Rifa</span><span class="logo-on">On</span>
-                            <span class="clover-container">
-                                <span class="logo-clover-emoji">🍀</span>
-                            </span>
-                        </span>
+                        <span style="color:#538cb3;">Rifa</span><span style="color:#d34c31;">On</span><span class="logo-clover">🍀</span>
                     </h1>
                     <p class="logo-subtitle">A maneira mais fácil e segura de criar rifas online. Compartilhe o link, gerencie pagamentos e realize sorteios em poucos cliques.</p>
                 </div>
@@ -674,7 +653,7 @@
                 <div id="chat-controls" style="display: flex; gap: 5px;">
                     <input type="file" id="chat-anexo" accept="image/*" style="display:none;" onchange="processarAnexoChat(this)">
                     <button class="btn btn-outline" style="width: auto; padding: 0 15px; font-size:20px;" title="Anexar Imagem" onclick="document.getElementById('chat-anexo').click()">📎</button>
-                    <input type="text" id="chat-input" style="flex:1; padding:10px; border-radius:8px; border:1px solid #ccc; font-family:inherit;" placeholder="Digite sua mensagem...">
+                    <input type="text" id="chat-input" style="flex:1; padding:10px; border-radius:8px; border:1px solid #ccc; font-family:inherit;" placeholder="Digite sua mensagem..." onkeypress="if(event.key === 'Enter') enviarMensagemChat()">
                     <button class="btn btn-success" style="width: auto; padding: 0 20px;" onclick="enviarMensagemChat()">Enviar</button>
                 </div>
                 
@@ -853,6 +832,47 @@
         </div>
     </div>
 
+    <div id="modal-admin-numero" class="modal-overlay">
+        <div class="modal-content" style="padding: 20px;">
+            <h3 style="margin-top:0;">Número <span id="mod-adm-num"></span></h3>
+            <p style="margin: 5px 0;"><strong>Comprador:</strong> <span id="mod-adm-nome"></span></p>
+            <p style="margin: 5px 0;"><strong>WhatsApp:</strong> <span id="mod-adm-tel"></span></p>
+            <p style="margin: 5px 0;"><strong>Promessa:</strong> <span id="mod-adm-data"></span></p>
+            <p style="margin: 5px 0 15px 0;"><strong>Status:</strong> <span id="mod-adm-status"></span></p>
+            <div class="action-buttons" style="gap: 5px; margin-bottom: 10px;">
+                <button class="btn btn-success btn-small" style="flex:1;" id="btn-adm-pagou" onclick="adminAcao('pagou')">✅ Confirmar</button>
+                <button class="btn btn-outline btn-small" style="flex:1;" onclick="encaminharComprovanteAdmin()">📲 Enviar</button>
+                <button class="btn btn-danger btn-small" style="flex:1;" id="btn-adm-apagar" onclick="adminAcao('apagar')">🗑️ Liberar</button>
+            </div>
+            <button class="btn" style="background:#999; margin: 0; width:100%;" onclick="fecharModal('modal-admin-numero')">Fechar Janela</button>
+        </div>
+    </div>
+
+    <div id="modal-lista-compradores" class="modal-overlay">
+        <div class="modal-content" style="max-width: 600px;">
+            <h3>Lista de Compradores</h3>
+            <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+                <input type="text" id="filtro-nome" placeholder="Buscar por nome..." oninput="filtrarLista()" style="flex:1; padding:8px; border-radius:4px; border:1px solid #ccc;">
+                <select id="filtro-status" onchange="filtrarLista()" style="padding:8px; border-radius:4px; border:1px solid #ccc;">
+                    <option value="">Todos os Status</option>
+                    <option value="paid">Pagos (Garantidos)</option>
+                    <option value="reserved">Reservados</option>
+                    <option value="late">Atrasados</option>
+                    <option value="available">Livres</option>
+                </select>
+            </div>
+            <div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; border-radius: 6px;">
+                <table class="table-compradores">
+                    <thead><tr><th>Nº</th><th>Nome</th><th>Celular</th><th>Status</th></tr></thead>
+                    <tbody id="corpo-tabela-compradores"></tbody>
+                </table>
+            </div>
+            <div class="action-buttons" style="margin-top: 15px;">
+                <button class="btn btn-outline" style="width:100%;" onclick="fecharModal('modal-lista-compradores')">Fechar</button>
+            </div>
+        </div>
+    </div>
+
     <footer class="footer no-print">
         <div class="footer-links">
             <a href="javascript:void(0)" onclick="abrirModal('modal-privacidade')">Política de Privacidade</a>
@@ -873,7 +893,8 @@
             projectId: "rf-online-a999e",
             storageBucket: "rf-online-a999e.firebasestorage.app",
             messagingSenderId: "635444835818",
-            appId: "1:635444835818:web:657712a4dbbb351bec2e93"
+            appId: "1:635444835818:web:657712a4dbbb351bec2e93",
+            measurementId: "G-4BBY4FNQGX"
         };
         
         try {
@@ -908,10 +929,7 @@
         let globalNotifs = [];
         let lastNotifsHash = ""; 
 
-        // ==========================================
-        // UTILIDADES E NAVEGAÇÃO
-        // ==========================================
-
+        // CONFIGURAÇÕES VISUAIS GERAIS
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
             const isDark = document.body.classList.contains('dark-mode');
@@ -940,6 +958,7 @@
         function abrirModal(id) { document.getElementById(id).style.display = 'flex'; }
         function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
 
+        // NAVEGAÇÃO E SEGURANÇA
         function deslogarComprador() {
             currentRaffleId = null;
             selectedNumbers = [];
@@ -973,10 +992,7 @@
             }
         }
 
-        // ==========================================
         // CARREGAMENTO INICIAL DO SISTEMA
-        // ==========================================
-
         window.addEventListener('load', () => {
             setTimeout(hideLoader, 8000); 
 
@@ -1030,7 +1046,6 @@
                     hideLoader();
                     ativarAtualizacoesEmTempoReal(); 
 
-                    // REGRA 1: LINK COMPARTILHADO (COMPRADOR)
                     if (rifaUrlId && consultaTel) {
                         currentRaffleId = rifaUrlId;
                         realizarConsultaPublica(rifaUrlId, consultaTel);
@@ -1047,7 +1062,6 @@
                         return; 
                     }
 
-                    // REGRA 2: ADMIN LOGADO (MEMORIA DE ABA)
                     if (user) {
                         const sessionData = sessionStorage.getItem('rifa_logged_user');
                         if(sessionData) {
@@ -1079,10 +1093,7 @@
             });
         });
 
-        // ==========================================
         // NOTIFICAÇÕES E SLA
-        // ==========================================
-
         function recalcularNotificacoesSLA() {
             if(!currentUserEmail) return;
             globalNotifs = [];
@@ -1198,7 +1209,7 @@
         function checarAtrasosLocal(rifa) {
             let mudou = false; 
             const dataAtual = new Date();
-            dataAtual.setHours(0,0,0,0);
+            dataAtual.setHours(0,0,0,0); // Zera hora para comparar somente o dia local
 
             rifa.numeros.forEach(n => {
                 if (n.status === 'reserved' && n.dataPromessa) {
@@ -1216,10 +1227,6 @@
             });
             return mudou;
         }
-
-        // ==========================================
-        // SISTEMA DE USUÁRIOS
-        // ==========================================
 
         function loginComGoogle() {
             showLoader();
@@ -1301,10 +1308,6 @@
                 else alert("Erro ao enviar redefinição: " + error.message);
             });
         }
-
-        // ==========================================
-        // SISTEMA DE SUPORTE CHAT INTEGRADO
-        // ==========================================
 
         function abrirRotaSuporte() {
             if (!currentUserEmail) {
@@ -1715,10 +1718,6 @@
                 options: { responsive: true, scales: { y: { beginAtZero: true, type: 'linear', position: 'left', title: { display: true, text: 'Chamados' } }, y1: { beginAtZero: true, max: 5, type: 'linear', position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'Nota' } } } }
             });
         }
-
-        // ==========================================
-        // SISTEMA DE CRIAÇÃO E EDIÇÃO DE RIFAS E GRADE
-        // ==========================================
 
         function obterMsgTemplate(tipo) {
             const defaults = {
