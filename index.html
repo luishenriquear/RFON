@@ -11,7 +11,7 @@
     
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0f172a">
-    <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Four_leaf_clover.png/512px-Four_leaf_clover.png">
+    <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/npm/emoji-datasource-apple@14.0.0/img/apple/256/1f340.png">
 
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -81,23 +81,24 @@
         }
         .btn-nav:hover { background: rgba(255,255,255,0.2); color: #fff; }
 
-        /* LOGOTIPO ADAPTATIVO COM TREVO FIXO (TIPO ASPAS) */
+        /* LOGOTIPO ADAPTATIVO COM TREVO (TIPO ASPAS SEM CABO E SEM ANIMAÇÃO) */
         .logo-container { text-align: center; margin-bottom: 30px; }
         
         .logo-title { 
             font-family: 'Tw Cen MT Condensed', 'Tw Cen MT', 'Oswald', sans-serif; 
             font-size: clamp(64px, 8vw, 130px); font-weight: 700; margin: 0; letter-spacing: 0px; 
-            display: inline-block; position: relative; padding-right: 0.45em; /* Espaço para o trevo não cortar */
+            display: inline-block; position: relative; padding-right: 0.35em; /* Espaço para o trevo */
         }
         .logo-rifa { color: #538cb3; }
         .logo-on { color: #d34c31; }
         
         .logo-clover { 
             position: absolute; 
-            top: 0.05em; 
+            top: -0.05em; 
             right: 0; 
-            font-size: 0.45em; /* Tamanho proporcional à letra */
+            font-size: 0.45em; /* Tamanho proporcional */
             text-shadow: 0 0 5px rgba(255,215,0,0.8);
+            clip-path: polygon(0 0, 100% 0, 100% 75%, 0 75%); /* Corta o cabinho fora */
         }
 
         .logo-subtitle { 
@@ -246,11 +247,13 @@
         
         /* Botão de Ajuda no Rodapé */
         .btn-help-footer {
-            position: absolute; right: 20px; bottom: 20px; width: 36px; height: 36px; border-radius: 50%;
-            border: 2px solid white; color: white; background: transparent; display: flex; justify-content: center; align-items: center;
-            font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; padding: 0;
+            width: 24px; height: 24px; border-radius: 50%;
+            border: 1px solid var(--footer-text); color: var(--footer-text); background: transparent; 
+            display: flex; justify-content: center; align-items: center;
+            font-size: 14px; font-weight: bold; cursor: pointer; transition: 0.3s; padding: 0;
         }
         .btn-help-footer:hover { background: rgba(255,255,255,0.2); color: white; border-color: white; transform: scale(1.1); }
+
         .preview-container { margin-top: 20px; border: 2px solid #ccc; border-radius: 8px; padding: 15px; background: rgba(0,0,0,0.05); }
         
         @media print {
@@ -283,7 +286,7 @@
               deferredPrompt.prompt();
               deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
           } else {
-              alert("Siga o passo a passo para instalar:\n\n📱 No Android (Chrome):\n1. Clique nos 3 pontinhos (⋮) no canto superior.\n2. Clique em 'Instalar aplicativo' ou 'Adicionar à tela inicial'.\n\n🍎 No iPhone (Safari):\n1. Toque no botão de Compartilhar (quadradinho com seta pra cima).\n2. Role a lista e clique em 'Adicionar à Tela de Início'.");
+              alert("⚠️ Não conseguimos abrir a janela automática.\n\nPara instalar o aplicativo:\n\n📱 No Android (Chrome):\n1. Clique nos 3 pontinhos (⋮) lá em cima.\n2. Clique em 'Instalar aplicativo' ou 'Adicionar à tela inicial'.\n\n🍎 No iPhone (Safari):\n1. Toque no botão de Compartilhar (quadradinho com seta pra cima).\n2. Role a lista e clique em 'Adicionar à Tela de Início'.");
           }
       }
     </script>
@@ -298,9 +301,8 @@
 
     <nav class="main-navbar no-print">
         <div class="nav-brand">
-            <span style="position:relative; display:inline-block; padding-right:0.45em;">
-                <span style="color:#538cb3;">Rifa</span><span style="color:#d34c31;">On</span>
-                <span class="logo-clover">🍀</span>
+            <span class="logo-title" style="font-size: 24px; padding-right: 0.35em;">
+                <span class="logo-rifa">Rifa</span><span class="logo-on">On</span><span class="logo-clover">🍀</span>
             </span>
         </div>
         <div class="nav-actions">
@@ -320,7 +322,7 @@
             <div style="margin-top: 10vh; background: transparent; padding: 25px; text-align: center;">
                 <div class="logo-container">
                     <h1 class="logo-title">
-                        <span style="color:#538cb3;">Rifa</span><span style="color:#d34c31;">On</span><span class="logo-clover">🍀</span>
+                        <span class="logo-rifa">Rifa</span><span class="logo-on">On</span><span class="logo-clover">🍀</span>
                     </h1>
                     <p class="logo-subtitle">A maneira mais fácil e segura de criar rifas online. Compartilhe o link, gerencie pagamentos e realize sorteios em poucos cliques.</p>
                 </div>
@@ -893,8 +895,7 @@
             projectId: "rf-online-a999e",
             storageBucket: "rf-online-a999e.firebasestorage.app",
             messagingSenderId: "635444835818",
-            appId: "1:635444835818:web:657712a4dbbb351bec2e93",
-            measurementId: "G-4BBY4FNQGX"
+            appId: "1:635444835818:web:657712a4dbbb351bec2e93"
         };
         
         try {
@@ -929,7 +930,6 @@
         let globalNotifs = [];
         let lastNotifsHash = ""; 
 
-        // CONFIGURAÇÕES VISUAIS GERAIS
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
             const isDark = document.body.classList.contains('dark-mode');
@@ -958,7 +958,6 @@
         function abrirModal(id) { document.getElementById(id).style.display = 'flex'; }
         function fecharModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // NAVEGAÇÃO E SEGURANÇA
         function deslogarComprador() {
             currentRaffleId = null;
             selectedNumbers = [];
@@ -992,7 +991,6 @@
             }
         }
 
-        // CARREGAMENTO INICIAL DO SISTEMA
         window.addEventListener('load', () => {
             setTimeout(hideLoader, 8000); 
 
@@ -1093,7 +1091,6 @@
             });
         });
 
-        // NOTIFICAÇÕES E SLA
         function recalcularNotificacoesSLA() {
             if(!currentUserEmail) return;
             globalNotifs = [];
@@ -1208,20 +1205,21 @@
 
         function checarAtrasosLocal(rifa) {
             let mudou = false; 
-            const dataAtual = new Date();
-            dataAtual.setHours(0,0,0,0); // Zera hora para comparar somente o dia local
-
+            
+            // Pega a data exata do celular do usuario, ignorando o horario do servidor
+            const hojeObj = new Date();
+            const y = hojeObj.getFullYear();
+            const m = String(hojeObj.getMonth() + 1).padStart(2, '0');
+            const d = String(hojeObj.getDate()).padStart(2, '0');
+            const hojeStr = `${y}-${m}-${d}`; 
+            
             rifa.numeros.forEach(n => {
                 if (n.status === 'reserved' && n.dataPromessa) {
-                    const partes = n.dataPromessa.split('-'); 
-                    if(partes.length === 3) {
-                        const dataPromessa = new Date(partes[0], partes[1] - 1, partes[2]);
-                        dataPromessa.setHours(0,0,0,0);
-                        
-                        if (dataPromessa < dataAtual) {
-                            n.status = 'late';
-                            mudou = true;
-                        }
+                    // Compara as strings de data (ex: '2023-10-05' < '2023-10-06') 
+                    // Isso evita 100% bugs de Fuso Horário de servidor (UTC vs GMT-3)
+                    if (n.dataPromessa < hojeStr) {
+                        n.status = 'late';
+                        mudou = true;
                     }
                 }
             });
